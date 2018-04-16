@@ -5,21 +5,22 @@
 
 ## menu 
 menu:
-- page: home
-  url: /
-  icon: 
+
 - page: 前端
   url: /categories/前端/
-  icon: 
+  icon: fast-backward
 - page: 后端
   url: /categories/后端/
-  icon: 
+  icon: backward
+- page: home
+  url: /
+  icon: stop
 - page: 工具
   url: /categories/工具/
-  icon: 
+  icon: forward
 - page: 资源
   url: /categories/资源/
-  icon: 
+  icon: fast-forward
 
 ## favicon 
 favicon: http://qiniu1.lxfriday.xyz/quanyecha/inuyasha_avatar.jpg
@@ -98,7 +99,7 @@ links:
 # 主题自定义个性化配置
 
 ## 网站宣传语
-branding: 止水的网络空间
+branding: 止水、的网络空间
 
 ## 设置banner背景图片
 banner:
