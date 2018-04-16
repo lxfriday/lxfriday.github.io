@@ -22,7 +22,7 @@ menu:
   icon: 
 
 ## favicon 
-favicon: /favicon.ico
+favicon: http://qiniu1.lxfriday.xyz/quanyecha/inuyasha_avatar.jpg
 
 ## Feed
 # rss: /atom.xml
@@ -98,7 +98,7 @@ links:
 # 主题自定义个性化配置
 
 ## 网站宣传语
-branding: Hello World!
+branding: 止水的网络空间
 
 ## 设置banner背景图片
 banner:
@@ -130,7 +130,7 @@ declaration:
   enable: true
   title: '转载声明'
   tip: |-
-      商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+      商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">止水、</a>
 
 
 ## 主题评论
@@ -147,7 +147,7 @@ gitment:
 ### 来必力
 livere: 
   enable: false
-  livere_uid: MTAyMC8zMzA1MS85NjEz
+  livere_uid: 
 
 ### 友言评论(服务不稳定)
 uyan:
@@ -163,7 +163,7 @@ disqus:
 ### 畅言评论(需要ICP备案)
 changyan:
   enable: false
-  appid: cyt8KmUC1
+  appid: 
   conf: prod_855a68d3b3d91855360a6215672a505a
 
 ## 网站访问统计
