@@ -1,6 +1,7 @@
 ---
 title: Hello World
 comments: false
+date: 2018-04-16 12:14:28
 ---
 
 ## Quick Start
