@@ -4,16 +4,16 @@
 
 # Site
 title: 止水、的网络空间
-subtitle:
-description:
-keywords:
+subtitle: 心若止水，何患风雨！
+description: 止水、的生活，学习
+keywords: 止水、的网络空间
 author: 止水、
 language: zh-CN
-timezone: 
+#timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://blog.lxfriday.xyz
+url: http://lxfriday.gitee.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -27,6 +27,8 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - README.md
+  - 404.html
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -81,3 +83,4 @@ theme: snippet
 deploy:
   type: git
   repo: https://gitee.com/lxfriday/lxfriday.git
+  branch: master

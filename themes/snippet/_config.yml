@@ -6,21 +6,28 @@
 ## menu 
 menu:
 
-- page: 前端
-  url: /categories/前端/
-  icon: fast-backward
-- page: 后端
-  url: /categories/后端/
-  icon: backward
 - page: home
   url: /
-  icon: stop
+  icon:
+#- page: 前端
+#  url: /categories/前端/
+#  icon:
+#- page: 后端
+#  url: /categories/后端/
+#  icon:
+- page: 微信小程序
+  url: /categories/微信小程序/
+  icon:
+#- page: 手机app
+#  url: /categories/手机app/
+#  icon:
 - page: 工具
   url: /categories/工具/
-  icon: forward
+  icon:
 - page: 资源
   url: /categories/资源/
-  icon: fast-forward
+  icon:
+
 
 ## favicon 
 favicon: http://qiniu1.lxfriday.xyz/quanyecha/inuyasha_avatar.jpg
