@@ -110,7 +110,7 @@ homePanel: true
 
 ## 缩略图自定义随机图片
 defaultImgs:
-  -
+  - 
 
 ## 截取文章首页描述字数
 excerptLength: 120
