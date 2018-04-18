@@ -172,7 +172,7 @@ disqus:
 changyan:
   enable: false
   appid: 
-  conf: prod_855a68d3b3d91855360a6215672a505a
+  conf:
 
 ## 网站访问统计
 
@@ -180,7 +180,7 @@ changyan:
 # cnzz_analytics:
 
 ### 百度统计
-baidu_analytics: 
+baidu_analytics: 7d531d40692431e1f152e12280d1ed0f
 
 ### 谷歌统计
 google_analytics: 
