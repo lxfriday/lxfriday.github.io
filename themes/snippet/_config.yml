@@ -12,9 +12,9 @@ menu:
 #- page: 前端
 #  url: /categories/前端/
 #  icon:
-#- page: 后端
-#  url: /categories/后端/
-#  icon:
+- page: 后端
+  url: /categories/后端/
+  icon:
 - page: 微信小程序
   url: /categories/微信小程序/
   icon:
