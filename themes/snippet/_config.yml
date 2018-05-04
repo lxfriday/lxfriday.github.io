@@ -27,6 +27,9 @@ menu:
 - page: 资源
   url: /categories/资源/
   icon:
+- page: 娱乐
+  url: /categories/娱乐/
+  icon:
 
 
 ## favicon 
