@@ -30,6 +30,9 @@ menu:
 - page: 娱乐
   url: /categories/娱乐/
   icon:
+- page: 我
+  url: /categories/我/
+  icon:
 
 
 ## favicon
