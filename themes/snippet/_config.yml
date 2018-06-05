@@ -3,15 +3,15 @@
 #   language: zh-CN
 # ---------------------------------------------------------------
 
-## menu 
+## menu
 menu:
 
 - page: home
   url: /
   icon:
-#- page: 前端
-#  url: /categories/前端/
-#  icon:
+- page: 前端
+  url: /categories/前端/
+  icon:
 - page: 后端
   url: /categories/后端/
   icon:
@@ -32,8 +32,8 @@ menu:
   icon:
 
 
-## favicon 
-favicon: http://qiniu1.lxfriday.xyz/quanyecha/inuyasha_avatar.jpg
+## favicon
+favicon: http://qiniu1.lxfriday.xyz/blog/5219B1C310EF45D4E200CBD63727AB35.png
 
 ## Feed
 # rss: /atom.xml
@@ -120,7 +120,7 @@ homePanel: true
 
 ## 缩略图自定义随机图片
 defaultImgs:
-  - 
+  -
 
 ## 截取文章首页描述字数
 excerptLength: 120
@@ -149,16 +149,16 @@ declaration:
 ### gitment
 gitment:
   enable: false
-  owner: 
-  repo: 
-  client_id: 
-  client_secret: 
+  owner:
+  repo:
+  client_id:
+  client_secret:
   perPage: 10
 
 ### 来必力
-livere: 
+livere:
   enable: false
-  livere_uid: 
+  livere_uid:
 
 ### 友言评论(服务不稳定)
 uyan:
@@ -174,7 +174,7 @@ disqus:
 ### 畅言评论(需要ICP备案)
 changyan:
   enable: false
-  appid: 
+  appid:
   conf:
 
 ## 网站访问统计
@@ -186,10 +186,10 @@ changyan:
 baidu_analytics: 7d531d40692431e1f152e12280d1ed0f
 
 ### 谷歌统计
-google_analytics: 
+google_analytics:
 
 ### 腾讯分析
-tencent_analytics: 
+tencent_analytics:
 
 ### 百度文章推送
 baidu_push:
