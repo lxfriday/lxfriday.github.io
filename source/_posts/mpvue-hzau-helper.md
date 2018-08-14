@@ -1,9 +1,9 @@
 ---
-title: 华中农业大学助手相关
+title: mpvue-hzau-helper
 comments: false
 date: 2018-06-05 18:35:00
 categories: 微信小程序
-tags: 华中农业大学助手
+tags: mpvue-hzau-helper
 ---
 
 [项目地址](https://github.com/lxfriday/mpvue-hzau-helper)
@@ -15,13 +15,7 @@ tags: 华中农业大学助手
 
 ## 前言
 
-小程序从开始着手设计，到现在稳定运行已经过了3个月。累计服务用户数超过了300人。
-
-小程序是我离开公司回学校之后的第一个公开个人项目。它的设计目的
-
-- 更便捷的查询学生在学校的相关信息
-- 让校外的人能直观的获取到学校的一些基本信息
-- 完善我自己的技术体系，对Vue和微信小程序的探索
+小程序从开始着手设计，到现在稳定运行已经过了3个月。累计服务用户数超过了1400人。
 
 整个项目从UI设计到小程序代码、后端抓取代码全部由我一个人完成。工作量还是挺大的。1.X版本的广场功能因为微信官方不允许，到2.X就整块全部删除了。成了现在的纯查询工具。
 
@@ -55,12 +49,3 @@ tags: 华中农业大学助手
 - [Vuex](https://github.com/vuejs/vuex)
 - [WeUI](https://github.com/Tencent/weui-wxss)
 - [mpvue-weui](https://github.com/KuangPF/mpvue-weui)
-
-### 使用到的微信相关API
-
-- 地图定位
-- Gallery
-
-### 踩坑
-
-1. 在1.X版本的时候，用户注册、登录之后，更新store中的数据，小程序页面的数据不会重新渲染，没有找到合适的代码解决方式，后面使用小程序的`wx.reLaunch`方法，自动关闭再打开才让数据和UI统一
