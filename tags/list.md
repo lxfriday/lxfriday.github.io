@@ -6,3 +6,4 @@ mpvue-hzau-helper
 资源汇总
 踩坑
 开源项目总结
+javascript中的error类型
