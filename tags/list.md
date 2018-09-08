@@ -7,3 +7,5 @@ mpvue-hzau-helper
 踩坑
 开源项目总结
 javascript中的error类型
+vue双向数据绑定
+模拟实现
