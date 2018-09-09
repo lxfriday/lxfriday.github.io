@@ -547,3 +547,6 @@ Compile.prototype = {
   },
 };
 ```
+
+## 参考
+- [vue的双向绑定原理及实现](https://www.cnblogs.com/libin-1/p/6893712.html) 
