@@ -116,7 +116,7 @@ branding: 止水、的网络空间
 
 ## 设置banner背景图片
 banner:
-    img: http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg
+    img:
 
 ## 首页列表底部面板
 homePanel: true
