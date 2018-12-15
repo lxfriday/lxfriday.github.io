@@ -160,8 +160,8 @@ gitment:
 
 ### 来必力
 livere:
-  enable: false
-  livere_uid:
+  enable: true
+  livere_uid: MTAyMC80MTY4NC8xODIzMA==
 
 ### 友言评论(服务不稳定)
 uyan:
