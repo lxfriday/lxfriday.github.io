@@ -1,6 +1,6 @@
 ---
 title: js中的error类型
-comments: false
+comments: true
 date: 2018-09-04 21:06:37
 categories: javascript
 tags: javascript中的error类型

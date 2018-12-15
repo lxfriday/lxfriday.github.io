@@ -9,15 +9,15 @@ menu:
 - page: home
   url: /
   icon:
-- page: 前端
-  url: /categories/前端/
-  icon:
-- page: 后端
-  url: /categories/后端/
-  icon:
-- page: 微信小程序
-  url: /categories/微信小程序/
-  icon:
+#- page: 前端
+#  url: /categories/前端/
+#  icon:
+#- page: 后端
+#  url: /categories/后端/
+#  icon:
+#- page: 微信小程序
+#  url: /categories/微信小程序/
+#  icon:
 #- page: 手机app
 #  url: /categories/手机app/
 #  icon:
@@ -27,9 +27,9 @@ menu:
 - page: 资源
   url: /categories/资源/
   icon:
-- page: 娱乐
-  url: /categories/娱乐/
-  icon:
+#- page: 娱乐
+#  url: /categories/娱乐/
+#  icon:
 - page: 我
   url: /categories/我/
   icon:

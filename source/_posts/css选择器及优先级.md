@@ -1,6 +1,6 @@
 ---
 title: CSS选择器及优先级
-comments: false
+comments: true
 date: 2018-09-03 10:48:03
 categories: css
 tags: css选择器优先级

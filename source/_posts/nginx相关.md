@@ -1,6 +1,6 @@
 ---
 title: nginx相关
-comments: false
+comments: true
 date: 2018-04-18 12:29:25
 categories: 后端
 tags: nginx

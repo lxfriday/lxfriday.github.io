@@ -1,6 +1,6 @@
 ---
 title: js资源汇总
-comments: false
+comments: true
 date: 2018-12-15 21:07:08
 categories: 资源
 tags: 资源汇总

@@ -1,6 +1,6 @@
 ---
 title: vue中的双向绑定
-comments: false
+comments: true
 date: 2018-09-08 10:23:18
 categories: vue
 tags: [vue双向数据绑定,模拟实现]
