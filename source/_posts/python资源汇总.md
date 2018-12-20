@@ -17,7 +17,7 @@ img: http://qiniu1.lxfriday.xyz/image/20181215-pythonlogo.jpeg
     - [Python 最佳实践指南 2018](https://pythoncaff.com/docs/python-guide/2018)
     - [Python 简明教程](https://pythoncaff.com/docs/byte-of-python/2018)
 - [python 352 中文文档 https://yiyibooks.cn/xx/python_352/index.html](https://yiyibooks.cn/xx/python_352/index.html)
-
+- [Python 3 Module of the Week demonstrate how to use the modules of the Python 3 standard library ](https://pymotw.com/3/index.html)
 ## 细节
 - [内置全局函数](https://www.cnblogs.com/2bjiujiu/p/9128566.html)
 ### 编码
