@@ -20,12 +20,11 @@ img: http://qiniu1.lxfriday.xyz/image/dasdasfsfsdfdsgdfgdfgdf.jpeg
 - [shelljs/shelljs](https://github.com/shelljs/shelljs) - ShellJS 是 Node.js 扩展，用于实现 Unix shell 命令执行。
 
 ## UI
-- [https://github.com/rstacruz/nprogress](nprogress： A nanoscopic progress bar. With realistic trickle animations to tell your users that something's happening!)
+- [nprogress](https://github.com/rstacruz/nprogress)
 
 ## 浏览器
-- [https://github.com/nfl/react-helmet](react-helmet)
-- [https://github.com/marcuswestin/store.js#readme](Store.js  
-Cross-browser storage for all use cases, used across the web)
-- [https://github.com/goldenyz/react-perfect-scrollbar](react-perfect-scrollbar)
+- [react-helmet](https://github.com/nfl/react-helmet)
+- [store.js](https://github.com/marcuswestin/store.js#readme)
+- [react-perfect-scrollbar](https://github.com/goldenyz/react-perfect-scrollbar)
 
 
