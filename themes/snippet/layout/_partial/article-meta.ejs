@@ -1,20 +1,27 @@
 <div class="post-meta">
+    <% if(post.top){ %>
+    <span style="margin-right:5px;">
+        <i class="fa fa-star" style="color:red;"></i>
+        <span style="color:#959595;" >置顶</span>
+    </span>
+
+    <% } %>
     <% if(!is_category()){ %>
     <%
         var _showLevel = (theme.whichCategory ? Math.min(theme.whichCategory, post.categories.data.length) : post.categories.data.length) - 1,
                 _data = post.categories.data[_showLevel],
                 _categoryInfo = _data ? _data.name : " ";
     %>
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
         <a href="/categories/<%= _categoryInfo %>">
             <%= _categoryInfo %>
         </a>
     </span>
     <% } %>
     <% if(!is_tag()){ %>
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
         <span class="tags-meta">
             <% if(post.tags && post.tags.length > 0){ %>
                 <% for(var i = 0; i < (post.tags.length > 3 ? 3 : post.tags.length); i++) { %>
@@ -35,7 +42,7 @@
             if (is_archive()) format = "MM/DD";
         %>
         <span class="fa-wrap">
-            <i class="fa fa-clock-o"></i>
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
             <span class="date-meta"><%- date(post.date, format) %></span>
         </span>
     <% } %>
