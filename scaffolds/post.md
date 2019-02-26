@@ -3,6 +3,7 @@ title: {{ title }}
 date: {{ date }}
 categories:
 tags:
-comments: false
+comments: true
 img:
+top: false
 ---
