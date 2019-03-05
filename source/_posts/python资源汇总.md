@@ -22,7 +22,8 @@ img: http://qiniu1.lxfriday.xyz/image/20181215-pythonlogo.jpeg
 - [内置全局函数](https://www.cnblogs.com/2bjiujiu/p/9128566.html)
 ### 编码
 - [PEP 263 -- Defining Python Source Code Encodings](https://www.python.org/dev/peps/pep-0263/)
-### %r %s %d
+- [Python 字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
+### `%r` `%s` `%d`
 - [python中%r和%s的区别](https://www.cnblogs.com/qunxiadexiaoxiangjiao/p/8330718.html)
 
 ## 时间
@@ -33,10 +34,11 @@ img: http://qiniu1.lxfriday.xyz/image/20181215-pythonlogo.jpeg
 - [logging模块学习笔记：basicConfig配置文件](http://www.cnblogs.com/bjdxy/archive/2013/04/12/3016820.html)
 - [python web开发-flask中日志的使用](https://www.cnblogs.com/itxb/p/8635056.html)
     - 日志的级别，存放位置
-    
+
 ## Flask
 ### jsonify
 - [在flask中使用jsonify和json.dumps的区别](https://blog.csdn.net/Duke_Huan_of_Qi/article/details/76064225)
 - [官方文档 http://flask.pocoo.org/docs/0.12/api/#flask.json.jsonify](http://flask.pocoo.org/docs/0.12/api/#flask.json.jsonify)
 ### 数据库操作相关
 - [Flask数据的增删改查(CRUD)](https://blog.csdn.net/weixin_42750983/article/details/82431257)
+- [【Flask】Sqlalchemy 常用数据类型](http://www.cnblogs.com/chen0427/p/8627587.html)
