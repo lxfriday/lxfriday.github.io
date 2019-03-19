@@ -74,15 +74,15 @@ notification: |-
 
 ## 社交设置
 social:
- - name: Github
+ - name: 前端知识合集（持续更新中）
    icon: git
-   href: //github.com/lxfriday
- - name: Gitee
+   href: https://github.com/lxfriday/web-knowledge-tree
+ - name: 华中农业大学助手小程序
    icon: git
-   href: //gitee.com/lxfriday
- - name: 邮箱
-   icon: envelope-o
-   href: mailto:liu3248184446@outlook.com
+   href: https://github.com/lxfriday/hzau-helper-miniapp
+# - name: 邮箱
+#   icon: envelope-o
+#   href: mailto:liu3248184446@outlook.com
 #  - name: 联系QQ
 #    icon: qq
 #    href: /

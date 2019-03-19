@@ -42,3 +42,5 @@ img: http://qiniu1.lxfriday.xyz/image/20181215-pythonlogo.jpeg
 ### 数据库操作相关
 - [Flask数据的增删改查(CRUD)](https://blog.csdn.net/weixin_42750983/article/details/82431257)
 - [【Flask】Sqlalchemy 常用数据类型](http://www.cnblogs.com/chen0427/p/8627587.html)
+- [flask-SQLAlchemy怎么查询具体字段](https://segmentfault.com/q/1010000000624461)
+- [SQLAlchemy筛选列为None无效，使用is_(None)](https://blog.csdn.net/six66667/article/details/86364776)

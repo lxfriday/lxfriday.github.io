@@ -866,30 +866,25 @@ pre {
   text-decoration: none;
 }
 .widget .social a {
-  display: inline-block;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  line-height: 45px;
-  color: #fff;
-  background: #808080;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  /*text-align: center;*/
+  /*width: 40px;*/
+  color: #e67e22;
+  text-decoration: none;
+  /*background: #808080;*/
+  /*-webkit-border-radius: 3px;*/
+  /*-moz-border-radius: 3px;*/
+  /*border-radius: 3px;*/
+  /*margin-right: 10px;*/
 }
-.widget .social a:hover {
-  background: #e67e22;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+.widget .social li {
+  margin-bottom: 5px;
 }
-.widget .social a:last-child {
-  margin-right: 0px;
-}
-.widget .social a i {
-  font-size: 20px;
-}
+/*.widget .social a:last-child {*/
+  /*margin-right: 0px;*/
+/*}*/
+/*.widget .social a i {*/
+  /*font-size: 20px;*/
+/*}*/
 .widget .friends-link a {
   margin-right: 15px;
 }
