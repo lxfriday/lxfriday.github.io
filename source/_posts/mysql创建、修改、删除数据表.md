@@ -132,6 +132,7 @@ img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ```sql
 > ALTER TABLE test111 ENGINE=MyISAM;
 ```
+
 ### 删除外键约束
 语法规范
 ```sql
@@ -140,4 +141,11 @@ img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 子表的外键名为 fk_emp_dept1
 ```sql
 > ALTER TABLE tb_emp5 DROP FOREIGN KEY fk_emp_dept1;
+```
+
+### 对已经存在的表创建外键约束
+创建外键的两个表的字段，字段类型必须相同，才可以创建成功
+
+```sql
+> ALTER TABLE nongjizulin ADD CONSTRAINT fk_uid FOREIGN KEY (uid) REFERENCES user(id);
 ```
