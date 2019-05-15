@@ -36,7 +36,7 @@ menu:
 
 
 ## favicon
-favicon: http://qiniu1.lxfriday.xyz/blog/5219B1C310EF45D4E200CBD63727AB35.png
+favicon: https://qiniu1.lxfriday.xyz/blog/5219B1C310EF45D4E200CBD63727AB35.png
 
 ## Feedhttp://lxfriday.xyz/img/avatar.jpg
 # rss: /atom.xml
@@ -116,7 +116,7 @@ branding: 止水、的网络空间
 
 ## 设置banner背景图片
 banner:
-    img: http://lxfriday.xyz/img/avatar.jpg
+    img: https://lxfriday.xyz/img/avatar.jpg
 
 ## 首页列表底部面板
 homePanel: true
