@@ -5,7 +5,7 @@ top: false
 date: 2019-02-25 15:05:39
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 ## MySQL 权限表

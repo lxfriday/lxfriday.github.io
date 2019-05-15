@@ -5,7 +5,7 @@ top: false
 date: 2019-02-26 10:58:06
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 数据备份是数据库管理员非常重要的工作。系统以为崩溃或者硬件的损坏都可能导致数据丢失，因此 MySQL 管理员应该定期备份数据，使得在意外情况出现时，尽可能减少损失。

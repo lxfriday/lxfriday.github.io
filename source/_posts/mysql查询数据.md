@@ -4,7 +4,7 @@ comments: true
 date: 2019-02-24 10:45:36
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 <input type="hidden" value="20190220" />

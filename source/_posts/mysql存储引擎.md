@@ -4,7 +4,7 @@ comments: true
 date: 2019-02-19 13:03:04
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 使用 `SHOW ENGINES;` 查看当前版本的数据库支持的存储引擎

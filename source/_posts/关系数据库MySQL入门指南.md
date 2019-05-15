@@ -4,7 +4,7 @@ comments: true
 date: 2019-01-28 10:57:43
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 ## RDBMS 即关系数据库管理系统(Relational Database Management System)的特点：

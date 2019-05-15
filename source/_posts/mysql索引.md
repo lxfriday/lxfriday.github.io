@@ -4,7 +4,7 @@ comments: true
 date: 2019-02-22 11:10:02
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 索引是对数据库中一列或多列的值进行排序的一种结构。使用索引可以提高数据库特定数据的查询速度。

@@ -4,7 +4,7 @@ comments: true
 date: 2018-12-15 21:18:33
 categories: 资源
 tags: 资源汇总
-img: http://qiniu1.lxfriday.xyz/image/20181215-pythonlogo.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20181215-pythonlogo.jpeg
 ---
 
 ## 学习文档

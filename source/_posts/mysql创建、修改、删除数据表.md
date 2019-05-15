@@ -4,7 +4,7 @@ comments: true
 date: 2019-02-19 15:15:33
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 ### 主键约束

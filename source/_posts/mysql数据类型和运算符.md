@@ -4,7 +4,7 @@ comments: true
 date: 2019-02-20 14:03:14
 categories: 数据库
 tags: mysql
-img: http://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
+img: https://qiniu1.lxfriday.xyz/image/20190128-mysql.jpeg
 ---
 
 MySQL 支持多种数据类型，主要有数值类型、日期、时间类型和字符串类型
