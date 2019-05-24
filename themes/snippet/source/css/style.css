@@ -40,13 +40,22 @@ body {
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
 }
+.img-center {
+  text-align: center;
+}
+
+.img-desc {
+  text-align: center;
+  font-size: 0.8em !important;
+  color: #777777;
+}
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-weight: 400;
+  font-weight: 600;
   color: #303030;
 }
 h1 {
