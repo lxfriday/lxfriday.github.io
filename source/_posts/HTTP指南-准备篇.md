@@ -25,6 +25,7 @@ img: https://qiniu1.lxfriday.xyz/WaterM/17a9f745-8a73-436b-ad64-8d40ffc032a4_tim
 1. TLS (Transport Layer Security) 传输层安全
 1. MIME (Multipurpose Internet Mail Extensions) 多用途因特网邮件扩展
 1. WebDAV (Web-based Distributed Authoring and Versioning) 基于万维网的分布式创作和版本控制
+1. CRC (Cyclic Redundancy Check) 循环冗余校验
 
 ## 2 TCP/IP 协议族的分层管理
 ### 2.1 TCP/IP 分层

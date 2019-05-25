@@ -106,7 +106,16 @@ arch_config:
 
 ## 友链设置
 links:
-  - 个人博客: #
+  - 阮一峰: http://www.ruanyifeng.com/home.html
+  - 廖雪峰: https://www.liaoxuefeng.com/
+  - Taro: https://taro.aotu.io/
+  - 慕课网: https://imooc.com
+  - LeetCode: https://leetcode-cn.com/
+  - AntMotion: http://motion.ant.design/index-cn
+  - AntV: https://antv.alipay.com/zh-cn/index.html
+  - AntD: https://ant.design/index-cn
+  - React: https://reactjs.org/
+  - NodeJS: https://nodejs.org/zh-cn/
 
 
 # 主题自定义个性化配置
