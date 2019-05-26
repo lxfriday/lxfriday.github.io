@@ -100,4 +100,7 @@ window.onload = function() {
 	    });
 	};
 
+	// jquery-pin http://www.bootcss.com/p/jquery.pin/
+  // $(".toc").pin();
+
 };
