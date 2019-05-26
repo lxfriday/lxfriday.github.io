@@ -48,11 +48,13 @@ favicon: https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7
 widgets:
   - search
   # - notification
+  - toc
   - social
   - category
   - archive
   - tagcloud
   - friends
+
 
 ## 搜索
 jsonContent:
@@ -116,7 +118,6 @@ links:
   - AntD: https://ant.design/index-cn
   - React: https://reactjs.org/
   - NodeJS: https://nodejs.org/zh-cn/
-
 
 # 主题自定义个性化配置
 

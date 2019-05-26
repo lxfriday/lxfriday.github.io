@@ -41,7 +41,17 @@ body {
   background: transparent url(https://qiniu1.lxfriday.xyz/WaterM/5205c40b-d313-4ee5-93b9-213c19e93f10_blog-image.jpeg);
   /*background: transparent url(https://bing.ioliu.cn/v1/rand?w=1920&h=1080);*/
 }
-
+.toc ol, ol.toc{
+  padding-left: 10px;
+  font-size: 10px;
+  list-style-type: none;
+  /*list-style-type: decimal; 以数字的形式显示 */
+  border-left: 1px dashed #dddddd;
+}
+ol.toc {
+  border-left: 0;
+  padding-left: 0;
+}
 .full-wrapper {
   width: 100vw;
   height: 100vh;

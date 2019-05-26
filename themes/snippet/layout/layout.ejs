@@ -10,12 +10,12 @@
                     <main class="col-md-8 main-content <%if(is_post()){%>m-post<%}%>">
                         <%- body %>
                     </main>
-                    <%- partial('_partial/sidebar', null, {cache: !config.relative_link}) %>
+                    <%- partial('_partial/sidebar', {cache: !config.relative_link}) %>
                 </div>
             </div>
         </section>
         <%- partial('_partial/footer', null, {cache: !config.relative_link}) %>
         <%- partial('_partial/copyright',null, {cache: !config.relative_link}) %>
-    </div>
+</div>
 </body>
 </html>
