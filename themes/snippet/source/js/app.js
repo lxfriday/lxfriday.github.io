@@ -4,7 +4,6 @@
 window.onload = function() {
     var $body = document.body,
         $mnav = document.getElementById("mnav"), //获取导航三角图标
-        $fullWrapper = document.getElementById("full-wrapper"), // wrapper
         $mainMenu = document.getElementById("main-menu"), //手机导航
         $process = document.getElementById('process'), //进度条
         $ajaxImgs = document.querySelectorAll('.img-ajax'), //图片懒加载
@@ -66,12 +65,12 @@ window.onload = function() {
 
     //获取滚动高度
     function getScrollTop() {
-        return ($fullWrapper.scrollTop || document.documentElement.scrollTop);
+        return ($body.scrollTop || document.documentElement.scrollTop);
     }
     //滚动回调
     var scrollCallback = function() {
         if ($process) {
-            $process.style.width = (getScrollTop() / ($fullWrapper.scrollHeight - window.innerHeight)) * 100 + "%";
+            $process.style.width = (getScrollTop() / ($body.scrollHeight - window.innerHeight)) * 100 + "%";
         }
         (isPC && getScrollTop() >= 300) ? $backToTop.removeAttribute("class","hide") : $backToTop.setAttribute("class","hide");
         imgsAjax($ajaxImgs);
@@ -79,7 +78,7 @@ window.onload = function() {
     scrollCallback();
 
     //监听滚动事件
-    $fullWrapper.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function() {
         clearTimeout(timer);
         timer = setTimeout(function fn() {
             scrollCallback();
