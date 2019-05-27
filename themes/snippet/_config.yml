@@ -126,7 +126,8 @@ branding: 止水、的网络空间
 
 ## 设置banner背景图片
 banner:
-    img: https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png
+    img:
+#    img: https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png
 
 ## 首页列表底部面板
 homePanel: true

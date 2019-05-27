@@ -23,6 +23,22 @@
     background-position: -100% 0;
   }
 }
+@keyframes avatar-animation-1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes avatar-animation-2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-720deg);
+  }
+}
 /*====================================================
     common styles
 ====================================================*/
@@ -31,7 +47,6 @@ html {
   line-height: 1.75em;
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
-  background: transparent url(https://qiniu1.lxfriday.xyz/WaterM/5205c40b-d313-4ee5-93b9-213c19e93f10_blog-image.jpeg);
 }
 body {
   color: #505050;
@@ -39,6 +54,30 @@ body {
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
   background: transparent;
+}
+.back-img {
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 1920px;
+  height: 1080px;
+  background: transparent url(https://qiniu1.lxfriday.xyz/WaterM/5205c40b-d313-4ee5-93b9-213c19e93f10_blog-image.jpeg);
+}
+.header-avatar-w-1 {
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+  animation: avatar-animation-1 3s infinite ease-in-out !important;
+}
+.header-avatar-w-2 {
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid #000000;
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+  animation: avatar-animation-2 3s infinite ease-in-out !important;
 }
 .toc ol, ol.toc{
   padding-left: 10px;
@@ -261,9 +300,9 @@ pre {
   height: 180px;
   width: 100%;
   /*background: #fff url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner.jpg);*/
-  background-repeat: repeat;
-  background-attachment: fixed;
-  overflow: hiddle;
+  /*background-repeat: repeat;*/
+  /*background-attachment: fixed;*/
+  /*overflow: hiddle;*/
 }
 .main-header .banneriframe {
   width: 100%;
@@ -280,6 +319,7 @@ pre {
   height: 82px;
   max-width: 100%;
   border-radius: 50%;
+  animation: avatar-animation-1 3s infinite ease-in-out !important;
 }
 .main-header .main-header-box a.header-avatar:hover {
   text-decoration: none;
