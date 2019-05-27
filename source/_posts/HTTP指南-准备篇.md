@@ -21,11 +21,18 @@ img: https://qiniu1.lxfriday.xyz/WaterM/17a9f745-8a73-436b-ad64-8d40ffc032a4_tim
 1. ARP (Address Resolution Protocol) 地址解析协议
 1. RFC (Request for Comments) 征求修正意见书
 1. REST (Representational State Transfer) 表征状态转移
-1. SSL（Secure Sockets Layer) 安全套接层
 1. TLS (Transport Layer Security) 传输层安全
+1. SSL (Secure Socket Layer) 安全套接层
 1. MIME (Multipurpose Internet Mail Extensions) 多用途因特网邮件扩展
 1. WebDAV (Web-based Distributed Authoring and Versioning) 基于万维网的分布式创作和版本控制
 1. CRC (Cyclic Redundancy Check) 循环冗余校验
+1. Dos 攻击 (Denial of Service) 拒绝服务攻击
+1. MITM (Man-in-the-Middle) 中间人攻击，请求或响应在传输图中，遭攻击者拦截并篡改内容的攻击成为中间人攻击
+1. EV SSL 整数(Extended Validation SSL Certificate) 
+1. CRL (Certificate Revocation List) 整数吊销机制
+1. IETF (Internet Engineering Task Force) 互联网工程任务组
+
+
 
 ## 2 TCP/IP 协议族的分层管理
 ### 2.1 TCP/IP 分层
