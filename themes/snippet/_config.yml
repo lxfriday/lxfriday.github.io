@@ -48,7 +48,7 @@ favicon: https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7
 widgets:
   - search
   # - notification
-#  - toc
+  - toc
   - social
   - category
   - archive

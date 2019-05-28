@@ -39,6 +39,19 @@
     transform: rotate(-720deg);
   }
 }
+@keyframes avatar-animation-3 {
+  0% {
+    transform: rotate(0deg);
+    width: 82px;
+    height: 82px;
+  }
+  to {
+    width: 60px;
+    height: 60px;
+    transform: rotate(-720deg);
+  }
+}
+
 /*====================================================
     common styles
 ====================================================*/
@@ -65,14 +78,19 @@ body {
 }
 .header-avatar-w-1 {
   display: inline-block;
+  width: 94px;
+  height: 94px;
   border-radius: 50%;
   border: 4px solid #ffffff;
   border-top-color: #000000;
   border-bottom-color: #000000;
   animation: avatar-animation-1 2s infinite ease-in-out !important;
+  background-color: #000000;
 }
 .header-avatar-w-2 {
   display: inline-block;
+  width: 86px;
+  height: 86px;
   border-radius: 50%;
   border: 2px solid #000000;
   border-top-color: #ffffff;
@@ -314,12 +332,11 @@ pre {
   width: 100%;
   padding-top: 30px;
 }
-.main-header .main-header-box a.header-avatar img {
-  width: 82px;
-  height: 82px;
-  max-width: 100%;
+.main-header .main-header-box a.header-avatar span {
+  display: inline-block;
+  background-color: #000000;
   border-radius: 50%;
-  animation: avatar-animation-1 3s infinite ease-in-out !important;
+  animation: avatar-animation-3 3s infinite ease-in-out !important;
 }
 .main-header .main-header-box a.header-avatar:hover {
   text-decoration: none;
