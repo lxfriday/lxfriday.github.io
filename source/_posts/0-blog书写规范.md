@@ -13,3 +13,6 @@ date: 1971-01-01 00:00:01
 ```html
 <div class=img-center><img src="$A$" alt="$B$"><p class="img-desc">$C$</p></div>
 ```
+
+## 参考文献
+- [SSL/TLS协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html) - 阮一峰

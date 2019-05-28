@@ -80,4 +80,4 @@ SSL 的慢分两种。一种是指通信慢。另一种是指由于大量消耗 
 
 ## 4 相关参考
 - 图解 HTTP
-- [SSL/TLS协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html)
+- [SSL/TLS协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html) - 阮一峰
