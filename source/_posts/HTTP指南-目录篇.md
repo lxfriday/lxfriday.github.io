@@ -17,5 +17,6 @@ img: https://qiniu1.lxfriday.xyz/WaterM/17a9f745-8a73-436b-ad64-8d40ffc032a4_tim
 - [HTTP指南-传输安全](/2019/05/26/HTTP指南-传输安全/)
 - [  ] [TCP三次握手和四次挥手]()
 - [  ] [CORS 跨域]()
+- [  ] [URI 和 URL 的区别联系]()
 - [  ] [HTTP缓存]()
     - 5.3 缓存相关

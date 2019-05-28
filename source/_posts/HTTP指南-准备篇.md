@@ -31,7 +31,8 @@ img: https://qiniu1.lxfriday.xyz/WaterM/17a9f745-8a73-436b-ad64-8d40ffc032a4_tim
 1. EV SSL 整数(Extended Validation SSL Certificate) 
 1. CRL (Certificate Revocation List) 整数吊销机制
 1. IETF (Internet Engineering Task Force) 互联网工程任务组
-
+1. XSS (Cross-Site Scripting) 跨站脚本攻击
+1. CSRF (Cross-site Request Forgery) 跨站请求伪造攻击
 
 
 ## 2 TCP/IP 协议族的分层管理
