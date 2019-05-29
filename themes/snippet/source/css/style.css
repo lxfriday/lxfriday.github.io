@@ -39,19 +39,6 @@
     transform: rotate(-720deg);
   }
 }
-@keyframes avatar-animation-3 {
-  0% {
-    transform: rotate(0deg);
-    width: 82px;
-    height: 82px;
-  }
-  to {
-    width: 60px;
-    height: 60px;
-    transform: rotate(-720deg);
-  }
-}
-
 /*====================================================
     common styles
 ====================================================*/
@@ -336,7 +323,7 @@ pre {
   display: inline-block;
   background-color: #000000;
   border-radius: 50%;
-  animation: avatar-animation-3 3s infinite ease-in-out !important;
+  animation: avatar-animation-1 3s infinite ease-in-out !important;
 }
 .main-header .main-header-box a.header-avatar:hover {
   text-decoration: none;
