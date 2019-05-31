@@ -319,9 +319,9 @@ pre {
   width: 100%;
   padding-top: 30px;
 }
-.main-header .main-header-box a.header-avatar span {
-  display: inline-block;
-  background-color: #000000;
+.main-header .main-header-box a.header-avatar img {
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   animation: avatar-animation-1 3s infinite ease-in-out !important;
 }
