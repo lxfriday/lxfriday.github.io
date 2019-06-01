@@ -1,14 +1,16 @@
 ---
-title: HTTP指南-目录篇
+title: HTTP-TCP/IP-目录篇
 comments: true
 top: false
 date: 2019-05-23 19:28:06
-categories: http 
-tags: http
+categories: [tcp, http]
+tags: [http, tcp]
 img: https://qiniu1.lxfriday.xyz/WaterM/17a9f745-8a73-436b-ad64-8d40ffc032a4_timg.jpeg
 ---
 
-## 系列文档目录
+- [计算机网络共同篇](/2019/05/23/计算机网络-共同篇/)
+
+## 1 HTTP
 - [HTTP指南-准备篇](/2019/05/23/http指南-准备篇/)
 - [HTTP指南-简单HTTP协议](/2019/05/23/HTTP指南-简单HTTP协议/)
 - [HTTP指南-HTTP状态码](/2019/05/24/HTTP指南-HTTP状态码/)
@@ -18,7 +20,11 @@ img: https://qiniu1.lxfriday.xyz/WaterM/17a9f745-8a73-436b-ad64-8d40ffc032a4_tim
 - [HTTP指南-用户身份认证](/2019/05/28/HTTP指南-用户身份认证/)
 - [HTTP指南-Web攻击技术](/2019/05/28/HTTP指南-Web攻击技术/)
 
-- [  ] [TCP三次握手和四次挥手]()
+## 2 TCP
+- [TCP指南-准备篇](/2019/05/23/http指南-准备篇/)
+
+## 3 相关
+- [TCP三次握手和四次挥手](/2019/05/31/TCP三次握手和四次挥手/)
 - [  ] [CORS 跨域]()
 - [  ] [URI 和 URL 的区别联系]()
 - [  ] [HTTP缓存]()

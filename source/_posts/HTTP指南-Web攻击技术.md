@@ -22,7 +22,8 @@ XSS 有可能造成以下影响：
 - 利用脚本窃取用户的 Cookie 值，被害者在不知情的情况下，帮助攻击者发送恶意请求；
 - 显示伪造的文章或图片；
 
-### 2.1.1 XSS 案例
+**XSS 案例**
+
 <div class=img-center><img src="https://qiniu1.lxfriday.xyz/WaterM/fbc1a32b-6c06-41ea-8db8-955145508402_WX20190528-161142-xss1.png" alt="xss"><p class="img-desc">xss</p></div>
 
 1. 通过地址栏中 URI 的查询字段指定 ID，相当于在表单内自动填写字符串的功能。而就在这个地方，隐藏着可执行跨站脚本攻击的漏洞。
