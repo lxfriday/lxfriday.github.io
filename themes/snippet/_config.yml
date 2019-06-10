@@ -122,7 +122,7 @@ links:
 # 主题自定义个性化配置
 
 ## 网站宣传语
-branding: 止水、的网络空间
+branding: 止水聊技术
 
 ## 设置banner背景图片
 banner:
@@ -155,7 +155,7 @@ declaration:
   enable: true
   title: '转载声明'
   tip: |-
-      商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">止水、</a>
+      商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">止水聊技术</a>
 
 
 ## 主题评论
