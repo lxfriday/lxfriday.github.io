@@ -9,33 +9,6 @@ top: true
 ---
 
 ## 2019
-### 20190706
-- [open-deepnude / open-deepnude](https://github.com/open-deepnude/open-deepnude) Open source reverse-engineered clone of DeepNude __[⭐ 751]__
-- [aidewoode / black_candy](https://github.com/aidewoode/black_candy) A self hosted music streaming server __[⭐ 227]__
-- [jackfrued / Python-100-Days](https://github.com/jackfrued/Python-100-Days) Python - 100天从新手到大师 __[⭐ 47,219]__
-- [houshanren / hangzhou_house_knowledge](https://github.com/houshanren/hangzhou_house_knowledge) 2017年买房经历总结出来的买房购房知识分享给大家，希望对大家有所帮助。买房不易，且买且珍惜。Sharing the knowledge of buy an own house that according to the experience at hangzhou in 2017 to all the people. It's not easy to buy a own house, so I hope that it would be useful to everyone. __[⭐ 20,545]__
-- [PapyElGringo / material-shell](https://github.com/PapyElGringo/material-shell) New shell for Gnome following the Material-design guidelines. Proposing a performant and simple opinionated mouse/keyboard workflow to increase daily productivity and comfort __[⭐ 457]__
-- [niemand-sec / AntiCheat-Testing-Framework](https://github.com/niemand-sec/AntiCheat-Testing-Framework) Framework for testing any Anti-Cheat __[⭐ 151]__
-- [facebookresearch / dlrm](https://github.com/facebookresearch/dlrm) An implementation of a deep learning recommendation model (DLRM) __[⭐ 730]__
-- [ziishaned / learn-regex](https://github.com/ziishaned/learn-regex) Learn regex the easy way __[⭐ 16,996]__
-- [apachecn / AiLearning](https://github.com/apachecn/AiLearning) AiLearning: 机器学习 - MachineLearning - ML、深度学习 - DeepLearning - DL、自然语言处理 NLP __[⭐ 16,347]__
-- [CarGuo / GSYVideoPlayer](https://github.com/CarGuo/GSYVideoPlayer) 视频播放器（IJKplayer、ExoPlayer、MediaPlayer），HTTPS，支持弹幕，支持滤镜、水印、gif截图，片头广告、中间广告，多个同时播放，支持基本的拖动，声音、亮度调节，支持边播边缓存，支持视频自带rotation的旋转（90,270之类），重力旋转与手动旋转的同步支持，支持列表播放 ，列表全屏动画，视频加载速度，列表小窗口支持拖动，动画效果，调整比例，多分辨率切换，支持切换播放器，进度条小窗口预览，列表切换详情页面无缝播放，rtsp、concat、mpeg。 __[⭐ 10,691]__
-- [helm / helm](https://github.com/helm/helm) The Kubernetes Package Manager __[⭐ 12,526]__
-- [TrinityCore / TrinityCore](https://github.com/TrinityCore/TrinityCore) TrinityCore Open Source MMO Framework (master = 8.1.5.30706, 3.3.5 = 3.3.5a.12340) __[⭐ 5,421]__
-- [scutan90 / DeepLearning-500-questions](https://github.com/scutan90/DeepLearning-500-questions) 深度学习500问，以问答形式对常用的概率知识、线性代数、机器学习、深度学习、计算机视觉等热点问题进行阐述，以帮助自己及有需要的读者。 全书分为18个章节，50余万字。由于水平有限，书中不妥之处恳请广大读者批评指正。 未完待续............ 如有意合作，联系scutjy2015@163.com 版权所有，违权必究 Tan 2018.06 __[⭐ 27,436]__
-- [lib-pku / libpku](https://github.com/lib-pku/libpku) 贵校课程资料民间整理 __[⭐ 19,139]__
-- [metatron-app / metatron-discovery](https://github.com/metatron-app/metatron-discovery) Powerful & Easy way for big data discovery __[⭐ 1,059]__
-- [PaddlePaddle / book](https://github.com/PaddlePaddle/book) Deep Learning 101 with PaddlePaddle （『飞桨』深度学习框架入门教程） __[⭐ 1,969]__
-- [ipasimulator / ipasim](https://github.com/ipasimulator/ipasim) iOS emulator for Windows __[⭐ 194]__
-- [react-native-community / cli](https://github.com/react-native-community/cli) React Native command line tools __[⭐ 476]__
-- [diasurgical / devilution](https://github.com/diasurgical/devilution) Diablo devolved - magic behind the 1996 computer game __[⭐ 6,366]__
-- [iqiyi / Qigsaw](https://github.com/iqiyi/Qigsaw) 🔥🔥Qigsaw is a dynamic modularization library which is based on Android App Bundles. It supports dynamic delivery for split APKs without reinstalling the base one. __[⭐ 270]__
-- [darshanime / notes](https://github.com/darshanime/notes) detailed notes on computer science topics, in one page __[⭐ 1,292]__
-- [macrozheng / mall-learning](https://github.com/macrozheng/mall-learning) mall学习教程，架构、业务、技术要点全方位解析。mall项目（16k+star）是一套电商系统，使用现阶段主流技术实现。 涵盖了SpringBoot2.1.3、MyBatis3.4.6、Elasticsearch6.2.2、RabbitMQ3.7.15、Redis3.2、Mongodb3.2、Mysql5.7等技术，采用Docker容器化部署。 __[⭐ 521]__
-- [yuanxiaosc / DeepNude-an-Image-to-Image-technology](https://github.com/yuanxiaosc/DeepNude-an-Image-to-Image-technology) DeepNude related Image-to-Image theory and practice research. DeepNude相关的Image-to-Image理论与实践研究。 __[⭐ 980]__
-- [sqshq / piggymetrics](https://github.com/sqshq/piggymetrics) Microservice Architecture with Spring Boot, Spring Cloud and Docker __[⭐ 6,513]__
-- [Unity-Technologies / ScriptableRenderPipeline](https://github.com/Unity-Technologies/ScriptableRenderPipeline) Scriptable Render Pipeline __[⭐ 2,007]__
-
 ### 20190705
 - [open-deepnude / open-deepnude](https://github.com/open-deepnude/open-deepnude) Open source reverse-engineered clone of DeepNude __[⭐ 442]__
 - [diasurgical / devilutionX](https://github.com/diasurgical/devilutionX) Diablo build for modern operating systems __[⭐ 988]__
