@@ -9,6 +9,31 @@ top: true
 ---
 
 ## 2019
+### 20190714
+- [facebook / hermes](https://github.com/facebook/hermes) Hermes is a small and lightweight JavaScript engine optimized for running React Native on Android. __[⭐ 2,530]__
+- [nats-io / nats-server](https://github.com/nats-io/nats-server) High-Performance server for NATS, the cloud native messaging system. __[⭐ 6,099]__
+- [sherlock-project / sherlock](https://github.com/sherlock-project/sherlock) 🔎 Find usernames across social networks __[⭐ 4,385]__
+- [vuejs / vue](https://github.com/vuejs/vue) 🖖 Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web. __[⭐ 143,630]__
+- [laravel / framework](https://github.com/laravel/framework)  __[⭐ 17,964]__
+- [lenve / vhr](https://github.com/lenve/vhr) 微人事是一个前后端分离的人力资源管理系统，项目采用SpringBoot+Vue开发。 __[⭐ 6,228]__
+- [pwn20wndstuff / Undecimus](https://github.com/pwn20wndstuff/Undecimus) unc0ver jailbreak for iOS 11.0 - 12.2 __[⭐ 3,233]__
+- [guyueyingmu / avbook](https://github.com/guyueyingmu/avbook) AV电影管理系统， avmoo 、javbus 爬虫，线上AV影片图书馆，AV磁力链接数据库，Japanese Adult Video Library,Adult Video Magnet Links - Japanese Adult Video Database __[⭐ 480]__
+- [alipay / SoloPi](https://github.com/alipay/SoloPi) Soloπ 自动化测试工具 __[⭐ 828]__
+- [GokuMohandas / practicalAI](https://github.com/GokuMohandas/practicalAI) 📚 A practical approach to machine learning. __[⭐ 18,792]__
+- [lenve / VBlog](https://github.com/lenve/VBlog) V部落，Vue+SpringBoot实现的多用户博客管理平台! __[⭐ 2,025]__
+- [alexellis / inlets](https://github.com/alexellis/inlets) Expose your local endpoints to the Internet __[⭐ 3,827]__
+- [sfyc23 / EverydayWechat](https://github.com/sfyc23/EverydayWechat) 微信助手：1.每日定时给好友发送定制消息。2.自动回复好友。3.群助手功能。 __[⭐ 5,205]__
+- [google / mediapipe](https://github.com/google/mediapipe) MediaPipe is a cross-platform framework for building multimodal applied machine learning pipelines __[⭐ 289]__
+- [P1sec / QCSuper](https://github.com/P1sec/QCSuper) QCSuper is a tool communicating with Qualcomm-based phones and modems, allowing to capture raw 2G/3G/4G radio frames, among other things. __[⭐ 215]__
+- [microsoft / cpprestsdk](https://github.com/microsoft/cpprestsdk) The C++ REST SDK is a Microsoft project for cloud-based client-server communication in native code using a modern asynchronous C++ API design. This project aims to help C++ developers connect to and interact with services. __[⭐ 4,176]__
+- [v1s1t0r1sh3r3 / airgeddon](https://github.com/v1s1t0r1sh3r3/airgeddon) This is a multi-use bash script for Linux systems to audit wireless networks. __[⭐ 1,631]__
+- [vaexio / vaex](https://github.com/vaexio/vaex) Out-of-Core DataFrames for Python, visualize and explore big tabular data at a billion rows per second. __[⭐ 1,422]__
+- [dianping / cat](https://github.com/dianping/cat) CAT 作为服务端项目基础组件，提供了 Java, C/C++, Node.js, Python, Go 等多语言客户端，已经在美团点评的基础架构中间件框架（MVC框架，RPC框架，数据库框架，缓存框架等，消息队列，配置系统等）深度集成，为美团点评各业务线提供系统丰富的性能指标、健康状况、实时告警等。 __[⭐ 9,835]__
+- [facebookresearch / faiss](https://github.com/facebookresearch/faiss) A library for efficient similarity search and clustering of dense vectors. __[⭐ 7,012]__
+- [Bash-it / bash-it](https://github.com/Bash-it/bash-it) A community Bash framework. __[⭐ 10,284]__
+- [hhyo / Archery](https://github.com/hhyo/Archery) SQL审核查询平台 __[⭐ 570]__
+- [alibaba / flutter-go](https://github.com/alibaba/flutter-go) flutter 开发者帮助 APP，包含 flutter 常用 140+ 组件的demo 演示与中文文档 __[⭐ 14,483]__
+
 ### 20190712
 - [lenve / VBlog](https://github.com/lenve/VBlog) V部落，Vue+SpringBoot实现的多用户博客管理平台! __[⭐ 1,838]__
 - [deep-man-yy / pepenude](https://github.com/deep-man-yy/pepenude) PepeNude is an application that allows you to transform photos into entertaining results. CLI and GUI versions available. __[⭐ 209]__
