@@ -9,6 +9,33 @@ top: true
 ---
 
 ## 2019
+### 20190717
+- [taosdata / TDengine](https://github.com/taosdata/TDengine) An open-source big data platform designed and optimized for the Internet of Things (IoT). __[⭐ 4,262]__
+- [JideGuru / FlutterSocialAppUIKit](https://github.com/JideGuru/FlutterSocialAppUIKit) Flutter representation of a Social App Concept i found in Uplabs. __[⭐ 196]__
+- [knadh / listmonk](https://github.com/knadh/listmonk) High performance, self-hosted newsletter and mailing list manager with a modern dashboard. Go + React. __[⭐ 1,729]__
+- [trekhleb / homemade-machine-learning](https://github.com/trekhleb/homemade-machine-learning) 🤖 Python examples of popular machine learning algorithms with interactive Jupyter demos and math being explained __[⭐ 12,304]__
+- [azl397985856 / leetcode](https://github.com/azl397985856/leetcode) LeetCode Solutions: A Record of My Problem Solving Journey.( leetcode题解，记录自己的leetcode解题之路。) __[⭐ 13,293]__
+- [baidu / amis](https://github.com/baidu/amis) 一种基于特定 JSON 格式生成 MIS 页面的工具 __[⭐ 1,391]__
+- [microsoft / recommenders](https://github.com/microsoft/recommenders) Best Practices on Recommendation Systems __[⭐ 3,971]__
+- [0voice / interview_internal_reference](https://github.com/0voice/interview_internal_reference) 2019年最新总结，阿里，腾讯，百度，美团，头条等技术面试题目，以及答案，专家出题人分析汇总。 __[⭐ 3,253]__
+- [gto76 / python-cheatsheet](https://github.com/gto76/python-cheatsheet) Comprehensive Python Cheatsheet __[⭐ 6,121]__
+- [b3log / baidu-netdisk-downloaderx](https://github.com/b3log/baidu-netdisk-downloaderx) ⚡️ 一款图形界面的百度网盘不限速下载器，支持 Windows、Linux 和 Mac。 __[⭐ 5,247]__
+- [r35tart / Penetration_Testing_Case](https://github.com/r35tart/Penetration_Testing_Case) 用于记录分享一些有趣的案例 __[⭐ 282]__
+- [benedekrozemberczki / awesome-graph-classification](https://github.com/benedekrozemberczki/awesome-graph-classification) A collection of important graph embedding, classification and representation learning papers with implementations. __[⭐ 1,001]__
+- [gothinkster / realworld](https://github.com/gothinkster/realworld) "The mother of all demo apps" — Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more 🏅 __[⭐ 29,058]__
+- [j3ssie / Osmedeus](https://github.com/j3ssie/Osmedeus) Fully automated offensive security framework for reconnaissance and vulnerability scanning __[⭐ 1,196]__
+- [tangzixiang0304 / Shielded_detector](https://github.com/tangzixiang0304/Shielded_detector)  __[⭐ 331]__
+- [cutenode / 1x.engineer](https://github.com/cutenode/1x.engineer) The official website of 1x Engineers around the world __[⭐ 542]__
+- [Automattic / mongoose](https://github.com/Automattic/mongoose) MongoDB object modeling designed to work in an asynchronous environment. __[⭐ 19,000]__
+- [horhof / quickjs](https://github.com/horhof/quickjs) Bellard's QuickJS __[⭐ 477]__
+- [microsoft / ai-edu](https://github.com/microsoft/ai-edu) AI education materials for Chinese students, teachers and IT professionals. __[⭐ 1,117]__
+- [cycfi / elements](https://github.com/cycfi/elements) Elements C++ GUI library __[⭐ 422]__
+- [Bash-it / bash-it](https://github.com/Bash-it/bash-it) A community Bash framework. __[⭐ 10,466]__
+- [uber / ludwig](https://github.com/uber/ludwig) Ludwig is a toolbox built on top of TensorFlow that allows to train and test deep learning models without the need to write code. __[⭐ 5,153]__
+- [jlevy / the-art-of-command-line](https://github.com/jlevy/the-art-of-command-line) Master the command line, in one page __[⭐ 61,121]__
+- [Koenkk / zigbee2mqtt](https://github.com/Koenkk/zigbee2mqtt) Zigbee 🐝 to MQTT bridge 🌉, get rid of your proprietary Zigbee bridges 🔨 __[⭐ 2,603]__
+- [YMFE / yapi](https://github.com/YMFE/yapi) YApi 是一个可本地部署的、打通前后端及QA的、可视化的接口管理平台 __[⭐ 9,791]__
+
 ### 20190716
 - [taosdata / TDengine](https://github.com/taosdata/TDengine) An open-source big data platform designed and optimized for the Internet of Things (IoT). __[⭐ 3,109]__
 - [sherlock-project / sherlock](https://github.com/sherlock-project/sherlock) 🔎 Find usernames across social networks __[⭐ 4,778]__
