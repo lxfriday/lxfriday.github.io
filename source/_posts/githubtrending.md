@@ -9,6 +9,33 @@ top: true
 ---
 
 ## 2019
+### 20190718
+- [YugaByte / yugabyte-db](https://github.com/YugaByte/yugabyte-db) The high-performance distributed SQL database for global, internet-scale apps. __[⭐ 1,425]__
+- [b3log / baidu-netdisk-downloaderx](https://github.com/b3log/baidu-netdisk-downloaderx) ⚡️ 一款图形界面的百度网盘不限速下载器，支持 Windows、Linux 和 Mac。 __[⭐ 5,642]__
+- [guyueyingmu / avbook](https://github.com/guyueyingmu/avbook) AV电影管理系统， avmoo , javbus , javlibrary 爬虫，线上AV影片图书馆，AV磁力链接数据库，Japanese Adult Video Library,Adult Video Magnet Links - Japanese Adult Video Database __[⭐ 1,418]__
+- [grpc / grpc-java](https://github.com/grpc/grpc-java) The Java gRPC implementation. HTTP/2 based RPC __[⭐ 6,255]__
+- [iamtrask / Grokking-Deep-Learning](https://github.com/iamtrask/Grokking-Deep-Learning) this repository accompanies my forthcoming book "Grokking Deep Learning" __[⭐ 3,162]__
+- [microsoft / ai-edu](https://github.com/microsoft/ai-edu) AI education materials for Chinese students, teachers and IT professionals. __[⭐ 1,379]__
+- [rasbt / python-machine-learning-book-2nd-edition](https://github.com/rasbt/python-machine-learning-book-2nd-edition) The "Python Machine Learning (2nd edition)" book code repository and info resource __[⭐ 3,771]__
+- [gto76 / python-cheatsheet](https://github.com/gto76/python-cheatsheet) Comprehensive Python Cheatsheet __[⭐ 6,810]__
+- [benedekrozemberczki / awesome-graph-classification](https://github.com/benedekrozemberczki/awesome-graph-classification) A collection of important graph embedding, classification and representation learning papers with implementations. __[⭐ 1,236]__
+- [0voice / interview_internal_reference](https://github.com/0voice/interview_internal_reference) 2019年最新总结，阿里，腾讯，百度，美团，头条等技术面试题目，以及答案，专家出题人分析汇总。 __[⭐ 3,951]__
+- [huggingface / pytorch-transformers](https://github.com/huggingface/pytorch-transformers) 👾 A library of state-of-the-art pretrained models for Natural Language Processing (NLP) __[⭐ 8,570]__
+- [sindresorhus / awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs) ⚡️ Delightful Node.js packages and resources __[⭐ 31,317]__
+- [taosdata / TDengine](https://github.com/taosdata/TDengine) An open-source big data platform designed and optimized for the Internet of Things (IoT). __[⭐ 4,705]__
+- [dianping / cat](https://github.com/dianping/cat) CAT 作为服务端项目基础组件，提供了 Java, C/C++, Node.js, Python, Go 等多语言客户端，已经在美团点评的基础架构中间件框架（MVC框架，RPC框架，数据库框架，缓存框架等，消息队列，配置系统等）深度集成，为美团点评各业务线提供系统丰富的性能指标、健康状况、实时告警等。 __[⭐ 10,071]__
+- [vincent-thevenin / Realistic-Neural-Talking-Head-Models](https://github.com/vincent-thevenin/Realistic-Neural-Talking-Head-Models) My implementation of Few-Shot Adversarial Learning of Realistic Neural Talking Head Models (Egor Zakharov et al.). __[⭐ 90]__
+- [kahun / awesome-sysadmin](https://github.com/kahun/awesome-sysadmin) A curated list of amazingly awesome open source sysadmin resources inspired by Awesome PHP. __[⭐ 18,781]__
+- [CamDavidsonPilon / Probabilistic-Programming-and-Bayesian-Methods-for-Hackers](https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers) aka "Bayesian Methods for Hackers": An introduction to Bayesian methods + probabilistic programming with a computation/understanding-first, mathematics-second point of view. All in pure Python ;) __[⭐ 18,656]__
+- [yuuwill / 1024app-android](https://github.com/yuuwill/1024app-android) 草榴官方客户端，小草客户端，Android __[⭐ 1,997]__
+- [j3ssie / Osmedeus](https://github.com/j3ssie/Osmedeus) Fully automated offensive security framework for reconnaissance and vulnerability scanning __[⭐ 1,275]__
+- [llSourcell / Learn_Computer_Vision](https://github.com/llSourcell/Learn_Computer_Vision) This is the curriculum for "Learn Computer Vision" by Siraj Raval on Youtube __[⭐ 438]__
+- [eclipse / openj9](https://github.com/eclipse/openj9) Eclipse OpenJ9: A Java Virtual Machine for OpenJDK that's optimized for small footprint, fast start-up, and high throughput. Builds on Eclipse OMR (https://github.com/eclipse/omr) and combines with the Extensions for OpenJDK for OpenJ9 repo. __[⭐ 1,891]__
+- [google / googletest](https://github.com/google/googletest) Googletest - Google Testing and Mocking Framework __[⭐ 12,250]__
+- [alibaba / easyexcel](https://github.com/alibaba/easyexcel) 快速、简单避免OOM的java处理Excel工具 __[⭐ 7,283]__
+- [sorenduan / awesome-java-books](https://github.com/sorenduan/awesome-java-books) Java开发者技术书籍大全 - Java入门书籍，Java基础及进阶书籍，框架与中间件，架构设计，设计模式，数学与算法，JVM周边语言，项目管理&领导力&流程，职业素养与个人成长，格局与视野，面试参考书等。 __[⭐ 827]__
+- [NVIDIA / DeepLearningExamples](https://github.com/NVIDIA/DeepLearningExamples) Deep Learning Examples __[⭐ 967]__
+
 ### 20190717
 - [taosdata / TDengine](https://github.com/taosdata/TDengine) An open-source big data platform designed and optimized for the Internet of Things (IoT). __[⭐ 4,262]__
 - [JideGuru / FlutterSocialAppUIKit](https://github.com/JideGuru/FlutterSocialAppUIKit) Flutter representation of a Social App Concept i found in Uplabs. __[⭐ 196]__
