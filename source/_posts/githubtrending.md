@@ -9,6 +9,60 @@ top: true
 ---
 
 ## 2019
+### 20190822
+- [CorentinJ / Real-Time-Voice-Cloning](https://github.com/CorentinJ/Real-Time-Voice-Cloning) Clone a voice in 5 seconds to generate arbitrary speech in real-time __[⭐ 3,747]__
+- [google / mediapipe](https://github.com/google/mediapipe) MediaPipe is a cross-platform framework for building multimodal applied machine learning pipelines __[⭐ 1,476]__
+- [MisterBooo / LeetCodeAnimation](https://github.com/MisterBooo/LeetCodeAnimation) Demonstrate all the questions on LeetCode in the form of animation.（用动画的形式呈现解LeetCode题目的思路） __[⭐ 38,410]__
+- [justauth / JustAuth](https://github.com/justauth/JustAuth) 💯 史上最全的整合第三方登录的开源库。目前已支持Github、Gitee、微博、钉钉、百度、Coding、腾讯云开发者平台、OSChina、支付宝、QQ、微信、淘宝、Google、Facebook、抖音、领英、小米、微软、今日头条、Teambition、StackOverflow、Pinterest、人人、华为和企业微信等第三方平台的授权登录。 Login, so easy! __[⭐ 2,698]__
+- [laravel / laravel.com-next](https://github.com/laravel/laravel.com-next)  __[⭐ 160]__
+- [d3 / d3](https://github.com/d3/d3) Bring data to life with SVG, Canvas and HTML. 📊📈🎉 __[⭐ 86,794]__
+- [sdras / ecommerce-netlify](https://github.com/sdras/ecommerce-netlify) 🛍 A JAMstack Ecommerce Site built with Nuxt and Netlify Functions __[⭐ 350]__
+- [openai / gpt-2](https://github.com/openai/gpt-2) Code for the paper "Language Models are Unsupervised Multitask Learners" __[⭐ 7,449]__
+- [gregsramblings / google-cloud-4-words](https://github.com/gregsramblings/google-cloud-4-words) The Google Cloud Developer's Cheat Sheet __[⭐ 1,918]__
+- [Cocos-BCX / JSSDK-Demo](https://github.com/Cocos-BCX/JSSDK-Demo) JSSDK Demo __[⭐ 1,255]__
+- [PaddlePaddle / Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite) Multi-platform high performance deep learning inference engine (『飞桨』多平台高性能深度学习预测引擎） __[⭐ 4,548]__
+- [0wczar / airframe-react](https://github.com/0wczar/airframe-react) Free Open Source High Quality Dashboard based on Bootstrap 4 & React 16: http://dashboards.webkom.co/react/airframe __[⭐ 1,168]__
+- [kaldi-asr / kaldi](https://github.com/kaldi-asr/kaldi) This is the official location of the Kaldi project. __[⭐ 6,829]__
+- [SoftwareBrothers / admin-bro](https://github.com/SoftwareBrothers/admin-bro) AdminBro is an admin panel for apps written in node.js __[⭐ 467]__
+- [uwdata / visualization-curriculum](https://github.com/uwdata/visualization-curriculum) A data visualization curriculum of interactive notebooks. __[⭐ 256]__
+- [ruanyf / free-books](https://github.com/ruanyf/free-books) 互联网上的免费书籍 __[⭐ 3,456]__
+- [igorwojda / android-showcase](https://github.com/igorwojda/android-showcase) 💎Android application following best practices: Kotlin, coroutines, Clean Architecture, feature modules, tests, MVVM, static analysis... __[⭐ 893]__
+- [haizlin / fe-interview](https://github.com/haizlin/fe-interview) 前端面试每日 3+1，以面试题来驱动学习，提倡每日学习与思考，每天进步一点！每天早上5点纯手工发布面试题（死磕自己，愉悦大家） __[⭐ 5,361]__
+- [yangshun / front-end-interview-handbook](https://github.com/yangshun/front-end-interview-handbook) 🕸 Almost complete answers to "Front-end Job Interview Questions" which you can use to interview potential candidates, test yourself or completely ignore __[⭐ 20,796]__
+- [vietai / dab](https://github.com/vietai/dab) Data Augmentation by Backtranslation (DAB) ヽ( •_-)ᕗ __[⭐ 185]__
+- [osquery / osquery](https://github.com/osquery/osquery) SQL powered operating system instrumentation, monitoring, and analytics. __[⭐ 14,742]__
+- [dotnet / core](https://github.com/dotnet/core) Home repository for .NET Core __[⭐ 11,554]__
+- [YonghaoHe / A-Light-and-Fast-Face-Detector-for-Edge-Devices](https://github.com/YonghaoHe/A-Light-and-Fast-Face-Detector-for-Edge-Devices) a light and fast face detector for edge devices __[⭐ 251]__
+- [nondanee / UnblockNeteaseMusic](https://github.com/nondanee/UnblockNeteaseMusic) Revive unavailable songs for Netease Cloud Music __[⭐ 4,372]__
+- [apache / incubator-superset](https://github.com/apache/incubator-superset) Apache Superset (incubating) is a modern, enterprise-ready business intelligence web application __[⭐ 25,742]__
+
+### 20190822
+- [CorentinJ / Real-Time-Voice-Cloning](https://github.com/CorentinJ/Real-Time-Voice-Cloning) Clone a voice in 5 seconds to generate arbitrary speech in real-time __[⭐ 3,746]__
+- [google / mediapipe](https://github.com/google/mediapipe) MediaPipe is a cross-platform framework for building multimodal applied machine learning pipelines __[⭐ 1,475]__
+- [MisterBooo / LeetCodeAnimation](https://github.com/MisterBooo/LeetCodeAnimation) Demonstrate all the questions on LeetCode in the form of animation.（用动画的形式呈现解LeetCode题目的思路） __[⭐ 38,409]__
+- [justauth / JustAuth](https://github.com/justauth/JustAuth) 💯 史上最全的整合第三方登录的开源库。目前已支持Github、Gitee、微博、钉钉、百度、Coding、腾讯云开发者平台、OSChina、支付宝、QQ、微信、淘宝、Google、Facebook、抖音、领英、小米、微软、今日头条、Teambition、StackOverflow、Pinterest、人人、华为和企业微信等第三方平台的授权登录。 Login, so easy! __[⭐ 2,697]__
+- [laravel / laravel.com-next](https://github.com/laravel/laravel.com-next)  __[⭐ 160]__
+- [d3 / d3](https://github.com/d3/d3) Bring data to life with SVG, Canvas and HTML. 📊📈🎉 __[⭐ 86,794]__
+- [sdras / ecommerce-netlify](https://github.com/sdras/ecommerce-netlify) 🛍 A JAMstack Ecommerce Site built with Nuxt and Netlify Functions __[⭐ 350]__
+- [openai / gpt-2](https://github.com/openai/gpt-2) Code for the paper "Language Models are Unsupervised Multitask Learners" __[⭐ 7,449]__
+- [gregsramblings / google-cloud-4-words](https://github.com/gregsramblings/google-cloud-4-words) The Google Cloud Developer's Cheat Sheet __[⭐ 1,918]__
+- [Cocos-BCX / JSSDK-Demo](https://github.com/Cocos-BCX/JSSDK-Demo) JSSDK Demo __[⭐ 1,255]__
+- [PaddlePaddle / Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite) Multi-platform high performance deep learning inference engine (『飞桨』多平台高性能深度学习预测引擎） __[⭐ 4,548]__
+- [0wczar / airframe-react](https://github.com/0wczar/airframe-react) Free Open Source High Quality Dashboard based on Bootstrap 4 & React 16: http://dashboards.webkom.co/react/airframe __[⭐ 1,168]__
+- [kaldi-asr / kaldi](https://github.com/kaldi-asr/kaldi) This is the official location of the Kaldi project. __[⭐ 6,829]__
+- [SoftwareBrothers / admin-bro](https://github.com/SoftwareBrothers/admin-bro) AdminBro is an admin panel for apps written in node.js __[⭐ 467]__
+- [uwdata / visualization-curriculum](https://github.com/uwdata/visualization-curriculum) A data visualization curriculum of interactive notebooks. __[⭐ 256]__
+- [ruanyf / free-books](https://github.com/ruanyf/free-books) 互联网上的免费书籍 __[⭐ 3,455]__
+- [igorwojda / android-showcase](https://github.com/igorwojda/android-showcase) 💎Android application following best practices: Kotlin, coroutines, Clean Architecture, feature modules, tests, MVVM, static analysis... __[⭐ 893]__
+- [haizlin / fe-interview](https://github.com/haizlin/fe-interview) 前端面试每日 3+1，以面试题来驱动学习，提倡每日学习与思考，每天进步一点！每天早上5点纯手工发布面试题（死磕自己，愉悦大家） __[⭐ 5,361]__
+- [yangshun / front-end-interview-handbook](https://github.com/yangshun/front-end-interview-handbook) 🕸 Almost complete answers to "Front-end Job Interview Questions" which you can use to interview potential candidates, test yourself or completely ignore __[⭐ 20,796]__
+- [vietai / dab](https://github.com/vietai/dab) Data Augmentation by Backtranslation (DAB) ヽ( •_-)ᕗ __[⭐ 185]__
+- [osquery / osquery](https://github.com/osquery/osquery) SQL powered operating system instrumentation, monitoring, and analytics. __[⭐ 14,741]__
+- [dotnet / core](https://github.com/dotnet/core) Home repository for .NET Core __[⭐ 11,553]__
+- [YonghaoHe / A-Light-and-Fast-Face-Detector-for-Edge-Devices](https://github.com/YonghaoHe/A-Light-and-Fast-Face-Detector-for-Edge-Devices) a light and fast face detector for edge devices __[⭐ 251]__
+- [nondanee / UnblockNeteaseMusic](https://github.com/nondanee/UnblockNeteaseMusic) Revive unavailable songs for Netease Cloud Music __[⭐ 4,372]__
+- [apache / incubator-superset](https://github.com/apache/incubator-superset) Apache Superset (incubating) is a modern, enterprise-ready business intelligence web application __[⭐ 25,742]__
+
 ### 20190820
 - [yangshun / tech-interview-handbook](https://github.com/yangshun/tech-interview-handbook) 💯 Materials to help you rock your next coding interview __[⭐ 30,589]__
 - [quii / learn-go-with-tests](https://github.com/quii/learn-go-with-tests) Learn Go with test-driven development __[⭐ 5,895]__
