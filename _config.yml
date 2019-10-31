@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 止水聊技术
-subtitle: 止水聊技术
-description: 止水聊技术，止水分享最实用的技术知识
-keywords: 止水聊技术,聊技术,止水,前端,React
-author: 止水
+title: 云影sky
+subtitle: 云影sky
+description: 云影sky的技术站点
+keywords: 云影,云影sky,前端,react,javascript
+author: 云影sky
 language: zh-CN
 #timezone:
 
@@ -51,7 +51,7 @@ highlight:
 # per_page: Posts displayed per page. (0 = disable pagination)
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
-  path: ''
+  path: ""
   per_page: 30
   order_by: -date
 

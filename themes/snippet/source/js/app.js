@@ -3,7 +3,7 @@
  * ======================================================================== */
 window.onload = function() {
     var $body = document.body,
-        $mnav = document.getElementById("mnav"), //获取导航三角图标
+        // $mnav = document.getElementById("mnav"), //获取导航三角图标
         $mainMenu = document.getElementById("main-menu"), //手机导航
         $process = document.getElementById('process'), //进度条
         $ajaxImgs = document.querySelectorAll('.img-ajax'), //图片懒加载
@@ -25,14 +25,14 @@ window.onload = function() {
     })();
 
     //手机菜单导航
-    $mnav.onclick = function(){  
-        var navOpen = $mainMenu.getAttribute("class");
-        if(navOpen.indexOf("in") != '-1'){
-            $mainMenu.setAttribute("class","collapse navbar-collapse"); 
-        } else {
-            $mainMenu.setAttribute("class","collapse navbar-collapse in");
-        }
-    };
+    // $mnav.onclick = function(){  
+    //     var navOpen = $mainMenu.getAttribute("class");
+    //     if(navOpen.indexOf("in") != '-1'){
+    //         $mainMenu.setAttribute("class","collapse navbar-collapse"); 
+    //     } else {
+    //         $mainMenu.setAttribute("class","collapse navbar-collapse in");
+    //     }
+    // };
 
     //首页文章图片懒加载
     function imgsAjax($targetEles) {
