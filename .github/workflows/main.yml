@@ -7,10 +7,12 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@master
     - name: Build and Deploy
-      uses: lxfriday/lxfriday.github.io@dev
+      uses: JamesIves/github-pages-deploy-action@master
       env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: master
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} 
+        BRANCH: dev
         FOLDER: public
-        BUILD_SCRIPT: yarn install && yarn g
+        BUILD_SCRIPT: npm install && npm g
