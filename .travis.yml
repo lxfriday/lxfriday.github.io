@@ -1,7 +1,7 @@
 language: node_js
 # nodejs版本
 node_js:
-  - '10'
+  - "10"
 
 # S: Build Lifecycle
 install:
@@ -16,11 +16,11 @@ script:
 after_script:
   - cd ./public
   - git init
-  - git config user.name "${U_NAME}"
-  - git config user.email "${U_EMAIL}"
+  - git config user.name "lxfriday"
+  - git config user.email "liu3248184446@outlook.com"
   - git add .
   - git commit -m "Ci Build"
-  - git push --force "https://${GH_TOKEN}@${GH_REF}" master:${P_BRANCH}
+  - git push --force "https://${GH_TOKEN}@${GH_REF}" dev:master
 # E: Build LifeCycle
 
 #指定分支，只有指定的分支提交时才会运行脚本
