@@ -1,5 +1,5 @@
 ---
-title: 面试必备 | 一文读懂现代 JavaScript 中的变量提升 - let、const 和 var
+title: 前端面试必会 | 一文读懂现代 JavaScript 中的变量提升 - let、const 和 var
 comments: true
 top: false
 date: 2019-12-14 19:08:00
