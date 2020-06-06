@@ -34,8 +34,8 @@ canvas {
   top: 48px;
   left: 0;
   width: 80px;
-  color: #13E8E9;
-  font-size: .8em;
+  color: #13e8e9;
+  font-size: 0.8em;
   text-align: left;
   text-indent: 4px;
   line-height: 14px;
@@ -48,7 +48,8 @@ canvas {
   font-size: 1.1em;
 }
 
-#stats, .count-particles {
+#stats,
+.count-particles {
   -webkit-user-select: none;
   margin-top: 5px;
   margin-left: 5px;
@@ -78,22 +79,6 @@ canvas {
     background-position: -100% 0;
   }
 }
-@keyframes avatar-animation-1 {
-  0% {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes avatar-animation-2 {
-  0% {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-720deg);
-  }
-}
 /*====================================================
     common styles
 ====================================================*/
@@ -101,13 +86,17 @@ html {
   color: #505050;
   line-height: 1.75em;
   position: relative;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB",
+    "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI",
+    "Microsoft YaHei", sans-serif;
 }
 body {
   color: #505050;
   line-height: 1.75em;
   position: relative;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB",
+    "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI",
+    "Microsoft YaHei", sans-serif;
   background: transparent;
 }
 .back-img {
@@ -116,7 +105,8 @@ body {
   position: fixed;
   width: 1920px;
   height: 1080px;
-  background: transparent url(https://qiniu1.lxfriday.xyz/WaterM/5205c40b-d313-4ee5-93b9-213c19e93f10_blog-image.jpeg);
+  background: transparent
+    url(https://qiniu1.lxfriday.xyz/WaterM/5205c40b-d313-4ee5-93b9-213c19e93f10_blog-image.jpeg);
 }
 .header-avatar-w-1 {
   display: inline-block;
@@ -126,7 +116,6 @@ body {
   border: 4px solid #ffffff;
   border-top-color: #000000;
   border-bottom-color: #000000;
-  animation: avatar-animation-1 2s infinite ease-in-out !important;
   background-color: #000000;
 }
 .header-avatar-w-2 {
@@ -139,7 +128,8 @@ body {
   border-bottom-color: #ffffff;
   animation: avatar-animation-2 3s infinite ease-in-out !important;
 }
-.toc ol, ol.toc{
+.toc ol,
+ol.toc {
   padding-left: 10px;
   font-size: 10px;
   list-style-type: none;
@@ -378,7 +368,6 @@ pre {
   width: 82px;
   height: 82px;
   border-radius: 50%;
-  animation: avatar-animation-1 3s infinite ease-in-out !important;
 }
 .main-header .main-header-box a.header-avatar:hover {
   text-decoration: none;
@@ -395,10 +384,17 @@ pre {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  background-image: -webkit-linear-gradient(left, #cddc39, #e67e22 25%, #cddc39 50%, #e67e22 75%, #cddc39) !important;
-  -webkit-text-fill-color: transparent!important;
-  -webkit-background-clip: text!important;
-  background-size: 200% 100%!important;
+  background-image: -webkit-linear-gradient(
+    left,
+    #cddc39,
+    #e67e22 25%,
+    #cddc39 50%,
+    #e67e22 75%,
+    #cddc39
+  ) !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-background-clip: text !important;
+  background-size: 200% 100% !important;
   animation: masked-animation 2s infinite linear !important;
 }
 .main-header .main-header-box .branding h2:hover {
@@ -600,7 +596,7 @@ pre {
 .post .post-footer .tag-list .post-meta .fa-wrap {
   margin-right: 10px;
 }
-.post .post-footer .tag-list .tags-meta a:nth-child(n+2) {
+.post .post-footer .tag-list .tags-meta a:nth-child(n + 2) {
   margin-left: 4px;
 }
 .post .post-footer .tag-list a {
@@ -616,41 +612,48 @@ pre {
   main post content
 ====================================================*/
 .post-content {
-  font: 400 16px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+  font: 400 16px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
   color: #333;
 }
 .post-content h1 {
-  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
   color: #333;
   font-size: 1.8em;
   margin: 0.67em 0;
 }
 .post-content h2 {
-  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
   color: #333;
   font-size: 1.5em;
   margin: 0.83em 0;
 }
 .post-content h3 {
-  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
   color: #333;
   font-size: 1.17em;
   margin: 1em 0;
 }
 .post-content h4 {
-  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
   color: #333;
   font-size: 1em;
   margin: 1.6em 0 1em 0;
 }
 .post-content h5 {
-  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
   color: #333;
   font-size: 1em;
   margin: 1.6em 0 1em 0;
 }
 .post-content h6 {
-  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
+  font-family: "Georgia", "Xin Gothic", "Hiragino Sans GB",
+    "Droid Sans Fallback", "Microsoft YaHei", "SimSun", sans-serif;
   color: #333;
   font-size: 1em;
   margin: 1.6em 0 1em 0;
@@ -970,7 +973,7 @@ pre {
   border: 1px solid #ebebeb;
   padding: 2px 7px;
   color: #959595;
-  font-size: 1em!important;
+  font-size: 1em !important;
   line-height: 1.5em;
   display: inline-block;
   margin: 0 7px 7px 0;
@@ -998,10 +1001,10 @@ pre {
   margin-bottom: 5px;
 }
 /*.widget .social a:last-child {*/
-  /*margin-right: 0px;*/
+/*margin-right: 0px;*/
 /*}*/
 /*.widget .social a i {*/
-  /*font-size: 20px;*/
+/*font-size: 20px;*/
 /*}*/
 .widget .friends-link a {
   margin-right: 15px;
@@ -1042,7 +1045,7 @@ pre {
   border: 1px solid #ccc;
 }
 .widget #search-form #result-wrap:before {
-  content: '';
+  content: "";
   position: absolute;
   display: inline-block;
   border-width: 0 12px 12px 12px;
@@ -1052,7 +1055,7 @@ pre {
   top: -12px;
 }
 .widget #search-form #result-wrap:after {
-  content: '';
+  content: "";
   position: absolute;
   display: inline-block;
   border-width: 0 12px 12px 12px;
@@ -1121,7 +1124,7 @@ pre {
   border-top: 1px solid #303030;
 }
 .copyright span {
-  margin: 0 .5em;
+  margin: 0 0.5em;
 }
 .copyright a {
   color: #666666;
