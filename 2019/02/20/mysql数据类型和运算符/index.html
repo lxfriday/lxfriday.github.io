@@ -1,0 +1,773 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>mysql数据类型和运算符 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="mysql数据类型和运算符">
+            
+	            mysql数据类型和运算符
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/数据库">
+            数据库
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/02/20</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>MySQL 支持多种数据类型，主要有数值类型、日期、时间类型和字符串类型</p>
+<ul>
+<li>数值数据类型：包括整数类型 TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT、浮点小数数据类型 FLOAT 和 DOUBLE、定点小数类型 DECIMAL。</li>
+<li>日期/时间类型：包括 YEAR、TIME、DATE、DATETIME、TIMESTAMP。</li>
+<li>字符串类型：包括 CHAR、VARCHAR、BINARY、VARBINARY、BOLB、TEXT、ENUM、SET。</li>
+</ul>
+<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">类型名</th>
+<th style="text-align:center">存储需求</th>
+<th style="text-align:center">有符号</th>
+<th style="text-align:center">无符号</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">TINYINT</td>
+<td style="text-align:center">1字节</td>
+<td style="text-align:center">-128~127</td>
+<td style="text-align:center">0~255</td>
+<td style="text-align:center">很小的整数</td>
+</tr>
+<tr>
+<td style="text-align:center">SMALLINT</td>
+<td style="text-align:center">2字节</td>
+<td style="text-align:center">-32768~32767</td>
+<td style="text-align:center">0~65535</td>
+<td style="text-align:center">小的整数</td>
+</tr>
+<tr>
+<td style="text-align:center">MEDIUMINT</td>
+<td style="text-align:center">3字节</td>
+<td style="text-align:center">-8388608~8388607</td>
+<td style="text-align:center">0~16777215<strong>(8位)</strong></td>
+<td style="text-align:center">中等大小的整数</td>
+</tr>
+<tr>
+<td style="text-align:center">INT</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">-2147483648~2147483647</td>
+<td style="text-align:center">0~4294967295<strong>(10位)</strong></td>
+<td style="text-align:center">普通大小的整数</td>
+</tr>
+<tr>
+<td style="text-align:center">BIGINT</td>
+<td style="text-align:center">8字节</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">0~1.8E+19(20位)</td>
+<td style="text-align:center">大整数</td>
+</tr>
+</tbody>
+</table>
+<p>注意：显示宽度和数据类型的取值范围无关。显示宽度只是指明了最大可能显示的数字个数，数值的位数小于指定的宽度时会有空格填充，如果插入了大于显示宽度的值，只要该值不超过取值范围，数值依然可以插入。</p>
+<p>例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE TABLE testlen ( total TINYINT(2) UNSIGNED NOT NULL );</span><br><span class="line">&gt; INSERT INTO testlen (total) values (111); # 可以正常插入数据</span><br><span class="line">&gt; SELECT * FROM testlen;</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">| total |</span><br><span class="line">+<span class="comment">-------+</span></span><br><span class="line">|   111 |</span><br><span class="line">+<span class="comment">-------+</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="浮点数类型和定点数类型"><a href="#浮点数类型和定点数类型" class="headerlink" title="浮点数类型和定点数类型"></a>浮点数类型和定点数类型</h2><p>MySQL 使用 浮点数和定点数表示小数。浮点类型有两种：单精度浮点类型(FLOAT)和双精度浮点类型(DOUBLE)。定点类型只有一种： DECIMAL。</p>
+<p>浮点类型和定点类型都可以用 (M,N) 来表示，期中 M 称为精度，表示总共的位数；N 称为标度，表示小数的位数。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型名</th>
+<th style="text-align:center">存储需求</th>
+<th style="text-align:center">有符号</th>
+<th style="text-align:center">无符号</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">FLOAT</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">-3.40E+<strong>38</strong>~-1.18E-<strong>38</strong></td>
+<td style="text-align:center">0和1.18E-<strong>38</strong>~3.4E+<strong>38</strong></td>
+<td style="text-align:center">单精度浮点数</td>
+</tr>
+<tr>
+<td style="text-align:center">DOUBLE</td>
+<td style="text-align:center">8字节</td>
+<td style="text-align:center">-1.80E+<strong>308</strong>~-2.23E-<strong>308</strong></td>
+<td style="text-align:center">0和2.23E-<strong>308</strong>~1.80E+<strong>308</strong></td>
+<td style="text-align:center">双精度浮点数</td>
+</tr>
+<tr>
+<td style="text-align:center">DECIMAL(M,D)</td>
+<td style="text-align:center">M+2字节</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">压缩的’严格’定点数</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE TABLE testnum</span><br><span class="line">(</span><br><span class="line">    x FLOAT(5,1) UNSIGNED,</span><br><span class="line">    y DOUBLE(5,1) UNSIGNED,</span><br><span class="line">    z DECIMAL(5,1) UNSIGNED</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">&gt; INSERT INTO testnum (x,y,z) VALUES (1234.5,1234.5,1234.5);</span><br><span class="line">&gt; INSERT INTO testnum (x,y,z) VALUES (1234.55,1234.55,1234.55);</span><br><span class="line"></span><br><span class="line">+<span class="comment">--------+--------+--------+</span></span><br><span class="line">| x      | y      | z      |</span><br><span class="line">+<span class="comment">--------+--------+--------+</span></span><br><span class="line">| 1234.5 | 1234.5 | 1234.5 |</span><br><span class="line">| 1234.5 | 1234.5 | 1234.6 |</span><br><span class="line">+<span class="comment">--------+--------+--------+</span></span><br><span class="line"></span><br><span class="line">&gt; SHOW WARNINGS;</span><br><span class="line">+<span class="comment">-------+------+----------------------------------------+</span></span><br><span class="line">| Level | Code | Message                                |</span><br><span class="line">+<span class="comment">-------+------+----------------------------------------+</span></span><br><span class="line">| Note  | 1265 | Data truncated for column 'z' at row 1 |</span><br><span class="line">+<span class="comment">-------+------+----------------------------------------+</span></span><br></pre></td></tr></table></figure>
+<p>FLOAT 和 DOUBLE 在不指定精度时，默认会采用实际的精度（由计算机硬件和操作系统决定），DECIMAL 如不指定精度则默认为(10,0)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE TABLE testnumm </span><br><span class="line">(</span><br><span class="line"> x FLOAT,</span><br><span class="line"> y DOUBLE,</span><br><span class="line"> z DECIMAL</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">&gt; INSERT INTO testnumm (x,y,z) VALUES (123456.7890,123456.7890,123456.7890);</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br><span class="line"></span><br><span class="line">+<span class="comment">--------+------------+--------+</span></span><br><span class="line">| x      | y          | z      |</span><br><span class="line">+<span class="comment">--------+------------+--------+</span></span><br><span class="line">| 123457 | 123456.789 | 123457 |</span><br><span class="line">+<span class="comment">--------+------------+--------+</span></span><br></pre></td></tr></table></figure>
+<h2 id="日期与时间类型"><a href="#日期与时间类型" class="headerlink" title="日期与时间类型"></a>日期与时间类型</h2><p>MySQL 中表示日期的数据类型，主要有 DATETIME、DATE、TIMESTAMP、TIME、YEAR。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型名称</th>
+<th style="text-align:center">日期格式</th>
+<th style="text-align:center">日期范围</th>
+<th style="text-align:center">存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">YEAR</td>
+<td style="text-align:center">YYYY</td>
+<td style="text-align:center">1901~2155</td>
+<td style="text-align:center">1字节</td>
+</tr>
+<tr>
+<td style="text-align:center">TIME</td>
+<td style="text-align:center">HH:MM:SS</td>
+<td style="text-align:center">-838:59:59~838:59:59</td>
+<td style="text-align:center">3字节</td>
+</tr>
+<tr>
+<td style="text-align:center">DATE</td>
+<td style="text-align:center">YYYY-MM-DD</td>
+<td style="text-align:center">1000-01-01~9999-12-3</td>
+<td style="text-align:center">3字节</td>
+</tr>
+<tr>
+<td style="text-align:center">DATETIME</td>
+<td style="text-align:center">YYYY-MM-DD HH:MM:SS</td>
+<td style="text-align:center">1000-01-01 00:00:00~9999-12-3123:59:59</td>
+<td style="text-align:center">8字节</td>
+</tr>
+<tr>
+<td style="text-align:center">TIMESTAMP</td>
+<td style="text-align:center">YYYY-MM-DD HH:MM:SS</td>
+<td style="text-align:center">1970-01-01 00:00:01 UTC~2038-01-19 03:14:07 UTC</td>
+<td style="text-align:center">4字节</td>
+</tr>
+</tbody>
+</table>
+<p>TIMESTAMP 与 DATETIME 除了存储字节和支持的范围不同外，还有一个区别，DATETIME 是输入什么就存储什么，与时区无关；而 TIMESTAMP 值的存储是以 UTC（世界标准时间）格式保存的，存储时对当前时区进行转换，检索时再转换回当前时区。 </p>
+<h2 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h2><p>MySQL 中字符串类型有 CHAR、VARCHAR、BINARY、VARBINARY、BLOB、TEXT、ENUM、SET。</p>
+<p>其中 VARCHAR、BLOB、TEXT 类型是变长类型，对于其存储需求取决于列值的实际长度，而不是取决于类型的最大可能尺寸。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型名称</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CHAR(M)</td>
+<td style="text-align:center">固定长度非二进制字符串</td>
+<td style="text-align:center">M 字节，1&lt;=M&lt;=255</td>
+</tr>
+<tr>
+<td style="text-align:center">VARCHAR(M)</td>
+<td style="text-align:center">变长非二进制字符串</td>
+<td style="text-align:center">L+1 字节，在此 L&lt;= M 和 1&lt;= M &lt;=255</td>
+</tr>
+<tr>
+<td style="text-align:center">TINYTEXT</td>
+<td style="text-align:center">非常小的非二进制字符串</td>
+<td style="text-align:center">L+1 字节，在此L &lt; 2^8</td>
+</tr>
+<tr>
+<td style="text-align:center">TEXT</td>
+<td style="text-align:center">小的非二进制字符串</td>
+<td style="text-align:center">L+2 字节，在此 L &lt; 2^16</td>
+</tr>
+<tr>
+<td style="text-align:center">MEDIUMTEXT</td>
+<td style="text-align:center">中等大小的非二进制字符串</td>
+<td style="text-align:center">L+3 字节，在此 L &lt; 2^24</td>
+</tr>
+<tr>
+<td style="text-align:center">LONGTEXT</td>
+<td style="text-align:center">大的非二进制字符串</td>
+<td style="text-align:center">L+4 字节，在此 L &lt; 2^32</td>
+</tr>
+<tr>
+<td style="text-align:center">ENUM</td>
+<td style="text-align:center">枚举类型，只能有一个枚举字符串值</td>
+<td style="text-align:center">1或2字节，取决于枚举值的数目（最大值65535）</td>
+</tr>
+<tr>
+<td style="text-align:center">SET</td>
+<td style="text-align:center">字符串对象，可以有零个或多个 SET 成员</td>
+<td style="text-align:center">1、2、3、4或8个字节，取决于集合成员的数量（最多64个成员）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="CHAR-和-VARCHAR-类型"><a href="#CHAR-和-VARCHAR-类型" class="headerlink" title="CHAR 和 VARCHAR 类型"></a>CHAR 和 VARCHAR 类型</h3><p>CHAR(M) 为固定长度字符串，在定义时要指定字符串列长。当保存时在右侧填充<strong>空格</strong>以达到指定的长度。M 表示列长度，M 的范围是 0~255 个字符。</p>
+<p>VARCHAR(M) 是长度可变的字符串，M 表示最大列长度。M 的范围是 0~65535。VARCHAR 的最大实际长度由最长的行的大小和使用的字符集确定，而其实际占用的空间为字符串的实际长度加1。例如，VARCHAR(50) 定义了一个最大长度为50的字符串，如果插入的字符串只有10个字符，则实际存储的字符串为10个字符和一个字符串结束字符。在保存和检索 VARCHAR 的值时尾部的空格仍保留。</p>
+<p>以下是一个对比的例子</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">插入值</th>
+<th style="text-align:center">CHAR(4)</th>
+<th style="text-align:center">存储需求</th>
+<th style="text-align:center">VARCHAR(4)</th>
+<th style="text-align:center">存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">‘’</td>
+<td style="text-align:center">‘    ‘(4个空格)</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">‘’</td>
+<td style="text-align:center">1字节</td>
+</tr>
+<tr>
+<td style="text-align:center">‘ab’</td>
+<td style="text-align:center">‘ab  ‘(2个空格)</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">‘ab’</td>
+<td style="text-align:center">3字节</td>
+</tr>
+<tr>
+<td style="text-align:center">‘abc’</td>
+<td style="text-align:center">‘abc ‘(1个空格)</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">‘abc’</td>
+<td style="text-align:center">4字节</td>
+</tr>
+<tr>
+<td style="text-align:center">‘abcd’</td>
+<td style="text-align:center">‘abcd’</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">‘abcd’</td>
+<td style="text-align:center">5字节</td>
+</tr>
+<tr>
+<td style="text-align:center">‘abcdef’</td>
+<td style="text-align:center">‘abcd’</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">‘abcd’</td>
+<td style="text-align:center">5字节</td>
+</tr>
+</tbody>
+</table>
+<h3 id="TEXT-类型"><a href="#TEXT-类型" class="headerlink" title="TEXT 类型"></a>TEXT 类型</h3><ul>
+<li>TINYTEXT：最大长度为255(2^8 - 1)个字符的 TEXT 列。</li>
+<li>TEXT：最大长度为65535(2^16 - 1)个字符的 TEXT 列。</li>
+<li>MEDIUMTEXT：最大长度为16 777 215(2^24 - 1)个字符的 TEXT 列。</li>
+<li>LONGTEXT：最大长度为 4294 967 295 或 4GB(2^32 - 1)个字符的 TEXT 列。</li>
+</ul>
+<h3 id="ENUM-类型"><a href="#ENUM-类型" class="headerlink" title="ENUM 类型"></a>ENUM 类型</h3><p>ENUM 是一个字符串对象(只要字符串)，其值为创建表时在列规定中枚举的一列值。一次只能取一个。ENUM 值在内部用整数表示，每个枚举值均有一个索引值：列表值所允许的成员值从1开始编号，MySQL 存储的就是这个<strong>编号</strong>。枚举最多有 <strong>65535</strong> 个元素。</p>
+<p>ENUM 列总有一个默认值。如果将 ENUM 列声明为 NULL，NULL 值则为该列的一个有效值，并且默认值为 NULL。如果 ENUM 列被声明为 NOT NULL，其默认值为允许的值列表的<strong>第一个元素</strong>。</p>
+<h3 id="SET-类型"><a href="#SET-类型" class="headerlink" title="SET 类型"></a>SET 类型</h3><p>SET 是一个字符串对象，可以有零个或多个值，SET 列最多有 <strong>64</strong> 列，其值为创建表时所规定的一列值。SET 可以从所规定的列值中选择多个字符联合插入。如果插入的字符有重复，则 MySQL 会自动删除重复的值。</p>
+<h2 id="二进制类型"><a href="#二进制类型" class="headerlink" title="二进制类型"></a>二进制类型</h2><p>MySQL 支持两类字符型数据：文本字符串和二进制字符串。MySQL 中的二进制数据类型有 BIT、BINARY、VARBINARY、TINYBLOB、BLOB、MEDIUMBLOB、LONGBLOB。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型名称</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">BIT(M)</td>
+<td style="text-align:center">位字段类型</td>
+<td style="text-align:center">大约 (M+7)/ 8个字节</td>
+</tr>
+<tr>
+<td style="text-align:center">BINARY(M)</td>
+<td style="text-align:center">固定长度二进制字符串</td>
+<td style="text-align:center">M 个字节</td>
+</tr>
+<tr>
+<td style="text-align:center">VARBINARY(M)</td>
+<td style="text-align:center">可变长度二进制字符串</td>
+<td style="text-align:center">M+1 个字节</td>
+</tr>
+<tr>
+<td style="text-align:center">TINYBLOB(M)</td>
+<td style="text-align:center">非常小的 BLOB</td>
+<td style="text-align:center">L+1 字节，在此 L &lt; 2^8</td>
+</tr>
+<tr>
+<td style="text-align:center">BLOB(M)</td>
+<td style="text-align:center">小 BLOB</td>
+<td style="text-align:center">L+2 字节，在此L &lt; 2^16</td>
+</tr>
+<tr>
+<td style="text-align:center">MEDIUMBLOB(M)</td>
+<td style="text-align:center">中等大小的 BLOB</td>
+<td style="text-align:center">L+3 字节，在此 L &lt; 2^24</td>
+</tr>
+<tr>
+<td style="text-align:center">LONGBLOB(M)</td>
+<td style="text-align:center">非常大的 BLOB</td>
+<td style="text-align:center">L+4 字节，在此 L &lt; 2^32</td>
+</tr>
+</tbody>
+</table>
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>比较运算符的结果总是1、0或者 NULL，比较运算符经常在 SELECT 的查询条件子句中使用</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">=</td>
+<td style="text-align:center">等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;=&gt;</td>
+<td style="text-align:center">安全等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;&gt;(!=)</td>
+<td style="text-align:center">不等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;=</td>
+<td style="text-align:center">小于等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;=</td>
+<td style="text-align:center">大于等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">大于</td>
+</tr>
+<tr>
+<td style="text-align:center">IS NULL</td>
+<td style="text-align:center">判断一个值是否为 NULL</td>
+</tr>
+<tr>
+<td style="text-align:center">IS NOT NULL</td>
+<td style="text-align:center">判断一个值是否不为 NULL</td>
+</tr>
+<tr>
+<td style="text-align:center">LEAST</td>
+<td style="text-align:center">在有两个或多个参数时，返回最小值</td>
+</tr>
+<tr>
+<td style="text-align:center">GREATEST</td>
+<td style="text-align:center">在有两个或多个参数时，返回最大值</td>
+</tr>
+<tr>
+<td style="text-align:center">BETWEEN AND</td>
+<td style="text-align:center">判断一个值是否落在两个值之间</td>
+</tr>
+<tr>
+<td style="text-align:center">ISNULL</td>
+<td style="text-align:center">与 IS NULL 的作用相同</td>
+</tr>
+<tr>
+<td style="text-align:center">IN</td>
+<td style="text-align:center">判断一个值时 IN 列表中的值</td>
+</tr>
+<tr>
+<td style="text-align:center">NOT IN</td>
+<td style="text-align:center">判断一个值不是 IN 列表中的值</td>
+</tr>
+<tr>
+<td style="text-align:center">LIKE</td>
+<td style="text-align:center">通配符匹配</td>
+</tr>
+<tr>
+<td style="text-align:center">REGEXP</td>
+<td style="text-align:center">正则表达式匹配</td>
+</tr>
+</tbody>
+</table>
+<pre><code>LIKE 运算符在匹配时，可以使用
+% ，匹配任意数目的字符，包括零字符
+_，只能匹配一个字符
+</code></pre><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT NULL IS NULL, ISNULL(NULL), ISNULL(10),10 IS NOT NULL;</span><br><span class="line">+<span class="comment">--------------+--------------+------------+----------------+</span></span><br><span class="line">| NULL IS NULL | ISNULL(NULL) | ISNULL(10) | 10 IS NOT NULL |</span><br><span class="line">+<span class="comment">--------------+--------------+------------+----------------+</span></span><br><span class="line">|            1 |            1 |          0 |              1 |</span><br><span class="line">+<span class="comment">--------------+--------------+------------+----------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT 4 BETWEEN 4 AND 6, 12 BETWEEN 9 AND 15, 'X' BETWEEN 'W' AND 'Z';</span><br><span class="line">+<span class="comment">-------------------+---------------------+-------------------------+</span></span><br><span class="line">| 4 BETWEEN 4 AND 6 | 12 BETWEEN 9 AND 15 | 'X' BETWEEN 'W' AND 'Z' |</span><br><span class="line">+<span class="comment">-------------------+---------------------+-------------------------+</span></span><br><span class="line">|                 1 |                   1 |                       1 |</span><br><span class="line">+<span class="comment">-------------------+---------------------+-------------------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT LEAST(2,0),LEAST(20.0,3.0,100), LEAST('A', 'B', 'C');</span><br><span class="line">+<span class="comment">------------+---------------------+----------------------+</span></span><br><span class="line">| LEAST(2,0) | LEAST(20.0,3.0,100) | LEAST('A', 'B', 'C') |</span><br><span class="line">+<span class="comment">------------+---------------------+----------------------+</span></span><br><span class="line">|          0 |                 3.0 | A                    |</span><br><span class="line">+<span class="comment">------------+---------------------+----------------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT GREATEST(2,0),GREATEST(20.0,3.0,100), GREATEST('A', 'B', 'C');</span><br><span class="line">+<span class="comment">---------------+------------------------+-------------------------+</span></span><br><span class="line">| GREATEST(2,0) | GREATEST(20.0,3.0,100) | GREATEST('A', 'B', 'C') |</span><br><span class="line">+<span class="comment">---------------+------------------------+-------------------------+</span></span><br><span class="line">|             2 |                  100.0 | C                       |</span><br><span class="line">+<span class="comment">---------------+------------------------+-------------------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT 2 IN (1,3,5, 'THIS'), 'THIS' IN (1,2,3,'THIS');</span><br><span class="line">+<span class="comment">----------------------+--------------------------+</span></span><br><span class="line">| 2 IN (1,3,5, 'THIS') | 'THIS' IN (1,2,3,'THIS') |</span><br><span class="line">+<span class="comment">----------------------+--------------------------+</span></span><br><span class="line">|                    0 |                        1 |</span><br><span class="line">+<span class="comment">----------------------+--------------------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT 2 IN (1,3,5, 'THIS', NULL), NULL IN (1,2,3,'THIS', NULL);</span><br><span class="line">+<span class="comment">----------------------------+------------------------------+</span></span><br><span class="line">| 2 IN (1,3,5, 'THIS', NULL) | NULL IN (1,2,3,'THIS', NULL) |</span><br><span class="line">+<span class="comment">----------------------------+------------------------------+</span></span><br><span class="line">|                       NULL |                         NULL |</span><br><span class="line">+<span class="comment">----------------------------+------------------------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT 'AB' LIKE 'AB__', 'AB' LIKE 'AB%';</span><br><span class="line">+<span class="comment">------------------+-----------------+</span></span><br><span class="line">| 'AB' LIKE 'AB__' | 'AB' LIKE 'AB%' |</span><br><span class="line">+<span class="comment">------------------+-----------------+</span></span><br><span class="line">|                0 |               1 |</span><br><span class="line">+<span class="comment">------------------+-----------------+</span></span><br></pre></td></tr></table></figure>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><p>在 MySQL 中，他们体现为 1(TRUE)，0(FALSE)，NULL</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">NOT 或者 !</td>
+<td style="text-align:center">逻辑非</td>
+</tr>
+<tr>
+<td style="text-align:center">AND 或者 &amp;&amp;</td>
+<td style="text-align:center">逻辑与</td>
+</tr>
+<tr>
+<td style="text-align:center">OR 或者 &#124;&#124;</td>
+<td style="text-align:center">逻辑或</td>
+</tr>
+<tr>
+<td style="text-align:center">XOR</td>
+<td style="text-align:center">逻辑异或</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/02/22/mysql索引/" class="pre-post btn btn-default" title="mysql索引">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">mysql索引</span>
+        </a>
+    
+    
+        <a href="/2019/02/19/mysql创建、修改、删除数据表/" class="next-post btn btn-default" title="mysql创建、修改、删除数据表">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">mysql创建、修改、删除数据表</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#整数类型"><span class="toc-text">整数类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浮点数类型和定点数类型"><span class="toc-text">浮点数类型和定点数类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期与时间类型"><span class="toc-text">日期与时间类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串类型"><span class="toc-text">字符串类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CHAR-和-VARCHAR-类型"><span class="toc-text">CHAR 和 VARCHAR 类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TEXT-类型"><span class="toc-text">TEXT 类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ENUM-类型"><span class="toc-text">ENUM 类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SET-类型"><span class="toc-text">SET 类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制类型"><span class="toc-text">二进制类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比较运算符"><span class="toc-text">比较运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑运算符"><span class="toc-text">逻辑运算符</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

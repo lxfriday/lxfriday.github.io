@@ -1,0 +1,456 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>mysql查询数据 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="mysql查询数据">
+            
+	            mysql查询数据
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/数据库">
+            数据库
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/02/24</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <input type="hidden" value="20190220">
+
+<p>MySQL 中查询数据的基本语句为 SELECT 语句，基本用法如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT </span><br><span class="line">    &#123;* | &lt;字段列表&gt;&#125;</span><br><span class="line">    [</span><br><span class="line">        FROM &lt;表1&gt;,&lt;表2&gt;...</span><br><span class="line">        [</span><br><span class="line">            WHERE &lt;表达式&gt;</span><br><span class="line">            [GROUP BY &lt;group by definition&gt;]</span><br><span class="line">            [HAVING &lt;expression&gt; [&#123;&lt;operator&gt; &lt;expression&gt;&#125;...]]</span><br><span class="line">            [ORDER BY &lt;order by definition&gt;]</span><br><span class="line">            [LIMIT [&lt;offset&gt;,] &lt;row count&gt;]</span><br><span class="line">        ]</span><br><span class="line">    ]</span><br><span class="line">    </span><br><span class="line">&gt; SELECT [字段1,字段2,...,字段n]</span><br><span class="line">    FROM [表或视图]</span><br><span class="line">    WHERE [查询条件];</span><br></pre></td></tr></table></figure>
+<h3 id="WHERE-条件判断符"><a href="#WHERE-条件判断符" class="headerlink" title="WHERE 条件判断符"></a>WHERE 条件判断符</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">操作符</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">=</td>
+<td style="text-align:center">等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;&gt;,!=</td>
+<td style="text-align:center">不相等</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">小于</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;=</td>
+<td style="text-align:center">小于或等于</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">大于</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;=</td>
+<td style="text-align:center">大于或等于</td>
+</tr>
+<tr>
+<td style="text-align:center">BETWEEN</td>
+<td style="text-align:center">位于两值之间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="带-IN-关键字查询"><a href="#带-IN-关键字查询" class="headerlink" title="带 IN 关键字查询"></a>带 IN 关键字查询</h3><p><code>IN (x, y, z)</code><br>IN 操作符用来查询满足指定范围的记录，使用时，将所有检索条件用括号括起来，检索条件之间用逗号分隔，只要满足条件范围内的一个值即为匹配项。</p>
+<p><code>IN</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a,b,c FROM alpha WHERE a IN (1, 2, 3);</span><br></pre></td></tr></table></figure></p>
+<p><code>NOT IN</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a,b,c FROM alpha WHERE a NOT IN (1, 2, 3);</span><br></pre></td></tr></table></figure></p>
+<h3 id="带-BETWEEN-AND-的范围查询"><a href="#带-BETWEEN-AND-的范围查询" class="headerlink" title="带 BETWEEN AND 的范围查询"></a>带 BETWEEN AND 的范围查询</h3><p><code>BETWEEN AND</code><br>BETWEEN AND 用来查询某个范围内的值，该操作符需要两个参数，即范围的开始值和结束值。如果字段满足置顶的范围查询条件，则这些记录被返回。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a,b,c FROM alpha WHERE a BETWEEN 2 AND 10;</span><br></pre></td></tr></table></figure>
+<h3 id="查询空值"><a href="#查询空值" class="headerlink" title="查询空值"></a>查询空值</h3><p><code>IS NULL</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM alpha WHERE a IS NULL;</span><br></pre></td></tr></table></figure></p>
+<h3 id="带-AND-的多条件查询"><a href="#带-AND-的多条件查询" class="headerlink" title="带 AND 的多条件查询"></a>带 AND 的多条件查询</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a,b,c from alpha WHERE a='1' AND b &gt; 1000;</span><br></pre></td></tr></table></figure>
+<h3 id="带-OR-的多条件查询"><a href="#带-OR-的多条件查询" class="headerlink" title="带 OR 的多条件查询"></a>带 OR 的多条件查询</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a,b,c from alpha WHERE a='1' OR b &gt; 1000;</span><br></pre></td></tr></table></figure>
+<h3 id="查询结果不重复"><a href="#查询结果不重复" class="headerlink" title="查询结果不重复"></a>查询结果不重复</h3><p><code>DISTINCT</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT DISTINCT a from alpha;</span><br></pre></td></tr></table></figure></p>
+<h3 id="对查询结果排序"><a href="#对查询结果排序" class="headerlink" title="对查询结果排序"></a>对查询结果排序</h3><p><code>ORDER BY</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM alpha ORDER BY a;</span><br></pre></td></tr></table></figure></p>
+<h3 id="多列排序"><a href="#多列排序" class="headerlink" title="多列排序"></a>多列排序</h3><p><code>ORDER BY a, b</code><br>在对多列进行排序的时候，首先排序的第一列必须有相同的列值，才会对第二列进行排序，如果第一列数据中的所有制都是唯一的，将不再对第二列进行排序。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a, b, c FROM alpha ORDER BY a ASC, b DESC;</span><br><span class="line"></span><br><span class="line">&gt; select DISTINCT * from selecttest1;</span><br><span class="line">  +<span class="comment">------+------+------+</span></span><br><span class="line">  | a    | b    | c    |</span><br><span class="line">  +<span class="comment">------+------+------+</span></span><br><span class="line">  |    1 | a    |    1 |</span><br><span class="line">  |    2 | b    |    2 |</span><br><span class="line">  |    2 | b    |    3 |</span><br><span class="line">  +<span class="comment">------+------+------+</span></span><br><span class="line"></span><br><span class="line">&gt;  SELECT DISTINCT * from selecttest1 ORDER BY a, c DESC;</span><br><span class="line">  +<span class="comment">------+------+------+</span></span><br><span class="line">  | a    | b    | c    |</span><br><span class="line">  +<span class="comment">------+------+------+</span></span><br><span class="line">  |    1 | a    |    1 |</span><br><span class="line">  |    2 | b    |    3 | &lt;- 现在排在前面了</span><br><span class="line">  |    2 | b    |    2 |</span><br><span class="line">  +<span class="comment">------+------+------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h3><p><code>[GROUP BY 字段] [HAVING &lt;条件表达式&gt;]</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a, COUNT(*) as a_count FROM alpha GROUP BY a;</span><br></pre></td></tr></table></figure>
+<p>条件查询</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT a, COUNT(*) as a_count FROM alpha GROUP BY a HAVING a &gt; 20 ORDER BY a_count DESC;</span><br></pre></td></tr></table></figure>
+<p><strong>HAVING 和 WHERE 的区别</strong></p>
+<p><code>HAVING</code> 在数据分组之后进行过滤来选择分组</p>
+<p><code>WHERE</code> 在分组之前用来选择记录</p>
+<h3 id="在-GROUP-BY-子句中使用-WITH-ROLLUP"><a href="#在-GROUP-BY-子句中使用-WITH-ROLLUP" class="headerlink" title="在 GROUP BY 子句中使用 WITH ROLLUP"></a>在 GROUP BY 子句中使用 WITH ROLLUP</h3><p>使用 <code>WITH ROLLUP</code> 关键字之后，在所有查询出的分组记录之后添加一条记录，该记录计算查询出的所有记录的综合，即统计记录数量。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT COALESCE(c, 'total') as c,COUNT(*) as a_count FROM selecttest1 GROUP BY c WITH ROLLUP;</span><br><span class="line"></span><br><span class="line">+<span class="comment">-------+---------+</span></span><br><span class="line">| c     | a_count |</span><br><span class="line">+<span class="comment">-------+---------+</span></span><br><span class="line">| 1     |       5 |</span><br><span class="line">| 2     |       4 |</span><br><span class="line">| 3     |       1 |</span><br><span class="line">| total |      10 | &lt;- 没有 COALESCE 则 total 为 NULL</span><br><span class="line">+<span class="comment">-------+---------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="GROUP-BY-和-ORDER-BY-一起使用"><a href="#GROUP-BY-和-ORDER-BY-一起使用" class="headerlink" title="GROUP BY 和 ORDER BY 一起使用"></a>GROUP BY 和 ORDER BY 一起使用</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT o_num,SUM(quantity * item_price) AS orderTotal</span><br><span class="line">    FROM orderitems</span><br><span class="line">    GROUP BY o_num</span><br><span class="line">    HAVING SUM(quantity * item_price) &gt;= 100</span><br><span class="line">    ORDER BY orderTotal;</span><br></pre></td></tr></table></figure>
+<p><strong>使用 ROLLUP 时，不能同时使用 ORDER BY 子句进行结果排序，即 ROLLUP 和 ORDER BY 是相互排斥的</strong></p>
+<h3 id="使用-LIMIT-限制查询结果的数量"><a href="#使用-LIMIT-限制查询结果的数量" class="headerlink" title="使用 LIMIT 限制查询结果的数量"></a>使用 LIMIT 限制查询结果的数量</h3><p><code>LIMIT [位置偏移量x,] 行数y</code> 从第 x + 1 条记录开始，总查询 y 条记录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM alpha LIMIT 4, 3; # 从第5条开始，查询3条记录</span><br></pre></td></tr></table></figure>
+<h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><p>当查询数据时，通过连接操作可以查询出存放在多个表中的不同实体的信息。当两个或多个表中存在相同意义的字段时，便可以通过这些字段对不同的表进行连接查询。</p>
+<h4 id="内连接查询-INNER-JOIN"><a href="#内连接查询-INNER-JOIN" class="headerlink" title="内连接查询 INNER JOIN"></a>内连接查询 INNER JOIN</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&gt; select * from testjoin1; # 表1 testjoin1</span><br><span class="line">+<span class="comment">----+--------------+----------+-------------------------+</span></span><br><span class="line">| id | isbn         | bookname | url                     |</span><br><span class="line">+<span class="comment">----+--------------+----------+-------------------------+</span></span><br><span class="line">|  1 | aaaaaaaaaaaa | a 书     | http://book.com?q=a 书  |</span><br><span class="line">|  2 | bbbbbbbbbbbb | b 书     | http://book.com?q=b 书  |</span><br><span class="line">|  3 | cccccccccccc | c 书     | http://book.com?q=c 书  |</span><br><span class="line">|  4 | dddddddddddd | d 书     | http://book.com?q=d 书  |</span><br><span class="line">|  5 | eeeeeeeeeeee | e 书     | http://book.com?q=e 书  |</span><br><span class="line">|  6 | ffffffffffff | f 书     | http://book.com?q=f 书  |</span><br><span class="line">+<span class="comment">----+--------------+----------+-------------------------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> testjoin2; <span class="comment"># 表2 testjoin2</span></span><br><span class="line">+<span class="comment">----+----------+--------------+</span></span><br><span class="line">| id | username | isbn         |</span><br><span class="line">+<span class="comment">----+----------+--------------+</span></span><br><span class="line">|  1 | lx1      | aaaaaaaaaaaa |</span><br><span class="line">|  2 | lx1      | bbbbbbbbbbbb |</span><br><span class="line">|  3 | lx1      | cccccccccccc |</span><br><span class="line">|  4 | lx2      | eeeeeeeeeeee |</span><br><span class="line">+<span class="comment">----+----------+--------------+</span></span><br><span class="line"></span><br><span class="line">&gt; # LEFT JOIN</span><br><span class="line">&gt; select a.bookname,a.url,b.username,a.isbn from testjoin1 a LEFT JOIN testjoin2 b ON a.isbn =b.isbn;</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line">| bookname | url                     | username | isbn         |</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line">| a 书     | http://book.com?q=a 书  | lx1      | aaaaaaaaaaaa |</span><br><span class="line">| b 书     | http://book.com?q=b 书  | lx1      | bbbbbbbbbbbb |</span><br><span class="line">| c 书     | http://book.com?q=c 书  | lx1      | cccccccccccc |</span><br><span class="line">| e 书     | http://book.com?q=e 书  | lx2      | eeeeeeeeeeee |</span><br><span class="line">| d 书     | http://book.com?q=d 书  | NULL     | dddddddddddd |</span><br><span class="line">| f 书     | http://book.com?q=f 书  | NULL     | ffffffffffff |</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line"></span><br><span class="line">&gt; # RIGHT JOIN</span><br><span class="line">&gt; select a.bookname,a.url,b.username,a.isbn from testjoin1 a RIGHT JOIN testjoin2 b ON a.isbn =b.isbn;</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line">| bookname | url                     | username | isbn         |</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line">| a 书     | http://book.com?q=a 书  | lx1      | aaaaaaaaaaaa |</span><br><span class="line">| b 书     | http://book.com?q=b 书  | lx1      | bbbbbbbbbbbb |</span><br><span class="line">| c 书     | http://book.com?q=c 书  | lx1      | cccccccccccc |</span><br><span class="line">| e 书     | http://book.com?q=e 书  | lx2      | eeeeeeeeeeee |</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line"></span><br><span class="line">&gt; # INNER JOIN</span><br><span class="line">&gt; select a.bookname,a.url,b.username,a.isbn from testjoin1 a INNER JOIN testjoin2 b ON a.isbn =b.isbn;</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line">| bookname | url                     | username | isbn         |</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br><span class="line">| a 书     | http://book.com?q=a 书  | lx1      | aaaaaaaaaaaa |</span><br><span class="line">| b 书     | http://book.com?q=b 书  | lx1      | bbbbbbbbbbbb |</span><br><span class="line">| c 书     | http://book.com?q=c 书  | lx1      | cccccccccccc |</span><br><span class="line">| e 书     | http://book.com?q=e 书  | lx2      | eeeeeeeeeeee |</span><br><span class="line">+<span class="comment">----------+-------------------------+----------+--------------+</span></span><br></pre></td></tr></table></figure>
+<p>连接查询将查询多个表中相互关联的行，内连接时，只返回符合查询条件和连接条件的行。如果要返回没有关联的行中数据，即返回查询结果集合中不仅包含符合连接条件的行而且还包括左表（左外连接或左连接）、右表（右外连接或右连接）或两个边连接（全外连接）中的所有数据行，这时就要用到外连接查询。</p>
+<p>外连接分为：左外连接、右外连接</p>
+<ul>
+<li>LEFT JOIN（左连接）：返回左表中的所有记录和右表中与连接字段相等的记录。</li>
+<li>RIGTH JOIN（右连接）：返回右表中的所有记录和右表中与连接字段相等的记录。 </li>
+</ul>
+<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><p>子查询是指一个查询语句嵌套在另一个查询语句内部的查询。在 SELECT 子句中先计算子查询，子查询结果作为外层另一个查询的过滤条件，查询可以基于一个表或者多个表。子查询中常用的操作符有 <code>ANY</code>(<code>SOME</code>)、<code>ALL</code>、<code>IN</code>、<code>EXISTS</code>；</p>
+<h4 id="ANY-SOME"><a href="#ANY-SOME" class="headerlink" title="ANY(SOME)"></a>ANY(SOME)</h4><p>ANY 和 SOME 是同义词，表示满足其中任一条件，他们允许创建一个表达式对子查询的返回值进行比较，只要满足内层子查询中的任何一个比较条件，就返回一个结果作为外层查询的条件。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE TABLE tb1 (num1 INT NOT NULL);</span><br><span class="line">&gt; CREATE TABLE tb2 (num2 INT NOT NULL);</span><br><span class="line">&gt; INSERT INTO tb1 VALUES (1),(5),(13),(27);</span><br><span class="line">&gt; INSERT INTO tb2 VALUES (6),(14),(11),(20);</span><br><span class="line"></span><br><span class="line">&gt; SELECT num1 FROM tb1 WHERE num1 &gt; ANY (SELECT num2 from tb2);</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| num1 |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">|   13 |</span><br><span class="line">|   27 |</span><br><span class="line">+<span class="comment">------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="ALL"><a href="#ALL" class="headerlink" title="ALL"></a>ALL</h4><p>使用 ALL 关键字时，需要同时满足所有内层查询的条件。</p>
+<p>ALL 关键字位于比较操作符的后面，表示与子查询返回的所有值比较为 TRUE ，则返回 TRUE；</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT num1 FROM tb1 WHERE num1 &gt; ALL (SELECT num2 from tb2);</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| num1 |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">|   27 |</span><br><span class="line">+<span class="comment">------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="EXISTS"><a href="#EXISTS" class="headerlink" title="EXISTS"></a>EXISTS</h4><p>EXISTS 关键字后面的参数是一个任意的子查询，系统对子查询进行运算以判断它是否返回行，如果至少返回一行，则 EXISTS 的结果为 TRUE，此时外层查询语句将进行查询；如果没有返回任何行，那么 EXISTS 返回的结果是 false，此时外层语句将不进行查询。</p>
+<h4 id="IN"><a href="#IN" class="headerlink" title="IN"></a>IN</h4><p>用 IN 关键字进行子查询时，内层查询语句只返回一个数据列，这个数据列里的值将提供给外层查询语句进行比较操作。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT c_id FROM orders WHERE o_num IN (SELECT o_num FROM orderitems WHERE f_id='c0');</span><br></pre></td></tr></table></figure>
+<h4 id="带比较运算的子查询"><a href="#带比较运算的子查询" class="headerlink" title="带比较运算的子查询"></a>带比较运算的子查询</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT s_id,f_name FROM fruits</span><br><span class="line">    WHERE s_id=</span><br><span class="line">    (<span class="keyword">SELECT</span> s1,s_id <span class="keyword">FROM</span> suppliers <span class="keyword">AS</span> s1 <span class="keyword">WHERE</span> s1.s_city=<span class="string">'Tianjin'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="合并查询结果-UNION"><a href="#合并查询结果-UNION" class="headerlink" title="合并查询结果 UNION"></a>合并查询结果 UNION</h3><p>使用 UNION 关键字，可以给出多条 SELECT 语句，并将它们的结果组合成一个结果集。合并时，两个表对应的列数和数据类型必须相同。SELECT 语句之间使用 UNION 或者 UNION ALL 关键字分隔，不使用关键字 ALL，执行的时候会删除重复的记录，所有返回的行都是唯一的。<strong>使用关键字 ALL 的作用是不删除重复行也不对结果进行自动排序。</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT isbn FROM testjoin1 UNION ALL SELECT isbn FROM testjoin2;;</span><br><span class="line">  +<span class="comment">--------------+</span></span><br><span class="line">  | isbn         |</span><br><span class="line">  +<span class="comment">--------------+</span></span><br><span class="line">  | aaaaaaaaaaaa |</span><br><span class="line">  | bbbbbbbbbbbb |</span><br><span class="line">  | cccccccccccc |</span><br><span class="line">  | dddddddddddd |</span><br><span class="line">  | eeeeeeeeeeee |</span><br><span class="line">  | ffffffffffff |</span><br><span class="line">  | aaaaaaaaaaaa |</span><br><span class="line">  | bbbbbbbbbbbb |</span><br><span class="line">  | cccccccccccc |</span><br><span class="line">  | eeeeeeeeeeee |</span><br><span class="line">  +<span class="comment">--------------+</span></span><br><span class="line"></span><br><span class="line">&gt; SELECT isbn FROM testjoin1 UNION  SELECT isbn FROM testjoin2;</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">| isbn         |</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">| aaaaaaaaaaaa |</span><br><span class="line">| bbbbbbbbbbbb |</span><br><span class="line">| cccccccccccc |</span><br><span class="line">| dddddddddddd |</span><br><span class="line">| eeeeeeeeeeee |</span><br><span class="line">| ffffffffffff |</span><br><span class="line">+<span class="comment">--------------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用正则表达式查询"><a href="#使用正则表达式查询" class="headerlink" title="使用正则表达式查询"></a>使用正则表达式查询</h3><p>使用关键字 REGEXP<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM fruits WHERE f_name REGEXP '^b'; # 查询 f_name 以b开头的字符串</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/02/25/mysql账户、权限、访问控制管理/" class="pre-post btn btn-default" title="mysql账户、权限、访问控制管理">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">mysql账户、权限、访问控制管理</span>
+        </a>
+    
+    
+        <a href="/2019/02/22/mysql插入更新与删除数据/" class="next-post btn btn-default" title="mysql插入更新与删除数据">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">mysql插入更新与删除数据</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE-条件判断符"><span class="toc-text">WHERE 条件判断符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带-IN-关键字查询"><span class="toc-text">带 IN 关键字查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带-BETWEEN-AND-的范围查询"><span class="toc-text">带 BETWEEN AND 的范围查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询空值"><span class="toc-text">查询空值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带-AND-的多条件查询"><span class="toc-text">带 AND 的多条件查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带-OR-的多条件查询"><span class="toc-text">带 OR 的多条件查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询结果不重复"><span class="toc-text">查询结果不重复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对查询结果排序"><span class="toc-text">对查询结果排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多列排序"><span class="toc-text">多列排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分组查询"><span class="toc-text">分组查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在-GROUP-BY-子句中使用-WITH-ROLLUP"><span class="toc-text">在 GROUP BY 子句中使用 WITH ROLLUP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GROUP-BY-和-ORDER-BY-一起使用"><span class="toc-text">GROUP BY 和 ORDER BY 一起使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-LIMIT-限制查询结果的数量"><span class="toc-text">使用 LIMIT 限制查询结果的数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接查询"><span class="toc-text">连接查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#内连接查询-INNER-JOIN"><span class="toc-text">内连接查询 INNER JOIN</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子查询"><span class="toc-text">子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ANY-SOME"><span class="toc-text">ANY(SOME)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ALL"><span class="toc-text">ALL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EXISTS"><span class="toc-text">EXISTS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IN"><span class="toc-text">IN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带比较运算的子查询"><span class="toc-text">带比较运算的子查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合并查询结果-UNION"><span class="toc-text">合并查询结果 UNION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用正则表达式查询"><span class="toc-text">使用正则表达式查询</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

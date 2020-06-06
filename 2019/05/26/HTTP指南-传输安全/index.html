@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>HTTP指南-传输安全 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="HTTP指南-传输安全">
+            
+	            HTTP指南-传输安全
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/http">
+            http
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/http" title="http">
+                        http
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/05/26</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="1-HTTP-加密-认证-完整性保护-HTTPS"><a href="#1-HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="1 HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>1 HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h2><p>HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用 SSL 和 TLS 协议代替。</p>
+<p>通常， HTTP 直接和 TCP 通信。当使用 SSL 时，则演变成先和 SSL 通信，再由 SSL 和 TCP 通信了。即，HTTPS 就是身披 SSL 协议这层外壳的 HTTP。</p>
+<h2 id="2-HTTPS-的安全通信机制"><a href="#2-HTTPS-的安全通信机制" class="headerlink" title="2 HTTPS 的安全通信机制"></a>2 HTTPS 的安全通信机制</h2><div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/209af313-2982-4d27-83a5-8ed7d3e8f0e0_QQ20190527-160120-https安全通信机制.png" alt="HTTPS 的安全通信机制"><p class="img-desc">HTTPS 的安全通信机制</p></div>
+
+<h3 id="2-1-通信过程"><a href="#2-1-通信过程" class="headerlink" title="2.1 通信过程"></a>2.1 通信过程</h3><ol>
+<li>客户端通过发送 Client Hello 报文开始 SSL 通信。报文中包含客户端支持的 SSL 的指定版本、加密组件（Cipher suite）列表（所使用的加密算法及秘钥长度）。</li>
+<li>服务器可进行 SSL 通信时，会以 Server Hello 报文作为应对答。和客户端一样，在报文中包含 SSL 版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的。</li>
+<li>之后服务器发送 Certificate 报文。报文中包含公开密钥证书。</li>
+<li>最后服务器发送 Server Hello Done 报文通知客户端，最初阶段的 SSL 握手协商部分结束。</li>
+<li>SSL 第一次握手结束之后，客户端以 Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 Pre-master secret 的随机密码串。该报文已用步骤3中的公开密钥进行加密。</li>
+<li>接着客户端继续发送 Change Cipher Spec 报文。该报文会提示服务器，在此报文之后的通信会采用 Pre-master secret 密钥加密。 </li>
+<li>客户端发送 Finished 报文。该报文包含连接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准。</li>
+<li>服务器同样发送 Change Cipher Spec 报文。</li>
+<li>服务器同样发送 Finished 报文。</li>
+<li>服务器和客户端的 Finished 报文交换完毕之后，SSL 连接就算建立完成。当然，通信会受到 SSL 的保护。从此处开始进行应用层协议的通信，及发送 HTTP 请求。</li>
+<li>应用层协议通信，及发送 HTTP 响应。</li>
+<li>最后由客户端断开连接。断开连接的时，发送 close_notify 报文。上图做了省略，这部之后再发送 TCP FIN 报文来关闭与 TCP 的通信。</li>
+</ol>
+<p>在以上的流程中，应用层发送数据时会附加一种叫做 MAC（Message Authentication Code）的报文摘要。MAC能够查知报文是否遭到篡改，从而保护报文的完整性。</p>
+<h3 id="2-2-SSL-和-TLS"><a href="#2-2-SSL-和-TLS" class="headerlink" title="2.2 SSL 和 TLS"></a>2.2 SSL 和 TLS</h3><p>HTTPS 使用 SSL 和 TLS 这两个协议。</p>
+<p>SSL 技术最初是由网景先倡导的，开发过 SSL3.0 之前的版本。目前主导权已经转移到 IETF 手中。</p>
+<p>IETF 以 SSL 3.0 为基准，后又制定了 TLS1.0、TLS1.1 和 TLS1.2。TLS 是以 SSL 为原型开发的协议，有时会统一称该协议为 SSL。当前主流的版本是 SSL3.0 和 TLS 1.0。</p>
+<p>由于 SSL1.0在设计之初被发现出了问题，就没有实际使用。SSL2.0 也被发现存在问题，所以很多浏览器直接废除了该协议版本。</p>
+<h3 id="2-2-SSL-慢吗"><a href="#2-2-SSL-慢吗" class="headerlink" title="2.2 SSL 慢吗"></a>2.2 SSL 慢吗</h3><p>SSL 的慢分两种。一种是指通信慢。另一种是指由于大量消耗 CPU 及内存等资源，导致处理速度变慢。</p>
+<p>和使用 HTTP 相比，网络负载可能会变慢 2 到 100 倍。出去和 TCP 连接、发送 HTTP 请求。响应之外，还必须进行 SSL 通信，因此整体上处理通信量不可避免会增加。</p>
+<p>另一点是 SSL 必须进行加密处理。在服务器和客户端都需要进行加密和解密的运算处理。因此从结果上讲，比起 HTTP 会更多地消耗服务器和客户端硬件资源，导致负载增强。</p>
+<p>针对速度变慢，并没有根本性的解决方案，可以使用 SSL 加速器这种（专用服务器）硬件来改善问题。该硬件为 SSL通信专用硬件，相对软件来讲，能够提高数倍 SSL 的计算速度。仅在 SSL 处理时发挥 SSL 加速器的功效，以分担负载。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3 总结"></a>3 总结</h2><ul>
+<li>明文通信的危害<br>  被监听、被篡改、被冒充</li>
+<li>HTTPS 加密特点<br>  每次会话，客户端和服务端会生成一个会话密钥，用密钥加密信息，密钥是对称加密，运算速度快。公钥只加密会话密钥本身，减少加密运算消耗的时间。</li>
+<li>客户端服务器端建立连接的过程<ul>
+<li>TLS Client =&gt; （协议版本、客户端生成的随机数、支持的加密算法、支持的压缩算法）<ul>
+<li>ClientHello</li>
+</ul>
+</li>
+<li>TLS Server =&gt; （确认使用的协议版本、服务器生成的随机数、确认使用的加密方法、服务器证书）<ul>
+<li>ServerHello</li>
+<li>ServerCertificate</li>
+<li>ServerKeyExchange</li>
+<li>CertificateRequest</li>
+<li>ServerHelloDone</li>
+</ul>
+</li>
+<li>TLS Client =&gt; （客户端生成的随机数、编码改变通知、客户端握手结束通知）<ul>
+<li>ClientCertificate</li>
+<li>ClientKeyExchange</li>
+<li>CertificateVerify</li>
+<li>ChangeCipherSpec</li>
+<li>Finished</li>
+</ul>
+</li>
+<li>TLS Server =&gt;（编码改变通知、服务器握手结束通知）<ul>
+<li>ClientCertificate</li>
+<li>ClientKeyExchange</li>
+<li>CertificateVerify</li>
+<li>ChangeCipherSpec</li>
+<li>Finished</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-相关参考"><a href="#4-相关参考" class="headerlink" title="4 相关参考"></a>4 相关参考</h2><ul>
+<li>图解 HTTP</li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">SSL/TLS协议运行机制的概述</a> - 阮一峰</li>
+</ul>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/05/28/HTTP指南-用户身份认证/" class="pre-post btn btn-default" title="HTTP指南-用户身份认证">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">HTTP指南-用户身份认证</span>
+        </a>
+    
+    
+        <a href="/2019/05/25/HTTP指南-HTTP首部/" class="next-post btn btn-default" title="HTTP指南-HTTP首部">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">HTTP指南-HTTP首部</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTTP-加密-认证-完整性保护-HTTPS"><span class="toc-text">1 HTTP + 加密 + 认证 + 完整性保护 = HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-HTTPS-的安全通信机制"><span class="toc-text">2 HTTPS 的安全通信机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-通信过程"><span class="toc-text">2.1 通信过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-SSL-和-TLS"><span class="toc-text">2.2 SSL 和 TLS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-SSL-慢吗"><span class="toc-text">2.2 SSL 慢吗</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-总结"><span class="toc-text">3 总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-相关参考"><span class="toc-text">4 相关参考</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

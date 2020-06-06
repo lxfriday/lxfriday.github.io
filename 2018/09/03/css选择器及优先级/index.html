@@ -1,0 +1,478 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>CSS选择器及优先级 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="CSS选择器及优先级">
+            
+	            CSS选择器及优先级
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/css">
+            css
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/css选择器优先级" title="css选择器优先级">
+                        css选择器优先级
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2018/09/03</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="CSS-三大特性"><a href="#CSS-三大特性" class="headerlink" title="CSS 三大特性"></a>CSS 三大特性</h2><ul>
+<li>继承：即子类元素继承父类的样式</li>
+<li>优先级：是指不同类别样式的权重比较</li>
+<li>层叠：当数量相同时，通过层叠的方式进行处理（后者覆盖前者）</li>
+</ul>
+<h2 id="CSS-选择器分类"><a href="#CSS-选择器分类" class="headerlink" title="CSS 选择器分类"></a>CSS 选择器分类</h2><h3 id="id-选择器"><a href="#id-选择器" class="headerlink" title="id 选择器"></a>id 选择器</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#selector</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="class-选择器-类"><a href="#class-选择器-类" class="headerlink" title="class 选择器(类)"></a>class 选择器(类)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.selector</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="标签选择器-div-span"><a href="#标签选择器-div-span" class="headerlink" title="标签选择器(div span)"></a>标签选择器(div span)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="全局选择器（-）"><a href="#全局选择器（-）" class="headerlink" title="全局选择器（*）"></a>全局选择器（*）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="组合选择器-head-head-fixed"><a href="#组合选择器-head-head-fixed" class="headerlink" title="组合选择器(.head.head-fixed)"></a>组合选择器(.head.head-fixed)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.head</span><span class="selector-class">.head-fixed</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="伪类、伪元素"><a href="#伪类、伪元素" class="headerlink" title="伪类、伪元素"></a>伪类、伪元素</h3><h4 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h4><ul>
+<li><code>:hover</code> 鼠标悬浮在元素上方时，向元素添加样式（ <code>:hover</code> 和 <code>:active</code>同时用时，<code>:hover</code> 会覆盖 <code>:active</code>）</li>
+<li><code>:visited</code> 向已经被访问的链接添加样式</li>
+<li><code>:link</code> 向未被访问的链接添加样式</li>
+<li><code>:active</code> 向被激活的元素添加样式</li>
+<li><code>:focus</code> 向拥有键盘输入焦点的元素添加样式</li>
+<li><code>:first-child</code> 向元素的第一个子元素添加样式</li>
+<li><code>:lang</code> <code>:lang(no)</code> 向带有指定 lang 属性的元素添加样式</li>
+<li><code>:first-child</code> <code>p:first-child</code> 选择属于父元素的第一个子元素的每个 <code>&lt;p&gt;</code> 元素</li>
+<li><code>:first-of-type</code> <code>p:first-of-type</code> 选择属于其父元素的首个 <code>&lt;p&gt;</code> 元素的每个 <code>&lt;p&gt;</code> 元素 </li>
+<li><code>:last-of-type</code> <code>p:last-of-type</code> 选择属于其父元素的最后 <code>&lt;p&gt;</code> 元素的每个 <code>&lt;p&gt;</code> 元素 </li>
+<li><code>:only-of-type</code> <code>p:only-of-type</code> 选择属于其父元素唯一的 <code>&lt;p&gt;</code> 元素的每个 <code>&lt;p&gt;</code> 元素 </li>
+<li><code>:only-child</code> <code>p:only-child</code> 选择属于其父元素的唯一子元素的每个 <code>&lt;p&gt;</code> 元素</li>
+<li><code>:nth-child(n)</code> 选择第n个子元素</li>
+<li><code>:nth-last-child(n)</code> 从最后一个开始计数的的第n个（倒数第n个）</li>
+<li><code>:nth-of-type(n)</code> <code>p:nth-of-type(3)</code> 其父元素第3个 <code>&lt;p&gt;</code> 元素的所有 <code>&lt;p&gt;</code> 元素</li>
+<li><code>:nth-last-of-type(n)</code> <code>p:nth-last-of-type</code> 从最后一个开始计数</li>
+<li><code>:last-child</code> <code>p:last-child</code> 父元素的最后一个 <code>&lt;p&gt;</code> 元素</li>
+<li><code>:root</code> 根元素 <code>&lt;html&gt;</code></li>
+<li><code>:empty</code> <code>p:empty</code> 选择没有子元素的每个空元素</li>
+<li><code>:enabled</code> <code>input:enabled</code> 选择启用的 <code>&lt;input&gt;</code> 元素</li>
+<li><code>:disabled</code> <code>input:disabled</code> 选择禁用的 <code>&lt;input&gt;</code> 元素</li>
+<li><code>:checked</code> <code>input:checked</code> 选择每个被选中的 <code>&lt;input&gt;</code> 元素</li>
+<li><code>:not(selector)</code> <code>:not(p)</code> 选择非 <code>&lt;p&gt;</code> 元素的每个元素</li>
+<li><code>::selection</code> 选择被用户选取的元素部分</li>
+<li><code>:before</code> 可以在元素的内容前面插入新内容</li>
+<li><code>:after</code> 可以在元素的内容之后插入新内容</li>
+<li><code>:first-line</code> 用于向文本的首行设置特殊样式<br>  下面的属性可应用于 <code>:first-line</code> 伪元素<ul>
+<li>font</li>
+<li>color</li>
+<li>background</li>
+<li>word-spacing</li>
+<li>letter-spacing</li>
+<li>text-decoration</li>
+<li>vertical-align</li>
+<li>text-transform</li>
+<li>line-height</li>
+<li>clear</li>
+</ul>
+</li>
+<li><code>:first-letter</code> 向文本的首字母设置特殊样式<br>  下面的属性可应用于 <code>first-letter</code> 伪元素<ul>
+<li>font</li>
+<li>color</li>
+<li>background</li>
+<li>margin</li>
+<li>padding</li>
+<li>border</li>
+<li>text-decoration</li>
+<li>vertical-align (仅当 float 为 none 时)</li>
+<li>text-transform</li>
+<li>line-height</li>
+<li>float</li>
+<li>clear</li>
+</ul>
+</li>
+</ul>
+<h3 id="属性选择器"><a href="#属性选择器" class="headerlink" title="属性选择器"></a>属性选择器</h3><ul>
+<li><code>[attr^=value]</code> <code>a[src^=&quot;https&quot;]</code> 选择其 src 属性值以 “https” 开头的每个 <code>&lt;a&gt;</code> 元素，等同于 <code>a[src^=https]</code></li>
+<li><code>[attr*=value]</code> <code>a[src*=&quot;https&quot;]</code> 选择其 src 属性值包含 “https” 的每个 <code>&lt;a&gt;</code> 元素，等同于 <code>a[src*=https]</code></li>
+<li><code>[attr$=value]</code> <code>a[src$=&quot;https&quot;]</code> 选择其 src 属性值以 “https” 开头的每个 <code>&lt;a&gt;</code> 元素，等同于 <code>a[src$=https]</code></li>
+<li><code>[attr]</code> <code>[target]</code> 选择带有 target 属性的所有元素</li>
+<li><code>[attr=value]</code> <code>[target=_blank]</code> 选择 <code>target=&quot;_blank&quot;</code> 的所有元素</li>
+</ul>
+<h3 id="关系选择符-、-gt-、-、’-‘、"><a href="#关系选择符-、-gt-、-、’-‘、" class="headerlink" title="关系选择符(+、 &gt;、 ~、’ ‘、 ,)"></a>关系选择符(+、 &gt;、 ~、’ ‘、 ,)</h3><ul>
+<li><code>+</code> <code>div+span</code> 选择所有 <code>&lt;div&gt;</code> 元素后面紧接着的 <code>&lt;span&gt;</code> 元素（选中 <code>&lt;div&gt;</code> 元素后面的第一个 <code>&lt;span&gt;</code> 元素）</li>
+<li><code>&gt;</code> <code>div&gt;span</code> 选择 <code>&lt;div&gt;</code> 的所有直接 <code>&lt;span&gt;</code> 元素</li>
+<li><code>~</code> <code>div~span</code> 选择前面有 <code>&lt;div&gt;</code> 元素的每个 <code>&lt;span&gt;</code> 元素</li>
+<li>空格 <code>div span</code> 选择 <code>&lt;div&gt;</code> 元素的所有 <code>&lt;span&gt;</code> 子元素</li>
+<li>紧挨着 <code>div.container</code> 选择所有有 <code>.container</code> 类选择器的 <code>&lt;div&gt;</code> 元素</li>
+<li><code>,</code> <code>div,span,h1,h2</code> 选择所有的 <code>&lt;div&gt;</code> <code>&lt;span&gt;</code> <code>&lt;h1&gt;</code> <code>&lt;h2&gt;</code></li>
+</ul>
+<h2 id="CSS-优先级"><a href="#CSS-优先级" class="headerlink" title="CSS 优先级"></a>CSS 优先级</h2><p>当两个规则都作用到了同一个html元素上时，如果定义的属性有冲突，则应该要按照一套规则来进行。</p>
+<p>浏览器通过 <strong>优先级</strong> 来判断哪一些属性值与一个元素最为相关，从而在该元素上应用这些属性值。优先级是基于不同种类选择器组成的匹配规则。</p>
+<ol>
+<li><code>!important</code> 会覆盖页面内任何位置定义的元素样式</li>
+<li>内联样式</li>
+<li>id选择器</li>
+<li>class选择器</li>
+<li>标签选择器</li>
+<li>通配符选择器</li>
+<li>浏览器自定义或者继承</li>
+</ol>
+<h3 id="优先级是如何计算的"><a href="#优先级是如何计算的" class="headerlink" title="优先级是如何计算的"></a>优先级是如何计算的</h3><p>优先级就是分配给指定的CSS声明的一个权重，它由 <strong>匹配的选择器</strong> 中的每一种选择器的类型的 <strong>数值</strong> 决定。</p>
+<p>当优先级与多个CSS声明中任意一个声明的优先级相等的时候，CSS中最后的那个声明将会应用到元素上（优先级都相同的则应用最后一个）。</p>
+<p>当同一个元素有多个声明的时候，优先级才会有意义。因为每一个直接作用于元素的CSS规则总是会接管/覆盖（take over）该元素从祖先元素继承而来的规则。</p>
+<h3 id="important-规则"><a href="#important-规则" class="headerlink" title="!important 规则"></a><code>!important</code> 规则</h3><p>当在一个样式声明中使用 <code>!important</code> 规则时，此声明将覆盖任何其他声明。当两条互相冲突的带有 <code>!important</code> 规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。</p>
+<p><strong>怎样覆盖 <code>!important</code></strong></p>
+<ul>
+<li>只需再添加一条带 <code>!important</code> 规则的CSS规则，给这个选择器更高的优先级（添加一个标签，ID或类）。</li>
+<li>使用相同的选择器，但是置于已有样式之后。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.cnblogs.com/zxjwlh/p/6213239.html" target="_blank" rel="noopener">CSS 选择器优先级总结</a></li>
+<li><a href="http://www.w3school.com.cn/cssref/css_selectors.asp" target="_blank" rel="noopener">CSS 选择器参考手册</a></li>
+<li><a href="http://www.w3school.com.cn/css/css_pseudo_classes.asp" target="_blank" rel="noopener">伪类</a></li>
+<li><a href="http://www.w3school.com.cn/css/css_pseudo_elements.asp" target="_blank" rel="noopener">伪元素</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Specificity" target="_blank" rel="noopener">MDN 优先级是如何计算的？
+</a></li>
+<li><a href="https://blog.csdn.net/jinboker/article/details/52126021" target="_blank" rel="noopener">为什么 CSS 选择器是从右往左解析</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/09/04/javascript中的error类型/" class="pre-post btn btn-default" title="js中的error类型">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">js中的error类型</span>
+        </a>
+    
+    
+        <a href="/2018/09/02/小程序自定义导航条之后自己设计左侧胶囊按钮需要在不同平台适配/" class="next-post btn btn-default" title="小程序自定义导航条之后自己设计左侧胶囊按钮需要在不同平台适配">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">小程序自定义导航条之后自己设计左侧胶囊按钮需要在不同平台适配</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-三大特性"><span class="toc-text">CSS 三大特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-选择器分类"><span class="toc-text">CSS 选择器分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#id-选择器"><span class="toc-text">id 选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class-选择器-类"><span class="toc-text">class 选择器(类)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标签选择器-div-span"><span class="toc-text">标签选择器(div span)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局选择器（-）"><span class="toc-text">全局选择器（*）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组合选择器-head-head-fixed"><span class="toc-text">组合选择器(.head.head-fixed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伪类、伪元素"><span class="toc-text">伪类、伪元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#伪类"><span class="toc-text">伪类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性选择器"><span class="toc-text">属性选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关系选择符-、-gt-、-、’-‘、"><span class="toc-text">关系选择符(+、 &gt;、 ~、’ ‘、 ,)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-优先级"><span class="toc-text">CSS 优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#优先级是如何计算的"><span class="toc-text">优先级是如何计算的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#important-规则"><span class="toc-text">!important 规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

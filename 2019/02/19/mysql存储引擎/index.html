@@ -1,0 +1,461 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>mysql存储引擎 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="mysql存储引擎">
+            
+	            mysql存储引擎
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/数据库">
+            数据库
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/02/19</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>使用 <code>SHOW ENGINES;</code> 查看当前版本的数据库支持的存储引擎</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 查看当前的数据库版本</span><br><span class="line">&gt; SELECT VERSION();</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| VERSION() |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| 5.7.23    |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line"></span><br><span class="line">&gt; SHOW ENGINES;</span><br><span class="line">+<span class="comment">--------------------+---------+----------------------------------------------------------------+--------------+------+------------+</span></span><br><span class="line">| Engine             | Support | <span class="keyword">Comment</span>                                                        | Transactions | XA   | Savepoints |</span><br><span class="line">+<span class="comment">--------------------+---------+----------------------------------------------------------------+--------------+------+------------+</span></span><br><span class="line">| <span class="keyword">InnoDB</span>             | <span class="keyword">DEFAULT</span> | Supports transactions, <span class="keyword">row</span>-<span class="keyword">level</span> locking, <span class="keyword">and</span> <span class="keyword">foreign</span> <span class="keyword">keys</span>     | YES          | YES  | YES        |</span><br><span class="line">| MRG_MYISAM         | YES     | Collection <span class="keyword">of</span> identical MyISAM <span class="keyword">tables</span>                          | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| <span class="keyword">MEMORY</span>             | YES     | <span class="keyword">Hash</span> based, <span class="keyword">stored</span> <span class="keyword">in</span> <span class="keyword">memory</span>, useful <span class="keyword">for</span> <span class="keyword">temporary</span> <span class="keyword">tables</span>      | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| BLACKHOLE          | YES     | /dev/<span class="literal">null</span> <span class="keyword">storage</span> <span class="keyword">engine</span> (anything you write <span class="keyword">to</span> it disappears) | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| MyISAM             | YES     | MyISAM <span class="keyword">storage</span> <span class="keyword">engine</span>                                          | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| CSV                | YES     | CSV <span class="keyword">storage</span> <span class="keyword">engine</span>                                             | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| <span class="keyword">ARCHIVE</span>            | YES     | <span class="keyword">Archive</span> <span class="keyword">storage</span> <span class="keyword">engine</span>                                         | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| PERFORMANCE_SCHEMA | YES     | <span class="keyword">Performance</span> <span class="keyword">Schema</span>                                             | <span class="keyword">NO</span>           | <span class="keyword">NO</span>   | <span class="keyword">NO</span>         |</span><br><span class="line">| FEDERATED          | <span class="keyword">NO</span>      | Federated MySQL <span class="keyword">storage</span> <span class="keyword">engine</span>                                 | <span class="literal">NULL</span>         | <span class="literal">NULL</span> | <span class="literal">NULL</span>       |</span><br><span class="line">+<span class="comment">--------------------+---------+----------------------------------------------------------------+--------------+------+------------+</span></span><br><span class="line"></span><br><span class="line">&gt; <span class="comment"># 查看当前的默认存储引擎相关信息</span></span><br><span class="line">&gt; <span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'%storage_engine%'</span>; </span><br><span class="line">+<span class="comment">----------------------------------+--------+</span></span><br><span class="line">| Variable_name                    | Value  |</span><br><span class="line">+<span class="comment">----------------------------------+--------+</span></span><br><span class="line">| default_storage_engine           | InnoDB |</span><br><span class="line">| default_tmp_storage_engine       | InnoDB |</span><br><span class="line">| disabled_storage_engines         |        |</span><br><span class="line">| internal_tmp_disk_storage_engine | InnoDB |</span><br><span class="line">+<span class="comment">----------------------------------+--------+</span></span><br></pre></td></tr></table></figure>
+<h2 id="1、InnoDB-存储引擎"><a href="#1、InnoDB-存储引擎" class="headerlink" title="1、InnoDB 存储引擎"></a>1、InnoDB 存储引擎</h2><p>InnoDB 是事物型数据的首选引擎，支持事务安全表（ACID），支持行锁定和外键。 MySQL 5.5.5 之后，<strong>InnoDB作为默认存储引擎</strong>。</p>
+<ol>
+<li>InnoDB 给 MySQL 提供了具有提交、回滚和崩溃恢复能力的事务安全（ACID兼容）存储引擎。</li>
+<li>InnoDB 是为提高处理巨大数据量的性能设计的。</li>
+<li>InnoDB 存储引擎为在主内存中缓存数据和索引而维持它自己的缓冲池。</li>
+<li>InnoDB 支持外键完整性约束（FOREIGN KEY）。</li>
+<li>InnoDB 被用在众多需要高性能的大型数据库站点上。<ul>
+<li>InnoDB 不创建目录，使用时，MySQL 将在 MySQL 数据目录下创建一个名为 ibdata1 的 10MB 大小的自动扩展数据文件，以及名为 ib_logfile0 和 ib_logfile1 的两个 5MB 大小的日志文件。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2、MyISAM-存储引擎"><a href="#2、MyISAM-存储引擎" class="headerlink" title="2、MyISAM 存储引擎"></a>2、MyISAM 存储引擎</h2><p>MyISAM 是在 Web、数据仓库和其他应用环境下最常使用的存储引擎之一。MyISAM 拥有较高的插入、查询速度，但不支持事务。</p>
+<ol>
+<li>在支持大文件的文件系统和操作系统上，大文件（达 63 位文件长度）被支持。</li>
+<li>当把删除和更新及插入操作混合使用的时候，将产生更少的碎片。</li>
+<li>每个 MyISAM 表的最大索引数是 64 ，可以通过编译来改变，每个索引最大的列数是 16 。</li>
+<li>最大的键长度是 1000 字节，也可以通过编译来改变。</li>
+<li><code>BLOB</code> 和 <code>TEXT</code> 列可以被索引。</li>
+<li>被允许在索引的列中出现 <code>NULL</code> 值，这个值占每个键的 0 ~ 1 个字节。</li>
+<li>每个 MyISAM 类型的表都有一个 <code>AUTO_INCREMENT</code> 的内部列，当执行 <code>INSERT</code> 和 <code>UPDATE</code> 操作的时候， <code>AUTO_INCREMENT</code> 列将会被刷新。所以 MyISAM 类型表的 <code>AUTO_INCREMENT</code> 列更新比 InnoDB 类型的 <code>AUTO_INCREMENT</code> 更快。</li>
+<li>可以把数据文件和索引文件放在不同目录。</li>
+<li>每个字符列可以有不同的字符集。</li>
+<li><code>VARCHAR</code> 和 <code>CHAR</code> 列的长度可以多达 64KB。</li>
+</ol>
+<p>使用 MyISAM 引擎创建数据库，将产生3个文件。文件的名字以表的名字开始，扩展名可以指出文件类型：表定义文件为 <strong>.frm</strong> ，数据文件的扩展名为 <strong>.MYD(MYData)</strong> ，索引文件的扩展名是 <strong>.MYI(MYIndex)</strong>。</p>
+<h2 id="3、MEMORY-存储引擎"><a href="#3、MEMORY-存储引擎" class="headerlink" title="3、MEMORY 存储引擎"></a>3、MEMORY 存储引擎</h2><p>MEMORY 存储引擎可以将表中的数据存储到内存中，为查询和引用其他表数据提供快速访问。</p>
+<ol>
+<li>可以有多达 32 个索引，每个索引有 16 列，以及 500 字节的最大键长度。</li>
+<li>可以执行 <code>HASH</code> 和 <code>BTREE</code> 索引。</li>
+<li>可以在 MEMORY 表中有非唯一键。</li>
+<li>MEMORY 存储引擎不支持 <code>BLOB</code> 和 <code>TEXT</code> 列。</li>
+<li>支持 <code>AUTO_INCREMENT</code> 列和对可包含 <code>NULL</code> 值的列的索引。</li>
+<li>MEMORY 表的内容被存放在内存中，内存是 MEMORY 表和服务器在查询处理时的空闲中创建的内部表共享。</li>
+<li>当不再需要 MEMORY 表的内容时，要释放表占用的内存，应该执行 <code>DELETE FROM</code> 或 <code>TRUNCATE TABLE</code>(清除表中的所有数据) ，或者<code>DROP TABLE</code>（删除整个表）。 </li>
+</ol>
+<p>对比</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">MyISAM</th>
+<th style="text-align:center">MEMORY</th>
+<th style="text-align:center">InnoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">存储限制</td>
+<td style="text-align:center">256TB</td>
+<td style="text-align:center">RAM</td>
+<td style="text-align:center">64TB</td>
+</tr>
+<tr>
+<td style="text-align:center">支持事务</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">支持全文索引</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+</tr>
+<tr>
+<td style="text-align:center">支持数据索引</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">支持哈希索引</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">N</td>
+</tr>
+<tr>
+<td style="text-align:center">支持数据缓存</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N/A</td>
+<td style="text-align:center">Y</td>
+</tr>
+<tr>
+<td style="text-align:center">支持外键</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">Y</td>
+</tr>
+</tbody>
+</table>
+<p>注意：外键约束不能跨引擎使用。MySQL 支持多种存储引擎，每一个表都可以指定一个不同的存储引擎，但是，外键约束是用来保证数据的参照完整性的，如果表之间需要关联外键，却指定了不同的存储引擎，这些表之间是不能创建外键约束的。</p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/02/19/mysql创建、修改、删除数据表/" class="pre-post btn btn-default" title="mysql创建、修改、删除数据表">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">mysql创建、修改、删除数据表</span>
+        </a>
+    
+    
+        <a href="/2019/01/28/关系数据库MySQL入门指南/" class="next-post btn btn-default" title="关系数据库MySQL入门指南">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">关系数据库MySQL入门指南</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、InnoDB-存储引擎"><span class="toc-text">1、InnoDB 存储引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、MyISAM-存储引擎"><span class="toc-text">2、MyISAM 存储引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、MEMORY-存储引擎"><span class="toc-text">3、MEMORY 存储引擎</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>mysql数据备份与还原 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="mysql数据备份与还原">
+            
+	            mysql数据备份与还原
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/数据库">
+            数据库
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/02/26</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>数据备份是数据库管理员非常重要的工作。系统以为崩溃或者硬件的损坏都可能导致数据丢失，因此 MySQL 管理员应该定期备份数据，使得在意外情况出现时，尽可能减少损失。</p>
+<h2 id="使用-mysqldump-命令备份"><a href="#使用-mysqldump-命令备份" class="headerlink" title="使用 mysqldump 命令备份"></a>使用 mysqldump 命令备份</h2><p>mysqldump 命令可以将数据备份成一个文本文件，该文件实际上包含多个 CREATE 和 INSERT 语句，使用这些语句可以重新创建表和插入数据。</p>
+<p>基本语法格式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -u user -p password dbname [tbname[, tbname]] &gt; filename.sql</span><br></pre></td></tr></table></figure>
+<ul>
+<li>user 表示用户名称</li>
+<li>host 表示登录用户的主机名称</li>
+<li>password 为登录密码</li>
+<li>dbname 为需要备份的数据库名称</li>
+<li>tbname 为要备份的数据表</li>
+<li>filename.sql 为备份的目的文件</li>
+</ul>
+<h3 id="备份单个数据库中的所有表"><a href="#备份单个数据库中的所有表" class="headerlink" title="备份单个数据库中的所有表"></a>备份单个数据库中的所有表</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -u root -p runoob &gt; /User/lxxxxx/test.sql</span><br><span class="line">Enter password: **</span><br></pre></td></tr></table></figure>
+<p>密码输入之后，将会自动将数据导出到 /User/lxxxxx/test.sql 文件</p>
+<h3 id="备份数据库中的某个表"><a href="#备份数据库中的某个表" class="headerlink" title="备份数据库中的某个表"></a>备份数据库中的某个表</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -u user -h host -p dbname [tbname[ tbname]] &gt; filename.sql;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -u root -p booksDB books &gt; /user/lxxx/test.sql;</span><br></pre></td></tr></table></figure>
+<h3 id="备份多个数据库"><a href="#备份多个数据库" class="headerlink" title="备份多个数据库"></a>备份多个数据库</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -u user -h host -p --databases [dbname [dbname]] &gt; filename.sql;</span><br></pre></td></tr></table></figure>
+<h3 id="备份所有数据库"><a href="#备份所有数据库" class="headerlink" title="备份所有数据库"></a>备份所有数据库</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -u user -h host -p --all-databases &gt; filename.sql;</span><br></pre></td></tr></table></figure>
+<h2 id="直接复制整个数据库目录"><a href="#直接复制整个数据库目录" class="headerlink" title="直接复制整个数据库目录"></a>直接复制整个数据库目录</h2><p>因为 MySQL 表保存为文件方式，所以可以直接复制 MySQL 数据库的存储目录及文件进行备份。</p>
+<p>在 Windows 下，存放数据库的目录通常为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; C:\Documents and Settings\All Users\application Data\MySQL\MySQL Server 5.6\data</span><br></pre></td></tr></table></figure>
+<p>在 Linux 平台下，数据库目录位置通常为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; /var/lib/mysql</span><br></pre></td></tr></table></figure>
+<p>要想保持备份的一致性，备份前需要对相关表执行 <code>LOCK TABLES</code> 操作，然后对表执行 <code>FLUSH TABLES</code>。这样当复制数据库目录中的文件时，允许其他客户继续查询表。</p>
+<p><strong>这种方法虽然简单，但并不是最好的方法。因为这种方法对 InnoDB 存储引擎的表不适用。使用这种方法的数据最容易还原到相同版本的服务器中，不同的版本可能不兼容</strong></p>
+<p>在 MySQL 版本号中，第一个数字表示主版本号，主版本号码相同的 MySQL 数据库的文件格式相同。</p>
+<h2 id="使用-mysql-命令还原"><a href="#使用-mysql-命令还原" class="headerlink" title="使用 mysql 命令还原"></a>使用 mysql 命令还原</h2><p>对于已经备份的包含 CREATE、INSERT 语句的文本文件，可以使用 mysql 命令导入数据库中。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql -u user -p [dbname] &lt; filename.sql</span><br></pre></td></tr></table></figure>
+<p>filename.sql 如果是 mysqldump 工具创建的包含数据库语句的文件，执行的时候不需要指定数据库名。</p>
+<p>使用 mysql 命令将 <code>C:\backup\booksdb.sql</code> 文件中的备份导入数据库中</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql -u root -p booksDB &lt; C:\backup\booksdb.sql</span><br></pre></td></tr></table></figure>
+<p>执行该语句前，必须现在 MySQL 服务器中创建 booksDB 数据库，如果不存在此数据库，恢复过程将会出错。</p>
+<p>如果已经登录 MySQL 服务器，可以使用 <strong>source</strong> 命令导入 sql 文件。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; source filename</span><br></pre></td></tr></table></figure></p>
+<p>整个过程如下<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use booksDB;</span><br><span class="line">&gt; source C:\backup\books.sql;</span><br></pre></td></tr></table></figure></p>
+<p>命令执行之后，会列出备份文件 books 中每一条语句的执行结果。 source 命令执行成功之后， books.sql 文件中的语句会全部导入现有数据库中。</p>
+<h2 id="数据库迁移"><a href="#数据库迁移" class="headerlink" title="数据库迁移"></a>数据库迁移</h2><h3 id="相同版本的-MySQL-数据库之间的迁移"><a href="#相同版本的-MySQL-数据库之间的迁移" class="headerlink" title="相同版本的 MySQL 数据库之间的迁移"></a>相同版本的 MySQL 数据库之间的迁移</h3><p>在主版本号相同的 MySQL 数据库之间进行数据库移动，迁移过程其实就是将源数据库备份移动到目标数据库中。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -h www.a.com -u root -p password dbname | mysql -h www.b.com -u root -p password;</span><br></pre></td></tr></table></figure>
+<p>通过管道符号 “|” ，传给 mysql 命令导入主机 <a href="http://www.b.com" target="_blank" rel="noopener">www.b.com</a> 的数据库中，dbname 为要迁移的数据库名称，如果要迁移全部的数据库，可使用参数 –all-databases。</p>
+<h3 id="不同版本的-MySQL-数据库之间的迁移"><a href="#不同版本的-MySQL-数据库之间的迁移" class="headerlink" title="不同版本的 MySQL 数据库之间的迁移"></a>不同版本的 MySQL 数据库之间的迁移</h3><p>旧版本与新版本的 MySQL 可能使用不同的默认字符集。</p>
+<p>新版本对旧版本有一定的兼容性，从旧版本的 MySQL 向新版本的 MySQL 迁移时，对于 MyISAM 引擎的表，可以直接复制数据库文件，也可以使用 mysqlhotcopy 和 mysqldump 工具。对于 InnoDB 引擎的表，一般只能使用 mysqldump 将数据导出，然后使用 mysql 命令导入目标服务器上。</p>
+<h2 id="表的导出和导入"><a href="#表的导出和导入" class="headerlink" title="表的导出和导入"></a>表的导出和导入</h2><h3 id="SELECT-…-INTO-OUTFILE-‘filename’"><a href="#SELECT-…-INTO-OUTFILE-‘filename’" class="headerlink" title="SELECT … INTO OUTFILE ‘filename’"></a>SELECT … INTO OUTFILE ‘filename’</h3><p>在 MySQL 数据库中导出数据时，可以用 SELECT … INTO OUTFILE ‘filename’ 形式的 SELECT 语句把被选择的行写入一个文件中，filename 不能是一个已经存在的文件。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT columnlist FROM table WHERE condition INTO OUTFILE 'filename' [OPTION]</span><br><span class="line"></span><br><span class="line">    <span class="comment">--OPTIONS 选项</span></span><br><span class="line">    FIELDS TERMINATED BY 'value'</span><br><span class="line">    FIELDS [OPTIONALLY] ENCLOSED BY 'value'</span><br><span class="line">    FIELDS ESCAPED BY 'value'</span><br><span class="line">    LINES STARTING BY 'value'</span><br><span class="line">    LINES TERMINATED BY 'value'</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>FIELDS TERMINATED BY &#39;value&#39;</code>：设置字段之间的分隔字符，可以为单个或多个字符</li>
+<li><code>FIELDS [OPTIONALLY] ENCLOSED BY &#39;value&#39;</code>：设置字段的包围字符，只能为单个字符</li>
+<li><code>FIELDS ESCAPED BY &#39;value&#39;</code>：设置如何写入或读取特殊字符，只能为单个字符，及设置转义字符，默认为 ‘\’</li>
+<li><code>LINES STARTING BY &#39;value&#39;</code>：设置每行数据开头的字符，可以为单个或多个字符，默认值为 ‘\n’</li>
+<li><code>LINES TERMINATED BY &#39;value&#39;</code>：设置每行数据皆为的字符，可以为单个或多个字符，默认为 ‘\n’</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM test.person INTO OUTFILE '/User/lxxxx/test.sql';</span><br><span class="line"></span><br><span class="line">1   Green   21  lawyer</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT * FROM test.person INTO OUTFILE '/User/lxxxx/test.sql'</span><br><span class="line">    FIELDS</span><br><span class="line">        TERMINATED BY ','</span><br><span class="line">        ENCLOSED BY '\"'</span><br><span class="line">        ESCAPED BY '\''</span><br><span class="line">    LINES</span><br><span class="line">        TERMINATED BY '\r\n';</span><br><span class="line"></span><br><span class="line">"1","Green","21","lawyer"</span><br></pre></td></tr></table></figure>
+<h3 id="使用-mysqldump-命令导出文本文件"><a href="#使用-mysqldump-命令导出文本文件" class="headerlink" title="使用 mysqldump 命令导出文本文件"></a>使用 mysqldump 命令导出文本文件</h3><p>基本语法格式<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -T path -u root -p dbname [tables] [OPTIONS]</span><br><span class="line"></span><br><span class="line">    <span class="comment">--OPTIONS 选项</span></span><br><span class="line">    <span class="comment">--fields-terminated-by=value</span></span><br><span class="line">    <span class="comment">--fields-enclosed-by=value</span></span><br><span class="line">    <span class="comment">--fields-optionally-enclosed-by=value</span></span><br><span class="line">    <span class="comment">--fields-escaped-by=value</span></span><br><span class="line">    <span class="comment">--lines-terminated-by=value</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>只有指定了 -T 参数才能导出纯文本文件</li>
+<li>path 表示导出数据目录</li>
+<li>tables 表示为指定要导出的表名称，如果不指定，将导出数据库 dbname 中所有的表</li>
+</ul>
+<p>与 SELECT … INTO OUTFILE 语句中的 OPTIONS 的各个参数设置不同，这里 OPTIONS 的各选项等号后面的 value 值不要用引号括起来。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqldump -T /User/lxxx person -u root -p;</span><br></pre></td></tr></table></figure>
+<h3 id="用-mysql-命令导出文本文件"><a href="#用-mysql-命令导出文本文件" class="headerlink" title="用 mysql 命令导出文本文件"></a>用 mysql 命令导出文本文件</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql -uroot -p --execute="SELECT * FROM person;" persondb &gt; /Users/lxxxx/test.txt;</span><br><span class="line"></span><br><span class="line">&gt; mysql -uroot -p --xml --execute="SELECT * FROM person;" persondb &gt; /Users/lxxxx/test.txt; # 导出 xml 格式</span><br><span class="line"></span><br><span class="line">&gt; mysql -uroot -p --html --execute="SELECT * FROM person;" persondb &gt; /Users/lxxxx/test.txt; # 导出 html 格式</span><br><span class="line"></span><br><span class="line">&gt; mysql -uroot -p --vertical --execute="SELECT * FROM person;" persondb &gt; /Users/lxxxx/test.txt; # 竖向排列</span><br></pre></td></tr></table></figure>
+<p>/Applications/MAMP/Library/bin/mysql -uroot -proot –vertical –execute=”SELECT * FROM testjoin1 FIELDS TERMINATED BY ‘\,’;” runoob  &gt; /Users/lxfriday/test.sql</p>
+<h3 id="使用-LOAD-DATA-INFILE-方式导入文本文件"><a href="#使用-LOAD-DATA-INFILE-方式导入文本文件" class="headerlink" title="使用 LOAD DATA INFILE 方式导入文本文件"></a>使用 LOAD DATA INFILE 方式导入文本文件</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; LOAD DATA INFILE 'filename.txt' INTO TABLE tablename [OPTIONS] [IGNORE number LINES]</span><br><span class="line">    <span class="comment">--OPTIONS 选项</span></span><br><span class="line">    FIELDS TERMINATED BY 'value'</span><br><span class="line">    FIELDS [OPTIONALLY] ENCLOSED BY 'value'</span><br><span class="line">    FIELDS ESCAPED BY 'value'</span><br><span class="line">    LINES STARTING BY 'value'</span><br><span class="line">    LINES TERMINATED BY 'value';</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/03/03/react资源/" class="pre-post btn btn-default" title="react资源">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">react资源</span>
+        </a>
+    
+    
+        <a href="/2019/02/25/mysql账户、权限、访问控制管理/" class="next-post btn btn-default" title="mysql账户、权限、访问控制管理">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">mysql账户、权限、访问控制管理</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-mysqldump-命令备份"><span class="toc-text">使用 mysqldump 命令备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#备份单个数据库中的所有表"><span class="toc-text">备份单个数据库中的所有表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备份数据库中的某个表"><span class="toc-text">备份数据库中的某个表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备份多个数据库"><span class="toc-text">备份多个数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备份所有数据库"><span class="toc-text">备份所有数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直接复制整个数据库目录"><span class="toc-text">直接复制整个数据库目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-mysql-命令还原"><span class="toc-text">使用 mysql 命令还原</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库迁移"><span class="toc-text">数据库迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相同版本的-MySQL-数据库之间的迁移"><span class="toc-text">相同版本的 MySQL 数据库之间的迁移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同版本的-MySQL-数据库之间的迁移"><span class="toc-text">不同版本的 MySQL 数据库之间的迁移</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表的导出和导入"><span class="toc-text">表的导出和导入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SELECT-…-INTO-OUTFILE-‘filename’"><span class="toc-text">SELECT … INTO OUTFILE ‘filename’</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-mysqldump-命令导出文本文件"><span class="toc-text">使用 mysqldump 命令导出文本文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用-mysql-命令导出文本文件"><span class="toc-text">用 mysql 命令导出文本文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-LOAD-DATA-INFILE-方式导入文本文件"><span class="toc-text">使用 LOAD DATA INFILE 方式导入文本文件</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

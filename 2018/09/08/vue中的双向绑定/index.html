@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>vue中的双向绑定 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="vue中的双向绑定">
+            
+	            vue中的双向绑定
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/vue">
+            vue
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/vue双向数据绑定" title="vue双向数据绑定">
+                        vue双向数据绑定
+                    </a>
+                
+                    <a href="/tags/模拟实现" title="模拟实现">
+                        模拟实现
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2018/09/08</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>本文主要介绍两大内容</p>
+<ol>
+<li>vue 数据双向绑定的原理</li>
+<li>实现简单版 vue 的过程，主要实现 <code>{ { } }</code>、v-model 和事件指令的功能</li>
+</ol>
+<p><a href="https://github.com/lxfriday/vue-data-bind" target="_blank" rel="noopener">多版本github仓库地址</a></p>
+<p>vue 数据双向绑定是通过数据劫持结合发布-订阅模式的方式来实现的， 数据劫持通过 <code>Object.defineProperty()</code> 来实现。</p>
+<p><code>set</code> 给属性赋值的时候调用， <code>get</code> 就是在获取属性的值的时候调用的</p>
+<p>本仓库中各文件的作用</p>
+<ul>
+<li>index.html html</li>
+<li>index.js Vue 的处理核心</li>
+<li>observer.js 数据劫持</li>
+<li>watcher.js 订阅-发布</li>
+<li>compile.js html 和 数据、事件属性的绑定</li>
+</ul>
+<h3 id="v1-版本"><a href="#v1-版本" class="headerlink" title="v1 版本"></a><a href="https://github.com/lxfriday/vue-data-bind/tree/master/v1" target="_blank" rel="noopener">v1 版本</a></h3><p>最基本的处理</p>
+<ul>
+<li>SelfVue 先做比较简单的处理，直接传入 element、data、属性名</li>
+<li>observer 中实现对数据的拦截</li>
+<li>watcher 实现变动监听</li>
+<li>没有 compile 实现</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./observer.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./watcher.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> selfVue = <span class="keyword">new</span> SelfVue(</span></span><br><span class="line"><span class="javascript">  <span class="comment">// root</span></span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.querySelector(<span class="string">'#app'</span>),</span></span><br><span class="line"><span class="javascript">  <span class="comment">// data</span></span></span><br><span class="line"><span class="undefined">  &#123;</span></span><br><span class="line"><span class="javascript">    name: <span class="string">'lxfriday'</span>,</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="javascript">  <span class="string">'name'</span>, <span class="comment">// exp</span></span></span><br><span class="line"><span class="undefined">);</span></span><br><span class="line"><span class="javascript">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">  selfVue.name = <span class="string">'止水、'</span>;</span></span><br><span class="line"><span class="undefined">&#125;, 1000);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// observer.js</span></span><br><span class="line"><span class="comment">// 对传入进来的对象进行属性扫描，对属性的描述符进行修改，添加监听器</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observer</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.data = data;</span><br><span class="line">  <span class="keyword">this</span>.walk(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Observer.prototype = &#123;</span><br><span class="line">  walk(data) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">Object</span>.keys(data).forEach(<span class="function"><span class="params">key</span> =&gt;</span> self.defineReactive(data, key, data[key]));</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 定义了属性的 set 和 get，在获取或者设定值得时候会触发相应的通知操作</span></span><br><span class="line">  defineReactive(data, key, val) &#123;</span><br><span class="line">    <span class="keyword">var</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">    <span class="keyword">var</span> childObj = observe(val);</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">      enumerable: <span class="literal">true</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      <span class="keyword">set</span>(newVal) &#123;</span><br><span class="line">        <span class="comment">// 前后两次的值是相同的则不往后面执行</span></span><br><span class="line">        <span class="keyword">if</span> (val === newVal) &#123;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        val = newVal;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'属性 '</span> + key + <span class="string">' 已经被监听了，现在值为：'</span> + newVal);</span><br><span class="line">        <span class="comment">// 在设置属性的时候，前后的值不同会触发事件通知</span></span><br><span class="line">        dep.notify();</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="keyword">get</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> (Dep.target) &#123;</span><br><span class="line">          <span class="comment">// 如果确定需要监听该目标，则在获取该目标属性的时候</span></span><br><span class="line">          <span class="comment">// 会将该属性添加到事件发布的队列里面去</span></span><br><span class="line">          dep.addSub(Dep.target);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用此函数，实现所有的属性观察</span></span><br><span class="line"><span class="comment">// 在属性get的时候，添加观察期，在属性set的时候，进行变化通知</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">value, vm</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 设定添加监听的终止条件</span></span><br><span class="line">  <span class="keyword">if</span> (!value || <span class="keyword">typeof</span> value !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Observer(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 队列，将所有要进行的通知全部进行缓存，等待属性变化的时候，进行通知，从而触发View层的变化</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.subs = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Dep.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: Dep,</span><br><span class="line">  // 添加广播器</span><br><span class="line">  addSub(sub) &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.push(sub);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 通知属性发生了变化</span></span><br><span class="line">  notify() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="params">sub</span> =&gt;</span> sub.update());</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Dep.target = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// watcher.js</span></span><br><span class="line"><span class="comment">// 属性变化之后，执行cb回调，从而实现 Model -&gt; View 层的同步</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Watcher</span>(<span class="params">vm, exp, cb</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.cb = cb;</span><br><span class="line">  <span class="keyword">this</span>.vm = vm;</span><br><span class="line">  <span class="keyword">this</span>.exp = exp;</span><br><span class="line">  <span class="keyword">this</span>.value = <span class="keyword">this</span>.get(); <span class="comment">// 将自己添加到订阅器的操作</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Watcher.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: Watcher,</span><br><span class="line">  update() &#123;</span><br><span class="line">    <span class="keyword">this</span>.run();</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 监听到属性发生了变化</span></span><br><span class="line">  <span class="comment">// 以新的value作为参数，调用实例化的时候赋予的回调</span></span><br><span class="line">  run() &#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="keyword">this</span>.vm.data[<span class="keyword">this</span>.exp];</span><br><span class="line">    <span class="keyword">var</span> oldVal = <span class="keyword">this</span>.value;</span><br><span class="line">    <span class="keyword">if</span> (value !== oldVal) &#123;</span><br><span class="line">      <span class="keyword">this</span>.value = value;</span><br><span class="line">      <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, value, oldVal);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 调用 get，会将该watcher发到队里里面</span></span><br><span class="line">  <span class="keyword">get</span>() &#123;</span><br><span class="line">    <span class="comment">// 缓存自己</span></span><br><span class="line">    Dep.target = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// 强制执行监听器里面的函数，get的时候回自动将该 Dep.target 添加到队列数组中</span></span><br><span class="line">    <span class="keyword">var</span> value = <span class="keyword">this</span>.vm.data[<span class="keyword">this</span>.exp];</span><br><span class="line">    Dep.target = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SelfVue</span>(<span class="params">ele, data, exp</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">this</span>.data = data;</span><br><span class="line">  <span class="built_in">Object</span>.keys(<span class="keyword">this</span>.data).forEach(<span class="function"><span class="params">key</span> =&gt;</span> self.proxyKey(key));</span><br><span class="line">  observe(<span class="keyword">this</span>.data);</span><br><span class="line">  ele.innerHTML = <span class="keyword">this</span>.data[exp];</span><br><span class="line">  <span class="keyword">new</span> Watcher(<span class="keyword">this</span>, exp, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    ele.innerHTML = value;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SelfVue.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: SelfVue,</span><br><span class="line">  proxyKey(key) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(self, key, &#123;</span><br><span class="line">      enumerable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      <span class="keyword">set</span>(v) &#123;</span><br><span class="line">        self.data[key] = v;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="keyword">get</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> self.data[key];</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这一版的 watcher 和 observer 和后面两版是一致的，该版本没有 Vue 的参数类似的模式，是直接将 Dom 对象、数据和属性名传递进去，调用 observer 对所有的数据进行观察，同时添加了对该元素的watcher。</p>
+<h3 id="v2-版本"><a href="#v2-版本" class="headerlink" title="v2 版本"></a><a href="https://github.com/lxfriday/vue-data-bind/tree/master/v2" target="_blank" rel="noopener">v2 版本</a></h3><ul>
+<li>优化 SelfVue，设计成 Vue 的模式</li>
+<li>添加 Compile，实现字段和视图的绑定，不修改元素属性</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./observer.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./watcher.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./compile.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> selfVue = <span class="keyword">new</span> SelfVue(&#123;</span></span><br><span class="line"><span class="javascript">      el: <span class="string">'#app'</span>,</span></span><br><span class="line"><span class="undefined">      data: &#123;</span></span><br><span class="line"><span class="javascript">        title: <span class="string">'hello !'</span>,</span></span><br><span class="line"><span class="javascript">        name: <span class="string">'lxfriday'</span>,</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 过1s之后修改值</span></span></span><br><span class="line"><span class="javascript">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">      selfVue.title = <span class="string">'你好'</span>;</span></span><br><span class="line"><span class="undefined">    &#125;, 1000);</span></span><br><span class="line"><span class="javascript">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">      selfVue.name = <span class="string">'止水、'</span>;</span></span><br><span class="line"><span class="undefined">    &#125;, 1000);</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// compile.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Compile</span>(<span class="params">el, vm</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.el = <span class="built_in">document</span>.querySelector(el);</span><br><span class="line">  <span class="keyword">this</span>.vm = vm;</span><br><span class="line">  <span class="keyword">this</span>.fragment = <span class="literal">null</span>; <span class="comment">// 用来装载编译后的 node</span></span><br><span class="line">  <span class="keyword">this</span>.init();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compile.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: Compile,</span><br><span class="line">  // 初始化方法</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.fragment = <span class="keyword">this</span>.nodeToFragment(<span class="keyword">this</span>.el);</span><br><span class="line">    <span class="keyword">this</span>.compileElement(<span class="keyword">this</span>.fragment);</span><br><span class="line">    <span class="keyword">this</span>.el.appendChild(<span class="keyword">this</span>.fragment);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 将 dom 结点变成 node</span></span><br><span class="line">  nodeToFragment(el) &#123;</span><br><span class="line">    <span class="keyword">const</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line">    <span class="keyword">let</span> child = el.firstChild;</span><br><span class="line">    <span class="keyword">while</span>(child) &#123;</span><br><span class="line">      fragment.appendChild(child);</span><br><span class="line">      child = el.firstChild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fragment;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 对结点进行属性绑定</span></span><br><span class="line">  compileElement(fragment) &#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> childNodes = fragment.childNodes;</span><br><span class="line">    <span class="keyword">const</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;</span><br><span class="line">    [].forEach.call(childNodes, <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">const</span> text = node.textContent;</span><br><span class="line">      <span class="comment">// nodeType === 3</span></span><br><span class="line">      <span class="keyword">if</span> (self.isTextNode(node) &amp;&amp; reg.test(text)) &#123;</span><br><span class="line">        self.compileText(node, reg.exec(text)[<span class="number">1</span>]);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 递归循环，把所有的结点全部循环完</span></span><br><span class="line">      <span class="keyword">if</span> (node.childNodes &amp;&amp; node.childNodes.length) &#123;</span><br><span class="line">        self.compileElement(node);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  compileText(node, exp) &#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span>;</span><br><span class="line">    self.updateText(node, self.vm.data[exp]);</span><br><span class="line">    <span class="keyword">new</span> Watcher(self.vm, exp, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">      self.updateText(node, value);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  updateText(node, value) &#123;</span><br><span class="line">    node.textContent = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span>? <span class="string">''</span>: value;</span><br><span class="line">  &#125;,</span><br><span class="line">  isTextNode(node) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.nodeType === <span class="number">3</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SelfVue</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">this</span>.vm = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">this</span>.data = options.data;</span><br><span class="line">  <span class="comment">// data 属性代理</span></span><br><span class="line">  <span class="built_in">Object</span>.keys(<span class="keyword">this</span>.data).forEach(<span class="function"><span class="params">key</span> =&gt;</span> self.proxyKey(key));</span><br><span class="line">  <span class="comment">// 添加数据拦截器</span></span><br><span class="line">  observe(<span class="keyword">this</span>.data);</span><br><span class="line">  <span class="comment">// 实现属性数据和模板的绑定</span></span><br><span class="line">  <span class="keyword">new</span> Compile(options.el, <span class="keyword">this</span>.vm);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SelfVue.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: SelfVue,</span><br><span class="line">  // 添加 this 的属性代理</span><br><span class="line">  proxyKey(key) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(self, key, &#123;</span><br><span class="line">      enumerable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">true</span>,</span><br><span class="line">      <span class="keyword">set</span>(v) &#123;</span><br><span class="line">        self.data[key] = v;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="keyword">get</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> self.data[key];</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个版本实现了参数输入方法和 vue 完全相同的模式，同时将属性和对应模板上的值对应起来，实现完全绑定</p>
+<h3 id="v3-版本"><a href="#v3-版本" class="headerlink" title="v3 版本"></a><a href="https://github.com/lxfriday/vue-data-bind/tree/master/v3" target="_blank" rel="noopener">v3 版本</a></h3><ul>
+<li>Compiler 添加指令(v-on、v-model)</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-on:click</span>=<span class="string">"getContent"</span>&gt;</span>&#123;&#123;title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-on:click</span>=<span class="string">"getContent"</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span> <span class="attr">v-on:click</span>=<span class="string">"getContent"</span>&gt;</span>&#123;&#123;age&#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">b</span>&gt;</span>message:<span class="tag">&lt;/<span class="name">b</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"message"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">b</span>&gt;</span>message2:<span class="tag">&lt;/<span class="name">b</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"message2"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./observer.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./watcher.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./compile.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> selfVue = <span class="keyword">new</span> SelfVue(&#123;</span></span><br><span class="line"><span class="javascript">      el: <span class="string">'#app'</span>,</span></span><br><span class="line"><span class="undefined">      data: &#123;</span></span><br><span class="line"><span class="javascript">        title: <span class="string">'hello world'</span>,</span></span><br><span class="line"><span class="javascript">        name: <span class="string">'lxfriday'</span>,</span></span><br><span class="line"><span class="undefined">        age: 0,</span></span><br><span class="line"><span class="javascript">        message: <span class="string">''</span>,</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 自己设定的方法</span></span></span><br><span class="line"><span class="undefined">      methods: &#123;</span></span><br><span class="line"><span class="undefined">        getContent(event) &#123;</span></span><br><span class="line"><span class="javascript">          <span class="comment">// 绑定 this</span></span></span><br><span class="line"><span class="javascript">          <span class="comment">// event.preventDefault();</span></span></span><br><span class="line"><span class="undefined">          event.stopPropagation();</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(event);</span></span><br><span class="line"><span class="undefined">        &#125;,</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 声明周期函数</span></span></span><br><span class="line"><span class="undefined">      beforeCreate() &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'before create'</span>);</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="undefined">      created() &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'created'</span>);</span></span><br><span class="line"><span class="javascript">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">this</span>.title = <span class="string">'你好'</span>;</span></span><br><span class="line"><span class="undefined">        &#125;, 1000);</span></span><br><span class="line"><span class="javascript">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">this</span>.name = <span class="string">'止水、'</span>;</span></span><br><span class="line"><span class="undefined">        &#125;, 1000);</span></span><br><span class="line"><span class="javascript">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">this</span>.age = <span class="number">23</span>;</span></span><br><span class="line"><span class="undefined">        &#125;, 1000);</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="undefined">      beforeMount() &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'beforeMount'</span>);</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="undefined">      mounted() &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'mounted'</span>);</span></span><br><span class="line"><span class="undefined">      &#125;,</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// compile.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Compile</span>(<span class="params">el, vm, lifecycle</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.vm = vm;</span><br><span class="line">  <span class="keyword">this</span>.lifecycle = lifecycle; <span class="comment">// beforeMount 和 mounted 生命周期函数的挂载点</span></span><br><span class="line">  <span class="keyword">this</span>.el = <span class="built_in">document</span>.querySelector(el);</span><br><span class="line">  <span class="keyword">this</span>.fragment = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">this</span>.init();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compile.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: Compile,</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.el) &#123;</span><br><span class="line">      <span class="comment">// 变成内存节点</span></span><br><span class="line">      <span class="keyword">var</span> &#123;</span><br><span class="line">        beforeMount,</span><br><span class="line">        mounted,</span><br><span class="line">      &#125; = <span class="keyword">this</span>.lifecycle;</span><br><span class="line">      beforeMount &amp;&amp; beforeMount.call(<span class="keyword">this</span>.vm);</span><br><span class="line">      <span class="keyword">this</span>.fragment = <span class="keyword">this</span>.nodeToFragment(<span class="keyword">this</span>.el);</span><br><span class="line">      <span class="comment">// 实现结点的数据绑定</span></span><br><span class="line">      <span class="keyword">this</span>.compileElement(<span class="keyword">this</span>.fragment);</span><br><span class="line">      <span class="comment">// 将 el 的子节点全部虚拟化绑定之后，再重新放置到 el 中，显示效果原样不变</span></span><br><span class="line">      <span class="keyword">this</span>.el.appendChild(<span class="keyword">this</span>.fragment);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// mounted 组件挂载好了</span></span><br><span class="line">      mounted &amp;&amp; mounted.call(<span class="keyword">this</span>.vm);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'DOM 元素不存在'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// dom 结点变成内存结点</span></span><br><span class="line">  nodeToFragment(el) &#123;</span><br><span class="line">    <span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line">    <span class="keyword">var</span> child = el.firstChild;</span><br><span class="line">    <span class="keyword">while</span>(child) &#123;</span><br><span class="line">      <span class="comment">// 将dom元素移到 fragment 中</span></span><br><span class="line">      fragment.appendChild(child);</span><br><span class="line">      child = el.firstChild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fragment;</span><br><span class="line">  &#125;,</span><br><span class="line">  compileElement(el) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> childNodes = el.childNodes;</span><br><span class="line">    <span class="comment">// 循环遍历所有结点及其子节点</span></span><br><span class="line">    [].slice.call(childNodes).forEach(<span class="function"><span class="params">node</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">var</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;</span><br><span class="line">      <span class="keyword">var</span> text = node.textContent;</span><br><span class="line">      <span class="comment">// 是否是元素结点 nodeType === 1</span></span><br><span class="line">      <span class="keyword">if</span> (self.isElementNode(node)) &#123;</span><br><span class="line">        self.compile(node);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (self.isTextNode(node) &amp;&amp; reg.test(text)) &#123;</span><br><span class="line">      <span class="comment">// 是文本结点，而且内容符合 &#123;&#123;&#125;&#125; 规则</span></span><br><span class="line">        <span class="comment">// 判断是否是符合 &#123;&#123;&#125;&#125; 的指令</span></span><br><span class="line">        self.compileText(node, reg.exec(text)[<span class="number">1</span>]);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (node.childNodes &amp;&amp; node.childNodes.length) &#123;</span><br><span class="line">        <span class="comment">// 会遍历到最底层</span></span><br><span class="line">        self.compileElement(node);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  compile(node) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> nodeAttrs = node.attributes;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对每个结点的每个属性都做一次遍历，筛选出要处理的指令</span></span><br><span class="line">    <span class="built_in">Array</span>.prototype.forEach.call(nodeAttrs, <span class="function"><span class="keyword">function</span>(<span class="params">attr</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> attrName = attr.name;</span><br><span class="line">      <span class="keyword">if</span> (self.isDirective(attrName)) &#123;</span><br><span class="line">        <span class="keyword">var</span> exp = attr.value;</span><br><span class="line">        <span class="keyword">var</span> dir = attrName.substring(<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span> (self.isEventDirective(dir)) &#123;</span><br><span class="line">          <span class="comment">// event 命令</span></span><br><span class="line">          self.compileEvent(node, self.vm, exp, dir);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// v-model 命令</span></span><br><span class="line">          self.compileModel(node, self.vm, exp, dir);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 移除属性名</span></span><br><span class="line">        node.removeAttribute(attrName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 编译 event</span></span><br><span class="line">  compileEvent(node, vm, exp, dir) &#123;</span><br><span class="line">    <span class="keyword">var</span> eventType = dir.split(<span class="string">':'</span>)[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">var</span> cb = vm.methods &amp;&amp; vm.methods[exp];</span><br><span class="line">    <span class="keyword">if</span> (eventType &amp;&amp; cb) &#123;</span><br><span class="line">      node.addEventListener(eventType, cb.bind(vm), <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 编译 model</span></span><br><span class="line">  compileModel(node, vm, exp, dir) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> val = self.vm[exp];</span><br><span class="line">    <span class="keyword">this</span>.modelUpdater(node, self.vm[exp]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// -------------------------------</span></span><br><span class="line">    <span class="comment">// Model -&gt; View</span></span><br><span class="line">    <span class="comment">// 对 model 绑定的属性添加监听</span></span><br><span class="line">    <span class="comment">// 当 self.vm[exp] 的值更改的时候，会执行后面的回调函数，从而换新视图</span></span><br><span class="line">    <span class="keyword">new</span> Watcher(self.vm, exp, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">      self.modelUpdater(node, value);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// --------------------------------</span></span><br><span class="line">    <span class="comment">// View -&gt; Model View层触发Model层的数据改变</span></span><br><span class="line">    <span class="comment">// 给结点添加输入的时候时间监听绑定</span></span><br><span class="line">    node.addEventListener(<span class="string">'input'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> newValue = event.target.value;</span><br><span class="line">      <span class="keyword">if</span> (val === newValue) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      self.vm[exp] = newValue;</span><br><span class="line">      val = newValue;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 将属性以及拥有该属性的结点进行数据绑定</span></span><br><span class="line">  <span class="comment">// 每次调用该方法的时候，都会对属性和 node 结点进行绑定，以实现数据更新，视图更新</span></span><br><span class="line">  compileText(node, exp) &#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> initText = <span class="keyword">this</span>.vm[exp]; <span class="comment">// 获取到该属性的值</span></span><br><span class="line">    <span class="keyword">this</span>.updateText(node, initText); <span class="comment">// 将初始化的数据初始化到视图中</span></span><br><span class="line">    <span class="comment">// 生成订阅器并绑定新函数</span></span><br><span class="line">    <span class="comment">// 如果 exp 属性变化了，则会执行下面的回调函数，用以更新属性值</span></span><br><span class="line">    <span class="keyword">new</span> Watcher(<span class="keyword">this</span>.vm, exp, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">      self.updateText(node, value);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 将 value 值更新到结点的属性上</span></span><br><span class="line">  updateText(node, value) &#123;</span><br><span class="line">    node.textContent = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span>? <span class="string">''</span>: value;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 给结点的 value 赋值</span></span><br><span class="line">  modelUpdater(node, value, oldValue) &#123;</span><br><span class="line">    node.value = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span>? <span class="string">''</span>: value;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 是不是指令？以 v- 开头</span></span><br><span class="line">  isDirective(attr) &#123;</span><br><span class="line">    <span class="keyword">return</span> attr.indexOf(<span class="string">'v-'</span>) === <span class="number">0</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 是否是时间指令？以 on: 开头</span></span><br><span class="line">  isEventDirective(dir) &#123;</span><br><span class="line">    <span class="keyword">return</span> dir.indexOf(<span class="string">'on:'</span>) === <span class="number">0</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 是否是元素结点</span></span><br><span class="line">  isElementNode(node) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.nodeType === <span class="number">1</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 判断是不是最原始的 Text 结点，纯文本结点，不是标签</span></span><br><span class="line">  isTextNode(node) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.nodeType === <span class="number">3</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.cnblogs.com/libin-1/p/6893712.html" target="_blank" rel="noopener">vue的双向绑定原理及实现</a> </li>
+</ul>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/11/30/githubtrending/" class="pre-post btn btn-default" title="github trending">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">github trending</span>
+        </a>
+    
+    
+        <a href="/2018/09/04/javascript中的error类型/" class="next-post btn btn-default" title="js中的error类型">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">js中的error类型</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#v1-版本"><span class="toc-text">v1 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2-版本"><span class="toc-text">v2 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v3-版本"><span class="toc-text">v3 版本</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a>
+        </li></div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link current" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

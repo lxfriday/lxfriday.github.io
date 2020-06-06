@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>前端面试必会 | 一文读懂 JavaScript 中的执行上下文和执行上下文栈 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="前端面试必会 | 一文读懂 JavaScript 中的执行上下文和执行上下文栈">
+            
+	            前端面试必会 | 一文读懂 JavaScript 中的执行上下文和执行上下文栈
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/javascript">
+            javascript
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/执行上下文" title="执行上下文">
+                        执行上下文
+                    </a>
+                
+                    <a href="/tags/执行上下文栈" title="执行上下文栈">
+                        执行上下文栈
+                    </a>
+                
+                    <a href="/tags/js原理" title="js原理">
+                        js原理
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/12/06</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <section id="nice" style="font-size: 16px; color: black; padding: 10px; line-height: 1.6; word-spacing: 0px; letter-spacing: 0px; word-break: break-word; word-wrap: break-word; text-align: left; font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/bingpic1_20191206203415.jpg" alt style="display: block; margin: 0 auto; width: 100%;"></figure><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">一起看看 JavaScript 程序内部是如何执行的。</p><br><blockquote style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border-left: 3px solid rgba(0, 0, 0, 0.4); background: rgba(0, 0, 0, 0.05); color: #6a737d; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 10px; margin-bottom: 20px; margin-top: 20px;"><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0px; color: black; line-height: 26px;">本文翻译自 <a href="https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0" style="text-decoration: none; color: #1e6bb8; word-wrap: break-word; font-weight: bold; border-bottom: 1px solid #1e6bb8;" target="_blank" rel="noopener">https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0</a>，作者 Sukhjinder Arora，有部分删改。</p><br></blockquote><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">如果你想成为一个合格的 JavaScript 开发者，你必须知道它的内部是如何执行的。掌握 JavaScript 执行上下文和执行栈对理解变量提升、作用域和闭包非常重要。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">理解执行上下文和执行栈将使你成为一个更加优秀的 JavaScript 开发者。</p><br><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>执行上下文是什么？</span></h2><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">执行上下文是一个 JavaScript 代码运行的环境</strong>。任何 JavaScript 代码执行的时候都是处于一个执行上下文中。</p><br><h3 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 20px;"><span>执行上下文的类型</span></h3><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">JavaScript 中一共有三种执行上下文。</p><br><ul style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">全局执行上下文(Global)</strong> – 它是默认的基本执行上下文。代码要么在全局执行上下文要么在函数执行上下文。它有两个特征：它会创建一个全局对象（在浏览器中就是 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">window</code>）并且会把 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">this</code> 设置为全局对象 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">windows</code>。在一个程序中只会有一个全局执行上下文。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">函数执行上下文</strong> – 当函数执行的时候，一个新的函数执行上下文就会创建。每个函数都有自己的执行上下文，当函数执行的时候上下文会被创建。函数执行上下文可以创建任意多个，每个执行上下文被创建的时候会经历若干步骤，接下来将会讨论。</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;"><code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">eval</code> 函数执行上下文</strong> – 在 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">eval</code> 函数中执行的代码也会有自己的自行上下文，但由于 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">eval</code> 已经不常用了，所以不做讨论。</section></li></ul><br><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>执行栈</span></h2><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">执行栈（执行上下文栈），在其他编程语言中也叫<strong style="font-weight: bold; color: black;">调用栈</strong>，是一个后进先出的结构。它用来存储代码执行过程中创建的所有执行上下文。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当 JavaScript 引擎执行你的代码时，它会创建一个全局执行上下文并且将它推入当前的执行栈。当执行碰到函数调用的时候，它会为这个函数创建执行上下文并把这个执行上下文推入执行栈顶部。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">引擎执行处于栈顶的上下文对应的函数。当函数执行完毕，它的上下文就会从栈顶弹出，引擎接着继续执行新处于顶部的上下文对应的函数。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">看看下面的例子：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">let</span> a = <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘Hello World!’</span>;<br><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">function</span> <span class="hljs-title" style="color: #a6e22e; font-weight: bold; line-height: 26px;">first</span>(<span class="hljs-params" style="line-height: 26px;"></span>) </span>{<br>  <span class="hljs-built_in" style="color: #a6e22e; line-height: 26px;">console</span>.log(<span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘Inside first function’</span>);<br>  second();<br>  <span class="hljs-built_in" style="color: #a6e22e; line-height: 26px;">console</span>.log(<span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘Again inside first function’</span>);<br>}<br><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">function</span> <span class="hljs-title" style="color: #a6e22e; font-weight: bold; line-height: 26px;">second</span>(<span class="hljs-params" style="line-height: 26px;"></span>) </span>{<br>  <span class="hljs-built_in" style="color: #a6e22e; line-height: 26px;">console</span>.log(<span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘Inside second function’</span>);<br>}<br>first();<br><span class="hljs-built_in" style="color: #a6e22e; line-height: 26px;">console</span>.log(<span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘Inside Global Execution Context’</span>);<br></code></pre><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191205231941.png" alt="上面代码的执行上下文栈" style="display: block; margin: 0 auto; width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">上面代码的执行上下文栈</figcaption></figure><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">上面代码在浏览器中执行时，JavaScript 引擎会先创建一个全局执行上下文并把它推出执行栈中。碰到 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">first()</code> 执行时，引擎给这个函数创建一个新的执行上下文，然后把它推入执行栈顶部。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">second()</code> 在 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">first()</code> 函数内部执行时，引擎会给 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">second</code> 创建上下文并把它推入执行栈顶，当 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">second</code> 函数执行完毕，它的执行上下文就会从执行栈顶弹出，指针会指向它下面的上下文，也就是 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">first</code> 函数的上下文。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">first</code> 函数执行完毕，它的执行栈也会从栈顶弹出，指针就指向了全局执行上下文。当所有的代码执行完毕，引擎会把全局执行上下文也从执行栈中移出。</p><br><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>执行上下文是如何创建的</span></h2><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">从上面的过程，我们已经了解了 JavaScript 引擎是如何管理执行上下文的，接下来我们看看引擎是如何创建执行上下文的。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">执行上下文会经历两个阶段：1 创建阶段；2 执行阶段。</p><br><h3 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 20px;"><span>创建阶段</span></h3><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">执行上下文在创建阶段就会被创建。创建阶段做下面两件事：</p><br><ol style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: decimal;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">创建<strong style="font-weight: bold; color: black;">词法环境(LexicalEnvironment)</strong>；</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">创建<strong style="font-weight: bold; color: black;">变量环境(VariableEnvironment)</strong>；</section></li></ol><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">所以从概念上说，执行上下文可以用下面的方式表示：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">ExecutionContext = {<br>  LexicalEnvironment = &lt;ref. to LexicalEnvironment in memory&gt;,<br>  VariableEnvironment = &lt;ref. to VariableEnvironment in  memory&gt;,<br>}<br></code></pre><br><h4 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 18px;"><span>词法环境(Lexical Environment)</span></h4><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><a href="http://ecma-international.org/ecma-262/6.0/" style="text-decoration: none; color: #1e6bb8; word-wrap: break-word; font-weight: bold; border-bottom: 1px solid #1e6bb8;" target="_blank" rel="noopener">ES6 官方文档</a>是这样定义词法环境的</p><br><blockquote style="display: block; font-size: 0.9em; overflow: auto; overflow-scrolling: touch; border-left: 3px solid rgba(0, 0, 0, 0.4); background: rgba(0, 0, 0, 0.05); color: #6a737d; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 10px; margin-bottom: 20px; margin-top: 20px;"><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0px; color: black; line-height: 26px;">A Lexical Environment is a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code. A Lexical Environment consists of an Environment Record and a possibly null reference to an outer Lexical Environment.</p><br></blockquote><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">简单来说，<strong style="font-weight: bold; color: black;">词法环境是一种表示标识符和变量的映射关系的环境。在词法环境中，标识符指向变量或者函数，变量是指对象（包括函数对象和数组对象）或者原始值。</strong></p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">举个例子，看看下面的代码</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">var</span> a = <span class="hljs-number" style="line-height: 26px;">20</span>;<br><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">var</span> b = <span class="hljs-number" style="line-height: 26px;">40</span>;<br><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">function</span> <span class="hljs-title" style="color: #a6e22e; font-weight: bold; line-height: 26px;">foo</span>(<span class="hljs-params" style="line-height: 26px;"></span>) </span>{<br>  <span class="hljs-built_in" style="color: #a6e22e; line-height: 26px;">console</span>.log(<span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘bar’</span>);<br>}<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">上面代码的词法环境如下</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">lexicalEnvironment = {<br>  a: 20,<br>  b: 40,<br>  foo: <span class="xml" style="line-height: 26px;"><span class="hljs-tag" style="color: #f92672; line-height: 26px;">&lt;<span class="hljs-name" style="color: #f92672; line-height: 26px;">ref.</span> <span class="hljs-attr" style="line-height: 26px;">to</span> <span class="hljs-attr" style="line-height: 26px;">foo</span> <span class="hljs-attr" style="line-height: 26px;">function</span>&gt;</span></span><br>}<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">每个词法环境由三个部分组成：</p><br><ol style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: decimal;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">词法环境内部的环境记录（Environment Record）；</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">一个指向外层词法环境的可空引用（Reference to the outer environment）；</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">this</code></section></li></ol><br><h5 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 16px;"><span>环境记录(Environment Record)</span></h5><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">Environment Record 是在词法环境中存储变量和函数的地方。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">Environment Record 有下面两种：</p><br><ul style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">Declarative environment record</strong> – As its name suggests stores variable and function declarations. The lexical environment for function code contains a declarative environment record.</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">Object environment record</strong> –  The lexical environment for global code contains a objective environment record. Apart from variable and function declarations, the object environment record also stores a global binding object (window object in browsers). So for each of binding object’s property (in case of browsers, it contains properties and methods provided by browser to the window object), a new entry is created in the record.</section></li></ul><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">上面是原文，简单解释下：</p><br><ul style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">Declarative environment record</strong> – 用来放变量或者函数声明，函数中的词法环境都是这种；</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><strong style="font-weight: bold; color: black;">Object environment record</strong> – 指向全局对象 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">window</code>（在浏览器中），全局词法环境是这种；</section></li></ul><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">注意：对于<strong style="font-weight: bold; color: black;">函数</strong>，环境记录也包括一个 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">arguments</code> 对象。<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">arguments</code> 是一个类数组对象，它包含索引和参数值的映射。看看下面的例子：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;"><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">function</span> <span class="hljs-title" style="color: #a6e22e; font-weight: bold; line-height: 26px;">foo</span>(<span class="hljs-params" style="line-height: 26px;">a, b</span>) </span>{<br>  <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">var</span> c = a + b;<br>}<br>foo(<span class="hljs-number" style="line-height: 26px;">2</span>, <span class="hljs-number" style="line-height: 26px;">3</span>);<br><span class="hljs-comment" style="color: #75715e; line-height: 26px;">// argument object</span><br>Arguments: {<span class="hljs-number" style="line-height: 26px;">0</span>: <span class="hljs-number" style="line-height: 26px;">2</span>, <span class="hljs-number" style="line-height: 26px;">1</span>: <span class="hljs-number" style="line-height: 26px;">3</span>, <span class="hljs-attr" style="line-height: 26px;">length</span>: <span class="hljs-number" style="line-height: 26px;">2</span>},<br></code></pre><br><h5 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 16px;"><span><code>outer</code> 是什么</span></h5><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">outer</code> 表示一个作用域指向的外层词法环境。在查找变量时，如果在当前的词法环境里面没有找到变量，那就通过 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">outer</code> 找到外层的词法环境，然后再在外层的词法环境里面查找变量，如果还没有找到，则会继续往外层找，一直找到全局作用域。</p><br><h5 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 16px;"><span><code>this</code> 怎么确定</span></h5><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">在全局执行上下文中，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">this</code> 指向全局对象 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">window</code>（在浏览器中）。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">在函数执行上下文中，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">this</code> 取决于函数是如何被调用的</strong>。这是我们经常弄混的一点。如果是通过对象调用的函数，那 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">this</code> 指向这个对象。否则 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">this</code> 将会指向全局对象（在浏览器中是 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">window</code>）或者 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">undefined</code>（严格模式下） 。 看下面的例子：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">const</span> person = {<br>  <span class="hljs-attr" style="line-height: 26px;">name</span>: <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">‘peter’</span>,<br>  <span class="hljs-attr" style="line-height: 26px;">birthYear</span>: <span class="hljs-number" style="line-height: 26px;">1994</span>,<br>  <span class="hljs-attr" style="line-height: 26px;">calcAge</span>: <span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">function</span>(<span class="hljs-params" style="line-height: 26px;"></span>) </span>{<br>    <span class="hljs-built_in" style="color: #a6e22e; line-height: 26px;">console</span>.log(<span class="hljs-number" style="line-height: 26px;">2018</span> - <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">this</span>.birthYear);<br>  }<br>}<br>person.calcAge();<br><span class="hljs-comment" style="color: #75715e; line-height: 26px;">// ‘this’ 指向 ‘person’， 因为 ‘calcAge’ 是通过 <code>person</code> 对象调用的。</span><br><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">const</span> calculateAge = person.calcAge;<br>calculateAge();<br><span class="hljs-comment" style="color: #75715e; line-height: 26px;">// ‘this’ 指向全局对象，因为函数不是通过对象引用的方式调用的。</span><br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">词法作用域用伪代码表示是这样的：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">GlobalExectionContext = {<br>  <span class="hljs-attr" style="line-height: 26px;">LexicalEnvironment</span>: {<br>    <span class="hljs-attr" style="line-height: 26px;">EnvironmentRecord</span>: {<br>      <span class="hljs-attr" style="line-height: 26px;">Type</span>: <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">“Object”</span>,<br>      <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// Identifier bindings go here</span><br>    }<br>    outer: &lt;null&gt;,<br>    this: &lt;global object&gt;<br>  }<br>}<br>FunctionExectionContext = {<br>  LexicalEnvironment: {<br>    EnvironmentRecord: {<br>      Type: “Declarative”,<br>      // Identifier bindings go here<br>    }<br>    outer: &lt;Global or outer function environment reference&gt;,<br>    this: &lt;depends on how function is called&gt;<br>  }<br>}<br></code></pre><br><h4 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 18px;"><span>变量环境(Variable Environment)</span></h4><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">变量环境也是一个词法环境，它和词法环境长得一样。区别在于，在 ES6 中，词法环境用来存储函数声明和 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">let</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">const</code> 声明的变量，变量环境仅仅用来存储 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">var</code> 声明的变量。</p><br><h3 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 20px;"><span>执行阶段</span></h3><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">在执行阶段会完成变量的赋值，代码会被执行。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">看下面的例子：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">let</span> a = <span class="hljs-number" style="line-height: 26px;">20</span>;<br><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">const</span> b = <span class="hljs-number" style="line-height: 26px;">30</span>;<br><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">var</span> c;<br><span class="hljs-function" style="line-height: 26px;"><span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">function</span> <span class="hljs-title" style="color: #a6e22e; font-weight: bold; line-height: 26px;">multiply</span>(<span class="hljs-params" style="line-height: 26px;">e, f</span>) </span>{<br> <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">var</span> g = <span class="hljs-number" style="line-height: 26px;">20</span>;<br> <span class="hljs-keyword" style="color: #f92672; font-weight: bold; line-height: 26px;">return</span> e <em> f </em> g;<br>}<br>c = multiply(<span class="hljs-number" style="line-height: 26px;">20</span>, <span class="hljs-number" style="line-height: 26px;">30</span>);<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当上面的代码执行的时候，JavaScript 引擎会创建一个全局执行上下文来执行全局的代码。所以在创建阶段（<strong style="font-weight: bold; color: black;">creation phase</strong>）全局执行上下文是像这样的：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">GlobalExectionContext = {<br>  <span class="hljs-attr" style="line-height: 26px;">LexicalEnvironment</span>: {<br>    <span class="hljs-attr" style="line-height: 26px;">EnvironmentRecord</span>: {<br>      <span class="hljs-attr" style="line-height: 26px;">Type</span>: <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">“Object”</span>,<br>      <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// Identifier bindings go here</span><br>      a: &lt; uninitialized &gt;,<br>      b: &lt; uninitialized &gt;,<br>      multiply: &lt; func &gt;<br>    }<br>    outer: &lt;null&gt;,<br>    ThisBinding: &lt;Global Object&gt;<br>  },<br>  VariableEnvironment: {<br>    EnvironmentRecord: {<br>      Type: “Object”,<br>      // Identifier bindings go here<br>      c: undefined,<br>    }<br>    outer: &lt;null&gt;,<br>    ThisBinding: &lt;Global Object&gt;<br>  }<br>}<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">在执行阶段（<strong style="font-weight: bold; color: black;">execution phase</strong>），会进行变量赋值。全局执行上下文将会变成下面这样：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">GlobalExectionContext = {<br>  <span class="hljs-attr" style="line-height: 26px;">LexicalEnvironment</span>: {<br>    <span class="hljs-attr" style="line-height: 26px;">EnvironmentRecord</span>: {<br>      <span class="hljs-attr" style="line-height: 26px;">Type</span>: <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">“Object”</span>,<br>      <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// Identifier bindings go here</span><br>      a: <span class="hljs-number" style="line-height: 26px;">20</span>,<br>      <span class="hljs-attr" style="line-height: 26px;">b</span>: <span class="hljs-number" style="line-height: 26px;">30</span>,<br>      <span class="hljs-attr" style="line-height: 26px;">multiply</span>: &lt; func &gt;<br>    }<br>    outer: &lt;null&gt;,<br>    ThisBinding: &lt;Global Object&gt;<br>  },<br>  VariableEnvironment: {<br>    EnvironmentRecord: {<br>      Type: “Object”,<br>      // Identifier bindings go here<br>      c: undefined,<br>    }<br>    outer: &lt;null&gt;,<br>    ThisBinding: &lt;Global Object&gt;<br>  }<br>}<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当碰到要执行 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">multiply(20, 30)</code> 时，一个新的函数执行上下文会创建。在创建阶段（<strong style="font-weight: bold; color: black;">creation phase</strong>）函数执行上下文会像下面这样：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">FunctionExectionContext = {<br>  <span class="hljs-attr" style="line-height: 26px;">LexicalEnvironment</span>: {<br>    <span class="hljs-attr" style="line-height: 26px;">EnvironmentRecord</span>: {<br>      <span class="hljs-attr" style="line-height: 26px;">Type</span>: <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">“Declarative”</span>,<br>      <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// Identifier bindings go here</span><br>      Arguments: {<span class="hljs-number" style="line-height: 26px;">0</span>: <span class="hljs-number" style="line-height: 26px;">20</span>, <span class="hljs-number" style="line-height: 26px;">1</span>: <span class="hljs-number" style="line-height: 26px;">30</span>, <span class="hljs-attr" style="line-height: 26px;">length</span>: <span class="hljs-number" style="line-height: 26px;">2</span>}, <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// 函数的参数也在词法环境中</span><br>    },<br>    <span class="hljs-attr" style="line-height: 26px;">outer</span>: &lt;GlobalLexicalEnvironment&gt;,<br>    ThisBinding: &lt;Global Object or undefined&gt;,<br>  },<br>  VariableEnvironment: {<br>    EnvironmentRecord: {<br>      Type: “Declarative”,<br>      // Identifier bindings go here<br>      g: undefined<br>    },<br>    outer: &lt;GlobalLexicalEnvironment&gt;,<br>    ThisBinding: &lt;Global Object or undefined&gt;<br>  }<br>}<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">在执行阶段（<strong style="font-weight: bold; color: black;">execution phase</strong>）会进行变量赋值。赋值之后的函数执行上下文如下：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="overflow-x: auto; padding: 16px; background: #272822; color: #ddd; font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; display: -webkit-box !important;">FunctionExectionContext = {<br>  <span class="hljs-attr" style="line-height: 26px;">LexicalEnvironment</span>: {<br>    <span class="hljs-attr" style="line-height: 26px;">EnvironmentRecord</span>: {<br>      <span class="hljs-attr" style="line-height: 26px;">Type</span>: <span class="hljs-string" style="color: #a6e22e; line-height: 26px;">“Declarative”</span>,<br>      <span class="hljs-comment" style="color: #75715e; line-height: 26px;">// Identifier bindings go here</span><br>      Arguments: {<span class="hljs-number" style="line-height: 26px;">0</span>: <span class="hljs-number" style="line-height: 26px;">20</span>, <span class="hljs-number" style="line-height: 26px;">1</span>: <span class="hljs-number" style="line-height: 26px;">30</span>, <span class="hljs-attr" style="line-height: 26px;">length</span>: <span class="hljs-number" style="line-height: 26px;">2</span>},<br>    },<br>    <span class="hljs-attr" style="line-height: 26px;">outer</span>: &lt;GlobalLexicalEnvironment&gt;,<br>    ThisBinding: &lt;Global Object or undefined&gt;,<br>  },<br>  VariableEnvironment: {<br>    EnvironmentRecord: {<br>      Type: “Declarative”,<br>      // Identifier bindings go here<br>      g: 20<br>    },<br>    outer: &lt;GlobalLexicalEnvironment&gt;,<br>    ThisBinding: &lt;Global Object or undefined&gt;<br>  }<br>}<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">函数执行完成时，返回的值将会赋值给 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">c</code>，全局词法环境将会更新，然后所有代码执行完毕，程序结束。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">你可能注意到了 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">let</code> 和 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">const</code> 声明的变量在创建阶段（creation phase） 和它的值没有任何关联，但是 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">var</code> 声明的变量被赋予了 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">undefined</code>。</strong></p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">这是因为在创建阶段 JavaScript 引擎会扫描到变量和函数声明。用 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">var</code> 声明的变量被初始化为 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">undefined</code>，用 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">let</code> <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">const</code> 声明的变量将不会被初始化。后者将会形成暂时性死区，提前使用它们将会报错。</p><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191206194554.png" alt="暂时性死区" style="display: block; margin: 0 auto; width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">暂时性死区</figcaption></figure><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">这就是变量提升。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">注意，在执行阶段，如果引擎发现 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">let</code> 声明的变量并没有被赋值，引擎将会把它赋值为 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">undefined</code>。</p><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191206194846.png" alt style="display: block; margin: 0 auto; width: 100%;"></figure><br><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>最后</span></h2><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">感谢阅读，欢迎关注我的公众号 <strong style="font-weight: bold; color: black;">云影 sky</strong>，带你解读前端技术。关注公众号可以拉你进讨论群，有任何问题都会回复。</p><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191206195201.png" alt="公众号" style="display: block; margin: 0 auto; width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">公众号</figcaption></figure><br></section>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/12/08/20191208-Understanding-Scope-and-Scope-Chain-in-JavaScript/" class="pre-post btn btn-default" title="前端面试必会 | 一文读懂 JavaScript 中的作用域和作用域链">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">前端面试必会 | 一文读懂 JavaScript 中的作用域和作用域链</span>
+        </a>
+    
+    
+        <a href="/2019/11/23/20191123css-layout-and-containing-block/" class="next-post btn btn-default" title="CSS 盒模型、布局和包含块">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">CSS 盒模型、布局和包含块</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">执行上下文是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">执行上下文的类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">执行栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">执行上下文是如何创建的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">创建阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-text">词法环境(Lexical Environment)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">环境记录(Environment Record)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">outer 是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">this 怎么确定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-text">变量环境(Variable Environment)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">执行阶段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">最后</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

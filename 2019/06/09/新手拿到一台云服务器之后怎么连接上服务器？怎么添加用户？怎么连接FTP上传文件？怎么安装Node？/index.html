@@ -1,0 +1,478 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>新手拿到一台云服务器之后怎么连接上服务器？怎么添加用户？怎么连接FTP上传文件？怎么安装Node？ | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="新手拿到一台云服务器之后怎么连接上服务器？怎么添加用户？怎么连接FTP上传文件？怎么安装Node？">
+            
+	            新手拿到一台云服务器之后怎么连接上服务器？怎么添加用户？怎么连接FTP上传文件？怎么安装Node？
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/linux">
+            linux
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/linux" title="linux">
+                        linux
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/06/09</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <blockquote>
+<p>正文约 1900 字，读完需要 5 分钟</p>
+</blockquote>
+<p>“ 本文讲解新服务器的基本操作，涉及到连接服务器、添加用户、FTP 配置、配置 Node 环境、后台运行 Node 程序”</p>
+<p>毕设答辩原本以为老师只会在我的电脑上查看操作过程，后来从同学那里得知老师要求能够通过校园网来访问项目。然后就又开始倒腾服务器了。</p>
+<p>要倒腾服务器，首先得有一台能够自己完全控制的服务器，虚拟机不如服务器自由，玩的不过瘾。</p>
+<p>说一个前提，如果想要带有域名也就是浏览器里面输入的那一串地址，需要提前购买和备案，否则要等半个月左右才能使用。</p>
+<p>服务器厂商阿里云、腾讯云、百度云都可以，我用的阿里云。</p>
+<p>选择一个低配的 1核CPU、2G内存，镜像代表操作系统，选择 Ubuntu，版本选择 16.04，系统盘使用默认 40G。</p>
+<p>安全组按照默认的来，后面可以在服务器管理里面配置，管理开放的端口。</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/ea40f804-5e22-47c9-a939-8fdd49878bd8_640.webp" alt><p class="img-desc"></p></div>
+
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2183368"><section class style="border-width: 0px;border-style: none;border-color: initial;padding: 0px;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="margin-top: 10px;margin-bottom: 10px;box-sizing: border-box;"><section class style="display: inline-block;box-sizing: border-box;"><span style="display: block;padding: 0.3em 0.5em;border-radius: 0.8em 0.8em 0px 0px;background-color: rgb(249, 110, 87);font-size: 14.08px;color: rgb(255, 255, 255);box-sizing: border-box;" class><section style="box-sizing: border-box;">1</section></span> </section><section class style="border-width: 1px;border-style: solid;border-color: rgb(249, 110, 87);border-radius: 0px 0px 0.8em 0.8em;padding: 10px;box-sizing: border-box;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="box-sizing: border-box;"><section class style="box-sizing: border-box;"><section style="box-sizing: border-box;">怎么连接服务器</section></section></section></section></section></section></section></section></section>
+
+<p>在 Mac 上安装 ZenTermLite ，打开点击 + ，会话名称随便取，主机地址即为对公网的地址（下图中公对应的地址）。</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/94c5536a-8b36-466d-9b43-6d938fc2e0b6_640 (1).webp" alt><p class="img-desc"></p></div>
+
+<p>用户名用 root，点击认证，在密码中输入申请实例的时候创建的密码。</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/3081cf0d-c1c2-4a38-8e00-098186047baa_640 (2).webp" alt><p class="img-desc"></p></div>
+
+<p>点击确定，连接即可自动连接上服务器（以root身份）。</p>
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2183368"><section class style="border-width: 0px;border-style: none;border-color: initial;padding: 0px;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="margin-top: 10px;margin-bottom: 10px;box-sizing: border-box;"><section class style="display: inline-block;box-sizing: border-box;"><span style="display: block;padding: 0.3em 0.5em;border-radius: 0.8em 0.8em 0px 0px;background-color: rgb(249, 110, 87);font-size: 14.08px;color: rgb(255, 255, 255);box-sizing: border-box;" class><section style="box-sizing: border-box;">2</section></span> </section><section class style="border-width: 1px;border-style: solid;border-color: rgb(249, 110, 87);border-radius: 0px 0px 0.8em 0.8em;padding: 10px;box-sizing: border-box;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="box-sizing: border-box;"><section class style="box-sizing: border-box;"><section style="box-sizing: border-box;">怎么添加新用户</section></section></section></section></section></section></section></section></section>
+
+<p>先查看系统的用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd</span><br></pre></td></tr></table></figure>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/dc478903-686a-4b9c-8e56-8d092652dc88_640 (3).webp" alt><p class="img-desc"></p></div>
+
+<p>我们创建一个用户 uftp，用来供上传文件使用。会要求输入密码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser uftp</span><br></pre></td></tr></table></figure>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/c4238cae-bf08-4b1e-be7c-7dd806cfc6d4_640 (4).webp" alt><p class="img-desc"></p></div>
+
+<p>这行命令会自动创建用户目录。</p>
+<p>删除用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel uftp</span><br></pre></td></tr></table></figure>
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2183368"><section class style="border-width: 0px;border-style: none;border-color: initial;padding: 0px;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="margin-top: 10px;margin-bottom: 10px;box-sizing: border-box;"><section class style="display: inline-block;box-sizing: border-box;"><span style="display: block;padding: 0.3em 0.5em;border-radius: 0.8em 0.8em 0px 0px;background-color: rgb(249, 110, 87);font-size: 14.08px;color: rgb(255, 255, 255);box-sizing: border-box;" class><section style="box-sizing: border-box;">3</section></span> </section><section class style="border-width: 1px;border-style: solid;border-color: rgb(249, 110, 87);border-radius: 0px 0px 0.8em 0.8em;padding: 10px;box-sizing: border-box;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="box-sizing: border-box;"><section class style="box-sizing: border-box;"><section style="box-sizing: border-box;">怎么通过FTP上传文件</section></section></section></section></section></section></section></section></section>
+
+<p>服务器需要先安装 ftp 服务，安装 vsftp。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install vsftpd</span><br></pre></td></tr></table></figure>
+<p>配置 vsftp。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/vsftp.conf</span><br></pre></td></tr></table></figure>
+<p>在 <code># Uncomment this to enable any form of FTP write command.</code> 处，添加如下语句</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/ef6e164d-be24-4f20-baf0-66d9ded33310_640 (5).webp" alt><p class="img-desc"></p></div>
+
+<p>同时创建 <code>/etc/vsftpd.user_list</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">touch /etc/vsftpd.user_list</span><br><span class="line">vi /etc/vsftpd.user_list</span><br></pre></td></tr></table></figure>
+<p>添加使用的用户，重启服务即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/vsftpd start  <span class="comment"># 启动vsftp服务</span></span><br><span class="line">sudo /etc/init.d/vsftpd stop <span class="comment"># 停止vsftp服务</span></span><br><span class="line">sudo /etc/init.d/vsftpd restart <span class="comment"># 重启vsftp服务</span></span><br></pre></td></tr></table></figure>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/ca6a5053-b702-4492-8953-e2d4eb51f282_640 (6).webp" alt><p class="img-desc"></p></div>
+
+<p>先下载一个 FIleZilla，这是一个 FTP客户端。输入</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/112b6686-53bd-41ef-91db-eb1ad4901099_640 (7).webp" alt><p class="img-desc"></p></div>
+
+<p>即可列出该目录，之后就可以开始上传下载文件了。</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/f41066c3-059e-4b21-90f0-36b020ef2276_640 (8).webp" alt><p class="img-desc"></p></div>
+
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2183368"><section class style="border-width: 0px;border-style: none;border-color: initial;padding: 0px;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="margin-top: 10px;margin-bottom: 10px;box-sizing: border-box;"><section class style="display: inline-block;box-sizing: border-box;"><span style="display: block;padding: 0.3em 0.5em;border-radius: 0.8em 0.8em 0px 0px;background-color: rgb(249, 110, 87);font-size: 14.08px;color: rgb(255, 255, 255);box-sizing: border-box;" class><section style="box-sizing: border-box;">4</section></span> </section><section class style="border-width: 1px;border-style: solid;border-color: rgb(249, 110, 87);border-radius: 0px 0px 0.8em 0.8em;padding: 10px;box-sizing: border-box;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="box-sizing: border-box;"><section class style="box-sizing: border-box;"><section style="box-sizing: border-box;">怎么安装Node</section></section></section></section></section></section></section></section></section>
+
+<p>Linux 上面选择从源文件编译安装，打开 <a href="http://nodejs.cn/download/，选择安装包。" target="_blank" rel="noopener">http://nodejs.cn/download/，选择安装包。</a></p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/fe311ab7-7810-4922-b9d4-9cb88b2f0df8_640 (9).webp" alt><p class="img-desc"></p></div>
+
+<p>找到 node-v10.16.0.tar.gz</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/500ca0af-62a0-4c9f-af53-fb5fe92ea038_640 (10).webp" alt><p class="img-desc"></p></div>
+
+<p>之后复制链接地址</p>
+<div class="img-center"><img src="https://qiniu1.lxfriday.xyz/WaterM/05ddfd96-5a0d-4be1-8288-d30f15b0aa1a_640 (11).webp" alt><p class="img-desc"></p></div>
+
+<p>wget 将文件下载到机器上，tar 将文件解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0.tar.gz</span><br><span class="line">tar -zxvf node-v10.16.0.tar.gz</span><br></pre></td></tr></table></figure>
+<p>以 root 用户的身份执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>静静等待。。。整个编译安装过程会比较漫长。。。</p>
+<p>等待执行完之后，在命令行里面输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">v10.16.0</span><br></pre></td></tr></table></figure>
+<p>显示出 Node 版本，即为安装成功。</p>
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2183368"><section class style="border-width: 0px;border-style: none;border-color: initial;padding: 0px;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="margin-top: 10px;margin-bottom: 10px;box-sizing: border-box;"><section class style="display: inline-block;box-sizing: border-box;"><span style="display: block;padding: 0.3em 0.5em;border-radius: 0.8em 0.8em 0px 0px;background-color: rgb(249, 110, 87);font-size: 14.08px;color: rgb(255, 255, 255);box-sizing: border-box;" class><section style="box-sizing: border-box;">5</section></span> </section><section class style="border-width: 1px;border-style: solid;border-color: rgb(249, 110, 87);border-radius: 0px 0px 0.8em 0.8em;padding: 10px;box-sizing: border-box;"><section class style="box-sizing: border-box;" powered-by="KolEditor.us"><section class style="box-sizing: border-box;"><section class style="box-sizing: border-box;"><section style="box-sizing: border-box;">如何后台运行 Node 程序</section></section></section></section></section></section></section></section></section>
+
+<p>使用 pm2 可以让 Node 程序运行在后台，即使关闭命令行也可以继续运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g pm2</span><br></pre></td></tr></table></figure>
+<p>启动类似 <code>node xxx.js</code> 的项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start --name xxxsname xxx.js  <span class="comment"># 将运行的实例命名为 xxxsname</span></span><br></pre></td></tr></table></figure>
+<p>启动类似 <code>npm run serve</code> 的项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start --name servename npm -- run serve</span><br></pre></td></tr></table></figure>
+<p>以配置文件的形式启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start pm2config.json</span><br></pre></td></tr></table></figure>
+<p>配置文件如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"apps"</span>: [&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"appname"</span>, <span class="comment"># 应用名</span></span><br><span class="line">    <span class="string">"exec_interpreter"</span>: <span class="string">"node"</span>, <span class="comment"># 执行环境</span></span><br><span class="line">    <span class="string">"script"</span>: <span class="string">"./b.js"</span>, <span class="comment"># 要执行的脚本</span></span><br><span class="line">    <span class="string">"cwd"</span>: <span class="string">"/home/uftp/test-pm2"</span>, <span class="comment"># 项目路径</span></span><br><span class="line">    <span class="string">"exec_mode"</span>: <span class="string">"fork"</span>,</span><br><span class="line">    <span class="string">"max_memory_restart"</span>: <span class="string">"1G"</span>,</span><br><span class="line">    <span class="string">"autorestart"</span>: <span class="literal">true</span>, <span class="comment"># 出错自动重启</span></span><br><span class="line">    <span class="string">"node_args"</span>: [],</span><br><span class="line">    <span class="string">"error_file"</span> : <span class="string">"./test-err.log"</span>, <span class="comment"># 错误日志文件位置</span></span><br><span class="line">    <span class="string">"out_file"</span>: <span class="string">"./test-out.log"</span>,  <span class="comment"># 输出日志文件位置</span></span><br><span class="line">    <span class="string">"pid_file"</span>: <span class="string">"./test.pid"</span>,  <span class="comment"># 进程相关文件位置</span></span><br><span class="line">    <span class="string">"args"</span>: [],</span><br><span class="line">    <span class="string">"env"</span>: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>pm2 真的是后台自动部署的神器！！！</p>
+<hr>
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2177544" style="white-space: normal;"><p class style="max-width: 100%;box-sizing: border-box;min-height: 1em;text-align: center;overflow-wrap: break-word !important;"><span data-txtless="spin" data-txtlessp="120" style="font-size: 14px;max-width: 100%;color: rgb(228, 157, 172);box-sizing: border-box !important;overflow-wrap: break-word !important;">◆&nbsp;</span><span style="font-size: 14px;max-width: 100%;color: rgb(250, 211, 172);box-sizing: border-box !important;overflow-wrap: break-word !important;">◆&nbsp;</span><span data-txtless="spin" data-txtlessp="-120" style="font-size: 14px;max-width: 100%;color: rgb(255, 233, 234);box-sizing: border-box !important;overflow-wrap: break-word !important;">◆ &nbsp;<span data-txtless="spin" data-txtlessp="120" style="max-width: 100%;color: rgb(121, 134, 175);box-sizing: border-box !important;overflow-wrap: break-word !important;">◆&nbsp;</span><span style="max-width: 100%;color: rgb(17, 163, 215);box-sizing: border-box !important;overflow-wrap: break-word !important;">◆</span></span></p></section>
+
+<p style="white-space: normal;"><br></p>
+
+<section class data-style-type="5" data-tools="新媒体排版" data-id="2170287" style="white-space: normal;"><section style="margin-right: 15px;margin-bottom: 10px;margin-left: 15px;float: left;color: inherit;"><p style="color: inherit;line-height: 72px;"><span style="color: rgb(95, 156, 239);font-size: 72px;">09</span></p><p style="color: rgb(153, 153, 153);"><span style="color: inherit;font-size: 24px;">06,2019</span></p></section><section style="margin: 24px 5px -20px -8px;border-right: 10px solid rgb(95, 156, 239);border-left-width: 0px;border-left-color: rgb(95, 156, 239);display: inline-block;max-width: 100%;height: 9px;width: 9px;vertical-align: top;float: left;border-bottom: 10px solid transparent !important;border-top-style: solid !important;border-top-color: transparent !important;overflow-wrap: break-word !important;box-sizing: border-box !important;"></section><section class style="margin-left: 125px;padding: 15px;line-height: 1.75em;color: rgb(255, 255, 255);border-radius: 5px;background: rgb(95, 156, 239);">这是一篇比较基础的入门教程，感觉能给初学者节省半天到一天的时间去熟悉吧！后面会讲解 Nginx 做静态文件服务器和反向代理服务器！</section></section>
+
+<p style="white-space: normal;"><br></p><br><p style="white-space: normal;"><br></p>
+
+<section class data-style-type="1" data-tools="新媒体排版" data-id="12893" style="white-space: normal;"><section class style="margin-top: 20px;"><section style="margin: 20px 5px 5px;padding: 5px;border-width: 2px;border-style: solid;border-color: rgb(240, 84, 84);border-radius: 4px;"><section style="display: flex;justify-content: center;"><section style="margin-top: -20px;padding-right: 25px;padding-left: 25px;background-color: rgb(254, 254, 254);"><p class style="color: rgb(240, 84, 84);font-size: 18px;min-width: 1em;">推荐阅读</p></section></section><section style="padding: 20px;"><p class style="color: rgb(85, 85, 85);font-size: 14px;"><a href="http://mp.weixin.qq.com/s?__biz=MzU3MzcxMzg2Mw==&amp;mid=2247483703&amp;idx=1&amp;sn=be296a8a00cd49ffda228806ec2c2d8f&amp;chksm=fd3c3d9fca4bb4894089132bab1f2fbb8c99cf69ec0698ea09d907210fdaca2424500bb845f2&amp;scene=21#wechat_redirect" target="_blank" data-itemshowtype="0" data-linktype="2">看了那么多，TCP/IP究竟是什么（二）</a></p><p class style="color: rgb(85, 85, 85);font-size: 14px;"><a href="http://mp.weixin.qq.com/s?__biz=MzU3MzcxMzg2Mw==&amp;mid=2247483697&amp;idx=1&amp;sn=a35ff697f4b57f6d42d58347e51f3ea7&amp;chksm=fd3c3d99ca4bb48f0b5e2684e10e4fd5d24b9a5dbe92f8fb04d811e96246fd942dfa9321df31&amp;scene=21#wechat_redirect" target="_blank" data-itemshowtype="0" data-linktype="2">看了那么多，TCP/IP究竟是什么（一）</a><br></p><p class style="color: rgb(85, 85, 85);font-size: 14px;"><a href="http://mp.weixin.qq.com/s?__biz=MzU3MzcxMzg2Mw==&amp;mid=2247483677&amp;idx=1&amp;sn=989ba7afba4688698799dfc3fdb22207&amp;chksm=fd3c3db5ca4bb4a3019f234701bccb40a6c5a43eae6669b9835bf3e14b48cd8c7e3ce4d3b3fd&amp;scene=21#wechat_redirect" target="_blank" data-itemshowtype="0" data-linktype="2">TCP三次握手和四次分手</a></p><p class style="color: rgb(85, 85, 85);font-size: 14px;"><a href="http://mp.weixin.qq.com/s?__biz=MzU3MzcxMzg2Mw==&amp;mid=2247483653&amp;idx=1&amp;sn=1366e3ed6daa4a5158968f44926a1cd4&amp;chksm=fd3c3dadca4bb4bbf8f4903d442d23d283600d553bc2edf04e9f49691871d429086a81e420ca&amp;scene=21#wechat_redirect" target="_blank" data-itemshowtype="0" data-linktype="2">vuejs 中双向绑定的模拟实现</a></p></section></section></section></section>
+
+<p style="white-space: normal;"><br></p>
+
+<section style="white-space: normal;font-family: 微软雅黑;font-size: 15px;letter-spacing: 2px;text-align: center;max-width: 100%;box-sizing: border-box;display: inline-block;overflow-wrap: break-word !important;"></section>
+
+<p style="white-space: normal;"><br></p>
+
+<section class data-style-type="4" data-tools="新媒体排版" data-id="9499" style="white-space: normal;"><section class><section style="margin-right: auto;margin-left: auto;text-align: center;"><section style="margin-right: auto;margin-left: auto;padding-bottom: 10px;font-size: 0px;max-width: 360px !important;"><section style="padding-left: 2px;width: 65px;"><img class data-ratio="0.27380952380952384" data-type="jpeg" data-w="84" style="vertical-align: bottom; width: 84px !important; height: auto !important; visibility: visible !important;" _width="84px" src="https://qiniu1.lxfriday.xyz/WaterM/4ed0d012-33c7-4e3b-aae8-a299cc689477_640 (12).webp" crossorigin="anonymous" data-fail="0"></section><section style="margin-top: -10px;padding: 30px 25px;border-width: 2px;border-style: solid;border-color: rgb(255, 138, 101);display: flex;align-items: flex-start;"><section style="flex-shrink: 0;"><section style="width: 75px;"><img class data-copyright="0" data-cropselx1="0" data-cropselx2="200" data-cropsely1="0" data-cropsely2="200" data-ratio="1" data-type="jpeg" data-w="258" style="color: rgb(120, 124, 129); width: 75px !important; height: auto !important; visibility: visible !important;" _width="75px" src="https://qiniu1.lxfriday.xyz/WaterM/072481f0-c293-4252-9817-339ad5ef42d4_公众号二维码.webp" crossorigin="anonymous" data-fail="0"></section></section><section style="padding-left: 15px;flex-shrink: 1;"><p style="margin-right: auto;margin-left: auto;text-align: left;font-size: 18px;line-height: 1.7;">止水聊技术</p><p style="margin-right: auto;margin-left: auto;text-align: left;font-size: 16px;line-height: 1.4;">关注回复关键词送学习资料,帮你快速掌握刚需技能</p></section></section><section style="margin-top: -10px;padding-right: 2px;width: 65px;float: right;"><img class data-ratio="0.27380952380952384" data-type="jpeg" data-w="84" style="vertical-align: bottom; width: 84px !important; height: auto !important; visibility: visible !important;" _width="84px" src="https://qiniu1.lxfriday.xyz/WaterM/17187d89-b54f-4546-947c-4237743692c1_640 (14).webp" crossorigin="anonymous" data-fail="0"></section><section style="margin-top: -18px;margin-right: auto;margin-left: 70px;padding-right: 15px;padding-left: 15px;height: 30px;line-height: 30px;border-radius: 15px;background-color: rgb(255, 138, 101);display: inline-block;box-sizing: border-box;"><section style="display: flex;align-items: center;"><section style="display: flex;align-items: center;width: 20px;"><img class data-ratio="1" data-type="jpeg" data-w="132" style="vertical-align: top; width: 132px !important; height: auto !important; visibility: visible !important;" _width="132px" src="https://qiniu1.lxfriday.xyz/WaterM/3e7be4c8-af93-44d1-bfba-b49ddac09688_640 (13).webp" crossorigin="anonymous" data-fail="0"></section><p style="margin-left: 10px;color: rgb(255, 255, 255);font-size: 18px;">关注</p></section></section></section></section></section></section>
+
+
+
+
+
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/06/10/PM2实用指南、PM2详解、PM2轻松实现脚本后台执行、Node如何在后台运行、如何让npm-start在后台运行/" class="pre-post btn btn-default" title="PM2实用指南、PM2详解、PM2轻松实现脚本后台执行、Node如何在后台运行、如何让npm start在后台运行">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">PM2实用指南、PM2详解、PM2轻松实现脚本后台执行、Node如何在后台运行、如何让npm start在后台运行</span>
+        </a>
+    
+    
+        <a href="/2019/06/06/看了那么多，TCPIP究竟是什么（二）/" class="next-post btn btn-default" title="看了那么多，TCPIP究竟是什么（二）">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">看了那么多，TCPIP究竟是什么（二）</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

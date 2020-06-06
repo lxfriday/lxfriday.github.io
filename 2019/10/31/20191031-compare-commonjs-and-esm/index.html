@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>比较 commonjs 和 ESM 模块使用方式 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="比较 commonjs 和 ESM 模块使用方式">
+            
+	            比较 commonjs 和 ESM 模块使用方式
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/javascript">
+            javascript
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/commonjs" title="commonjs">
+                        commonjs
+                    </a>
+                
+                    <a href="/tags/esm" title="esm">
+                        esm
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/10/31</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <section id="layout" class="layout" style="font-size: 16px; color: black; padding: 10px; line-height: 1.6; word-spacing: 0px; letter-spacing: 0px; word-break: break-word; word-wrap: break-word; text-align: left; font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>commonjs</span></h2><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">commonjs 中有几个特别的变量，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">module</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">exports</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">require</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">global</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;"><strong>filename</strong></code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">dirname</code>。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">在一个 js 文件中输入下面这行，你会发现可以打印出 5 个 argument。</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(<span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">arguments</span>);<br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">它们分别对应的就是：<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">exports</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">require</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">module</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;"><strong>filename</strong></code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">dirname</code>。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">commonjs 的导出机制比较简单，只有 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">module.exports</code> 和 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">exports</code>。需要注意的是，他们指向的都是同一个对象。如果对 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">module.exports</code> 赋值，则通过 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">exports.xxx</code> 导出的所有变量都会失效，它所指向的对象和 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">module.exports</code> 指向的不是同一个对象，而导出时是以 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">module.exports</code> 指向的对象为准。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">require</code> 是动态导入模块的，只有执行到 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">require</code> 语句的时候才会导入模块，它导入的是模块的一个拷贝。模块导入一次之后就会被缓存起来，后面再导入时都是使用的已缓存的版本。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">举个简单例子，下面代码会先打印 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">index</code> 再打印 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">a</code>。如果把 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">require</code> 换成 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">import</code>，则会先打印 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">a</code> 再打印 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">index</code>。</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// a.js</span><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(<span class="hljs-string" style="line-height: 26px; color: #d14;">‘a’</span>)<br><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// index.js</span><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(<span class="hljs-string" style="line-height: 26px; color: #d14;">‘index’</span>)<br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">require</span>(<span class="hljs-string" style="line-height: 26px; color: #d14;">‘./a’</span>)<br></code></pre><br><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;">node index.js<br></code></pre><br><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>ESM</span></h2><br><h3 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 20px;"><span>常见导入导出</span></h3><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">ESM 全称叫 ECMA Script Modules，是在 ES6 语言层面提出的一种模块化标准。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">ES6 中主要有 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">import</code>、<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">export</code> 两个关键词。要注意他们是语法层面的关键词，所以不能使用     <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">console.log(import)</code> 这种方式来打印。而 commonjs 中的变量都是可以打印的。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">常见的导入导出：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 导入</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> React <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘react’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> <em> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">as</span> React <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘react’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> { Component } <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘react’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> {<span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">default</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">as</span> a} <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘react’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> {Button <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">as</span> Btn} <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘antd’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘index.less’</span><br><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">default</span> <span class="hljs-number" style="line-height: 26px; color: #008080;">1</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">const</span> name = <span class="hljs-string" style="line-height: 26px; color: #d14;">‘lxfriday’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> { age }<br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> {name <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">as</span> nickname}<br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> { foo } <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘./foo-bar’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> \</em> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘./foo-bar’</span><br></code></pre><br><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">ES6 模块在编译阶段就可以分析出导出的结果，同时它导出的是值的引用。</strong></p><br><ul style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">编译阶段会导出意味着模块的导入会先于正常的执行流执行，即使 import 导入语句是在正常语句之后（见 commonjs 的例子）；</section></li><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;">ES6 导出的是一个引用，所以在对原模块做更改之后会影响新导入的值，导入时可以看做是从 getter 函数里面取值，获取的都是原模块内部的值；</section></li></ul><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">下面是一个例子：</p><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191031221658.png" alt="image" style="display: block; margin: 0 auto; width: 50%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">image</figcaption></figure><br><h3 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 20px;"><span>ESM 在浏览器中的应用</span></h3><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">ESM 模块语法可以在<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Modules" style="text-decoration: none; color: #1e6bb8; word-wrap: break-word; font-weight: bold; border-bottom: 1px solid #1e6bb8;" target="_blank" rel="noopener">比较新</a>的浏览器中使用，它的使用方式像下面的代码，需要使用 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">type = module</code> 区分。浏览器对 script 标签默认的 type 是 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">application/javascript</code>。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">浏览器对 module 标签的脚本是异步加载并执行的，模块的加载不会阻塞浏览器渲染，等到整个页面渲染完成之后，module 才会执行，这种加载执行策略和 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">defer</code> 属性相同（<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">async</code> 是异步加载完就会立即执行，会中断浏览器渲染）。</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-tag" style="line-height: 26px; color: #000080; font-weight: normal;">&lt;<span class="hljs-name" style="line-height: 26px; color: #000080; font-weight: normal;">script</span> <span class="hljs-attr" style="line-height: 26px; color: #008080;">type</span>=<span class="hljs-string" style="line-height: 26px; color: #d14;">“module”</span> <span class="hljs-attr" style="line-height: 26px; color: #008080;">src</span>=<span class="hljs-string" style="line-height: 26px; color: #d14;">“./index.js”</span>&gt;</span>xxx<span class="hljs-tag" style="line-height: 26px; color: #000080; font-weight: normal;">&lt;/<span class="hljs-name" style="line-height: 26px; color: #000080; font-weight: normal;">script</span>&gt;</span><br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">下面是一个例子</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// cc.js</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">default</span> { <span class="hljs-attr" style="line-height: 26px;">aa</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">“aaa”</span>, <span class="hljs-attr" style="line-height: 26px;">bb</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">“bbb”</span> };<br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">var</span> value = <span class="hljs-number" style="line-height: 26px; color: #008080;">100</span>;<br><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// index.js</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> cc <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">“./cc.js”</span>;<br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(<span class="hljs-string" style="line-height: 26px; color: #d14;">“module in browser”</span>, cc);<br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(value);<br></code></pre><br><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-tag" style="line-height: 26px; color: #000080; font-weight: normal;">&lt;<span class="hljs-name" style="line-height: 26px; color: #000080; font-weight: normal;">body</span>&gt;</span><br>  hello<br>  <span class="hljs-tag" style="line-height: 26px; color: #000080; font-weight: normal;">&lt;<span class="hljs-name" style="line-height: 26px; color: #000080; font-weight: normal;">script</span> <span class="hljs-attr" style="line-height: 26px; color: #008080;">src</span>=<span class="hljs-string" style="line-height: 26px; color: #d14;">“./index.js”</span> <span class="hljs-attr" style="line-height: 26px; color: #008080;">type</span>=<span class="hljs-string" style="line-height: 26px; color: #d14;">“module”</span>&gt;</span><span class="hljs-tag" style="line-height: 26px; color: #000080; font-weight: normal;">&lt;/<span class="hljs-name" style="line-height: 26px; color: #000080; font-weight: normal;">script</span>&gt;</span><br><span class="hljs-tag" style="line-height: 26px; color: #000080; font-weight: normal;">&lt;/<span class="hljs-name" style="line-height: 26px; color: #000080; font-weight: normal;">body</span>&gt;</span><br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">执行结果</p><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191031221651.png" alt="image" style="display: block; margin: 0 auto; width: 50%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">image</figcaption></figure><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">可以看到，模块正常导入并打印了，但是在 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">cc.js</code> 中定义的变量 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">value</code>，在 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">index.js</code> 中获取不到，这说明  <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">type=module</code> 有作用域限制。</p><br><h2 style="margin-top: 40px; margin-bottom: 20px; font-weight: bold; color: black; font-size: 24px;"><span>commonjs 和 ESM 混合使用</span></h2><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">当它们混合使用的时候很容易产生混乱，在导入的时候，推荐把 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">import</code> 语句都放在 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">require</code> 语句前面。在不同时期，由于语法标准不完善，导入导出都存在差异，下面例子基于 webpack <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">4.41.2</code> 测试得出。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">看看下面的例子：</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 对 import xx from ‘./aa.js’</span><br><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">module</span>.exports = xx<br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 等同于 </span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">default</span> xx<br></code></pre><br><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 对 import { aa, bb } from ‘./cc.js’ 或者 const { aa, bb } = require(‘./cc.js’)</span><br><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">module</span>.exports = { <span class="hljs-attr" style="line-height: 26px;">aa</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">‘aaa’</span>, <span class="hljs-attr" style="line-height: 26px;">bb</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">‘bbb’</span> }<br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 等同于</span><br>exports.aa = <span class="hljs-string" style="line-height: 26px; color: #d14;">‘aaa’</span><br>exports.bb = <span class="hljs-string" style="line-height: 26px; color: #d14;">‘bbb’</span><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 等同于</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">const</span> aa = <span class="hljs-string" style="line-height: 26px; color: #d14;">‘aaa’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">const</span> bb = <span class="hljs-string" style="line-height: 26px; color: #d14;">‘bbb’</span><br></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">下面两个例子要多加注意</p><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// cc.js</span><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">module</span>.exports = { <span class="hljs-attr" style="line-height: 26px;">aa</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">‘aaa’</span>, <span class="hljs-attr" style="line-height: 26px;">bb</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">‘bbb’</span> }<br><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// index.js</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> cc <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘./cc.js’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> * <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">as</span> dd <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘./cc.js’</span><br><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(cc)<br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(dd)<br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 打印的结果相同，为 {aa: “aaa”, bb: “bbb”}</span><br></code></pre><br><br><pre class="custom" style="margin-top: 10px; margin-bottom: 10px;"><code class="hljs" style="font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; border-radius: 0px; font-size: 12px; -webkit-overflow-scrolling: touch; overflow-x: auto; padding: 16px; color: #333; background: #f8f8f8; display: -webkit-box !important;"><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// cc.js</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">export</span> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">default</span> { <span class="hljs-attr" style="line-height: 26px;">aa</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">‘aaa’</span>, <span class="hljs-attr" style="line-height: 26px;">bb</span>: <span class="hljs-string" style="line-height: 26px; color: #d14;">‘bbb’</span> }<br><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// index.js</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> cc <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘./cc.js’</span><br><span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">import</span> <em> <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">as</span> dd <span class="hljs-keyword" style="line-height: 26px; color: #333; font-weight: bold;">from</span> <span class="hljs-string" style="line-height: 26px; color: #d14;">‘./cc.js’</span><br><br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(cc)<br><span class="hljs-built_in" style="line-height: 26px; color: #0086b3;">console</span>.log(dd)<br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// 打印的结果不同</span><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// cc =&gt; {aa: “aaa”, bb: “bbb”}</span><br><span class="hljs-comment" style="line-height: 26px; color: #998; font-style: italic;">// dd =&gt; Module&nbsp;{default: {…}, __esModule: true, Symbol(Symbol.toStringTag): “Module”}</span><br></em></code></pre><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">可以看出，使用 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">export default</code> 这种 ES6 方式导出的结果，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">import  as</code> 可以准确的实现自身的语义，把模块里面所有导出的都挂载模块对象中。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">ES6 模块中，<code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">import a from ‘./xx’</code> 是 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">import { default as a } from ‘./xx’</code> 的简写。表示把 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">xx</code> 模块中用 <code style="font-size: 14px; word-wrap: break-word; padding: 2px 4px; border-radius: 4px; margin: 0 2px; color: #1e6bb8; background-color: rgba(27,31,35,.05); font-family: Operator Mono, Consolas, Monaco, Menlo, monospace; word-break: break-all;">export default</code> 导出的变量导入。</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;"><strong style="font-weight: bold; color: black;">参考</strong></p><br><ul style="margin-top: 8px; margin-bottom: 8px; padding-left: 25px; color: black; list-style-type: disc;"><br><li><section style="margin-top: 5px; margin-bottom: 5px; line-height: 26px; text-align: left; color: rgb(1,1,1); font-weight: 500;"><a href="http://es6.ruanyifeng.com/#docs/module-loader" style="text-decoration: none; color: #1e6bb8; word-wrap: break-word; font-weight: bold; border-bottom: 1px solid #1e6bb8;" target="_blank" rel="noopener">阮一峰 module-loader</a></section></li></ul><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">今天的文章就到这里，感谢阅读~</p><br><p style="font-size: 16px; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height: 26px; color: black;">欢迎大家关注我的掘金和公众号</p><br><figure style="margin: 0; margin-top: 10px; margin-bottom: 10px;"><img src="https://qiniu1.lxfriday.xyz/blog/image_20191031220057.png" alt="image" style="display: block; margin: 0 auto; width: 100%;"><figcaption style="margin-top: 5px; text-align: center; color: #888; font-size: 14px;">image</figcaption></figure><br></section>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/11/16/20191116-bfc-clearfix-margincollapse/" class="pre-post btn btn-default" title="这一次终于弄懂了 CSS BFC、清除浮动、外边距折叠">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">这一次终于弄懂了 CSS BFC、清除浮动、外边距折叠</span>
+        </a>
+    
+    
+        <a href="/2019/06/10/PM2实用指南、PM2详解、PM2轻松实现脚本后台执行、Node如何在后台运行、如何让npm-start在后台运行/" class="next-post btn btn-default" title="PM2实用指南、PM2详解、PM2轻松实现脚本后台执行、Node如何在后台运行、如何让npm start在后台运行">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">PM2实用指南、PM2详解、PM2轻松实现脚本后台执行、Node如何在后台运行、如何让npm start在后台运行</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">commonjs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">ESM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">常见导入导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">ESM 在浏览器中的应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">commonjs 和 ESM 混合使用</span></a></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="云影sky">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://lxfriday.xyz">
+    <!--SEO-->
+
+<meta name="description" content="云影sky的技术站点">
+
+
+
+<meta name="keywords" content="云影,云影sky,前端,react,javascript">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>mysql账户、权限、访问控制管理 | 云影sky</title>
+
+
+
+    <link rel="icon" href="https://qiniu1.lxfriday.xyz/WaterM/7feb0a11-eba6-4ad3-a33d-c3bdcffa85b7_cathead.png">
+
+    
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e086f0436a5026c69c7d1143d9f2e91a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <div id="particles-js"/></div>
+    <header class="main-header">
+    <div class="main-header-box">
+        <span class="header-avatar-w-1">
+            <span class="header-avatar-w-2">
+                <a class="header-avatar" href="/" title="云影sky">
+                    <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+                </a>
+            </span>
+        </span>
+
+
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 云影sky </h2>
+            
+    	</div>
+    </div>
+</header>
+    <section class="content-wrap" style="margin-top: 24px;">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="mysql账户、权限、访问控制管理">
+            
+	            mysql账户、权限、访问控制管理
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    
+    <span class="categories-meta fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-folder-open" style="color:#827717;"></i>
+        <a href="/categories/数据库">
+            数据库
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap" style="margin-right:5px;">
+        <i class="fa fa-tags" style="color:green;"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/mysql" title="mysql">
+                        mysql
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o" style="color:#3e2723;"></i>
+            <span class="date-meta">2019/02/25</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="MySQL-权限表"><a href="#MySQL-权限表" class="headerlink" title="MySQL 权限表"></a>MySQL 权限表</h2><p>MySQL 通过权限表来控制用户对数据库的访问，权限表存放在 MySQL 数据库中， mysql_install_db 脚本初始化。存储账户权限的信息主要有 user、db、host、tables_priv、columns_priv、procs_priv。</p>
+<p>user 表是 MySQL 中最重要的一个权限表，记录允许连接到服务器的账号信息，里面的权限是全局级别的。若一个用户在 user 表中被授予了 DELETE 权限，则该用户可以删除 MySQL 服务器上所有数据库中的任何记录。</p>
+<p>user 表主要由四类列构成：</p>
+<ul>
+<li>用户列：Host、User、authentication_string</li>
+<li>权限列：Select_priv、Update_pirv、Create_priv…</li>
+<li>安全列：ssl_type、ssl_cipher、x509_issuer…</li>
+<li>资源控制列：max_questions、max_updates、max_connections…</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE TABLE `user` (</span><br><span class="line">  `Host` char(60) COLLATE utf8_bin NOT NULL DEFAULT '',</span><br><span class="line">  `User` char(32) COLLATE utf8_bin NOT NULL DEFAULT '',</span><br><span class="line">  `Select_priv` enum('N','Y') CHARACTER <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Insert_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Update_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Delete_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Create_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Drop_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Reload_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Shutdown_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Process_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`File_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Grant_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`References_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Index_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Alter_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Show_db_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Super_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Create_tmp_table_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Lock_tables_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Execute_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Repl_slave_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Repl_client_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Create_view_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Show_view_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Create_routine_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Alter_routine_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Create_user_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Event_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Trigger_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`Create_tablespace_priv`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`ssl_type`</span> enum(<span class="string">''</span>,<span class="string">'ANY'</span>,<span class="string">'X509'</span>,<span class="string">'SPECIFIED'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`ssl_cipher`</span> <span class="built_in">blob</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`x509_issuer`</span> <span class="built_in">blob</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`x509_subject`</span> <span class="built_in">blob</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`max_questions`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`max_updates`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`max_connections`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`max_user_connections`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`plugin`</span> <span class="built_in">char</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'mysql_native_password'</span>,</span><br><span class="line">  <span class="string">`authentication_string`</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> utf8_bin,</span><br><span class="line">  <span class="string">`password_expired`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  <span class="string">`password_last_changed`</span> <span class="built_in">timestamp</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`password_lifetime`</span> <span class="built_in">smallint</span>(<span class="number">5</span>) <span class="keyword">unsigned</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`account_locked`</span> enum(<span class="string">'N'</span>,<span class="string">'Y'</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'N'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`Host`</span>,<span class="string">`User`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COLLATE</span>=utf8_bin <span class="keyword">COMMENT</span>=<span class="string">'Users and global privileges'</span></span><br></pre></td></tr></table></figure>
+<h2 id="MySQL-账户管理"><a href="#MySQL-账户管理" class="headerlink" title="MySQL 账户管理"></a>MySQL 账户管理</h2><h3 id="登录和退出-MySQL-服务器"><a href="#登录和退出-MySQL-服务器" class="headerlink" title="登录和退出 MySQL 服务器"></a>登录和退出 MySQL 服务器</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h localhost -u root -p test</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-h 主机名，指定主机名或 ip，默认为 localhost</li>
+<li>-u 用户名</li>
+<li>-p 密码</li>
+<li>-P 端口，默认 3306</li>
+<li>无参数数据库名。可以在命令的最后指定数据库名</li>
+<li>-esql。如果制定了该参数，将在登录后执行 -e 后面的命令或 sql 语句并退出</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql -h localhost -u root -p mysql -e "DESC person;"</span><br></pre></td></tr></table></figure>
+<h3 id="新建普通用户"><a href="#新建普通用户" class="headerlink" title="新建普通用户"></a>新建普通用户</h3><p>有两种方法可以创建新用户：一种是使用 CREATE USER 或 GRANT 语句；零一种是直接操作 MySQL 授权表。最好使用 GRANT 语句。</p>
+<h4 id="使用-CREATE-USER"><a href="#使用-CREATE-USER" class="headerlink" title="使用 CREATE USER"></a>使用 CREATE USER</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE USER user_specification [, user_specification]...</span><br><span class="line">    user_specification:</span><br><span class="line">    user@host</span><br><span class="line">    [</span><br><span class="line">        IDENTIFIED BY [PASSWORD] 'password'</span><br><span class="line">        [ IDENTIFIED <span class="keyword">WITH</span> auth_plugin [<span class="keyword">AS</span> <span class="string">'auth_string'</span>]]</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+<p>user 表示创建的用户名称；host 表示允许登录的用户主机名称；IDENTIFIED BY 表示用来设置用户的密码；[PASSWORD] 表示使用哈希值设置密码，该参数可选；password 表示用户登录时使用的普通明文密码；IDENTIFIED WITH 语句为用户指定一个身份验证插件；auth_plugin 是插件的名称，插件名称可以是一个带单引号的字符串，或者带双引号的字符串；auth_string 是可选的字符串参数，该参数传递给身份验证插件，由该插件解释该参数的意义。</p>
+<p>使用 CREATE USER 语句的用户，必须有全局的 CREATE USER 权限或 MySQL 数据库的 INSERT 权限。CREATE USER 新创建的账户没有任何权限。如果新添加的账户已经存在，CREATE USER 语句会返回一个错误。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'mypass'</span><br></pre></td></tr></table></figure>
+<p>如果只指定用户名部分 jeffrey，则主机名部分默认为 % （即对所有的主机开放权限）。</p>
+<p>为了避免指定明文密码，如果知道密码的哈希值，可以通过 PASSWORD 关键字使用密码的哈希值设置密码。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT PASSWORD('mypass');</span><br><span class="line"></span><br><span class="line">&gt; CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY PASSWORD '*6C8989366EAF75BB670AD8EA7A7FC1176A95CEF4'</span><br></pre></td></tr></table></figure>
+<h4 id="使用-GRANT-语句创建新用户"><a href="#使用-GRANT-语句创建新用户" class="headerlink" title="使用 GRANT 语句创建新用户"></a>使用 GRANT 语句创建新用户</h4><p>CREATE USER 语句创建的新用户没有任何权限，还需要用 GRANT 语句赋予用户权限。GRANT 语句创建用户可以直接授权。GRANT 语句是添加新用户并授权他们访问数据库的首选方法。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; GRANT ALL PRIVILEGES ON db.table TO user@localhost [IDENTIFIED BY 'password'] [,user [IDENTIFIED BY 'password']] [WITH GRANT OPTION];</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; GRANT SELECT,UPDATE ON *.* TO 'testUser'@'localhost' IDENTIFIED By 'testpwd';</span><br></pre></td></tr></table></figure>
+<h4 id="直接操作-MySQL-用户表"><a href="#直接操作-MySQL-用户表" class="headerlink" title="直接操作 MySQL 用户表"></a>直接操作 MySQL 用户表</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; INSERT INTO mysql.user (HOST,User,Password,[privilegelist]) VALUES ('host', 'username', PASSWORD('password'), privilegevaluelist);</span><br></pre></td></tr></table></figure>
+<h3 id="删除普通用户"><a href="#删除普通用户" class="headerlink" title="删除普通用户"></a>删除普通用户</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; DROP USER 'user'@'host'; # username + hostname 组合对应一个指定的用户</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; DELETE FROM mysql.user WHERE host='hostname' AND user='username';</span><br></pre></td></tr></table></figure>
+<h3 id="root-用户修改自己的密码"><a href="#root-用户修改自己的密码" class="headerlink" title="root 用户修改自己的密码"></a>root 用户修改自己的密码</h3><h4 id="使用-mysqladmin-命令在命令行指定新密码"><a href="#使用-mysqladmin-命令在命令行指定新密码" class="headerlink" title="使用 mysqladmin 命令在命令行指定新密码"></a>使用 mysqladmin 命令在命令行指定新密码</h4><p>mysqladmin 命令的基本语法格式如下<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqladmin -u username -h localhost -p password 'newpwd';</span><br></pre></td></tr></table></figure></p>
+<p>更改 root 用户的密码<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqladmin -u root -p password "rootpwd"</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改-mysql-数据库的-user-表"><a href="#修改-mysql-数据库的-user-表" class="headerlink" title="修改 mysql 数据库的 user 表"></a>修改 mysql 数据库的 user 表</h4><p>直接更改数据库中的 root 对应的密码字段的值<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; UPDATE mysql.user SET Password=PASSWORD('rootpwd') WHERE User='root' and Host='localhost';</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用-SET-语句修改-root-用户的密码"><a href="#使用-SET-语句修改-root-用户的密码" class="headerlink" title="使用 SET 语句修改 root 用户的密码"></a>使用 SET 语句修改 root 用户的密码</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SET PASSWORD=PASSWORD('rootpwd');</span><br></pre></td></tr></table></figure>
+<h3 id="root-用户修改普通用户密码"><a href="#root-用户修改普通用户密码" class="headerlink" title="root 用户修改普通用户密码"></a>root 用户修改普通用户密码</h3><h4 id="SET-语句"><a href="#SET-语句" class="headerlink" title="SET 语句"></a>SET 语句</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SET PASSWORD FOR 'user'@'host' = PASSWORD('userpwd');</span><br></pre></td></tr></table></figure>
+<h4 id="UPDATE-语句修改"><a href="#UPDATE-语句修改" class="headerlink" title="UPDATE 语句修改"></a>UPDATE 语句修改</h4> <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; UPDATE mysql.user SET Password=PASSWORD('pwd') WHERE User='username' AND Host='localhost';</span><br></pre></td></tr></table></figure>
+<h4 id="GRANT-语句修改普通用户密码"><a href="#GRANT-语句修改普通用户密码" class="headerlink" title="GRANT 语句修改普通用户密码"></a>GRANT 语句修改普通用户密码</h4><p> GRANT … ON … TO ‘user‘@’localhost’</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; GRANT USAGE ON *.* TO 'someuser'@'%' IDENTIFIED BY 'somepwd';</span><br></pre></td></tr></table></figure>
+<h3 id="普通用户修改密码"><a href="#普通用户修改密码" class="headerlink" title="普通用户修改密码"></a>普通用户修改密码</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SET PASSWORD=PASSWORD('newpwd');</span><br></pre></td></tr></table></figure>
+<h3 id="root-用户密码丢失的解决办法"><a href="#root-用户密码丢失的解决办法" class="headerlink" title="root 用户密码丢失的解决办法"></a>root 用户密码丢失的解决办法</h3><h4 id="使用-skip-grant-tables-选项启动-MySQL-服务"><a href="#使用-skip-grant-tables-选项启动-MySQL-服务" class="headerlink" title="使用 skip-grant-tables 选项启动 MySQL 服务"></a>使用 skip-grant-tables 选项启动 MySQL 服务</h4><p>以 skip-grant-tables 选项启动的时候，MySQL 服务器将不加载权限判断，任何用户都能访问数据库。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 在 Linux 系统中，使用 /etc/init.d/mysql 来启动 MySQL 服务</span><br><span class="line">&gt; /etc/init.d/mysql start-mysqld --skip-grant-tables</span><br></pre></td></tr></table></figure>
+<h4 id="使用-root-用户登录，重新设置密码"><a href="#使用-root-用户登录，重新设置密码" class="headerlink" title="使用 root 用户登录，重新设置密码"></a>使用 root 用户登录，重新设置密码</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysqld --skip-grant-tables</span><br></pre></td></tr></table></figure>
+<p>命令运行之后，用户无法输入指令，此时如果在任务管理器中看到名为 mysqld 的进程，则表示可以使用 root 用户登录 MySQL 了</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql -u root</span><br><span class="line">&gt; UPDATE mysql.user SET Password=PASSWORD('newpwd') WHERE User='root' AND Host='localhost'</span><br><span class="line">&gt; # 再加载权限表，密码修改完成之后，必须使用 FlUSH PRIVILEGES 语句加载权限表。加载权限表后，新的密码才会生效，同时 MySQL 服务器开始权限验证</span><br><span class="line">&gt; FLUSH PRIVILEGES;</span><br><span class="line">&gt; # 修改密码之后，将输入 mysqld --skip-grant-tables 命令的命令行窗口关闭，接下来就可以使用新设置的密码登录 MySQL 了。</span><br></pre></td></tr></table></figure>
+<h3 id="MySQL-权限管理"><a href="#MySQL-权限管理" class="headerlink" title="MySQL 权限管理"></a>MySQL 权限管理</h3><h4 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h4><p>全局层级，全局权限适用于一个给定服务器中的所有数据库，这些权限存储在 mysql.user 表中。 <code>GRANT ALL ON *.*</code> 和 <code>REVOKEA LL ON db_name.*</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; GRANT priv_type [(columns)] [,priv_type[(columns)]] ...</span><br><span class="line">    ON [object_type] table1,tabl2,...,tablen</span><br><span class="line">    TO user [IDENTIFIED BY [PASSWORD] 'password']</span><br><span class="line">    [, user [IDENTIFIED BY [PASSWORD] 'password']] ...</span><br><span class="line">    [<span class="keyword">WITH</span> <span class="keyword">GRANT</span> <span class="keyword">OPTION</span>]</span><br></pre></td></tr></table></figure>
+<p>使用 GRANT 语句创建一个新用户 grantUser，密码为 grantpwd ，用户 grantUser 对所有的数据有查询、插入权限，并授予 GRANT 权限。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; GRANT SELECT,INSERT ON *.* TO 'grantUseer'@'localhost' IDENTIFIED BY 'grantpwd' WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h4 id="收回权限-REVOKE"><a href="#收回权限-REVOKE" class="headerlink" title="收回权限 REVOKE"></a>收回权限 REVOKE</h4><p>REVOKE 语句必须和 FROM 一起使用，FROM 指明需要收回权限的账户<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user'@'host' [,'user'@'host' ...];</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; REVOKE priv_type [(columns)] [,priv_type[(columns)]] ...</span><br><span class="line">    ON table1,table2,...,tablen</span><br><span class="line">    FROM 'user'@'host' [, 'user'@'host'];</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="comment">#### 查看权限</span></span><br><span class="line">```sql</span><br><span class="line">&gt; SHOW GRANTS FOR 'user'@'host';</span><br></pre></td></tr></table></figure>
+<p>直接从 user 表中查询数据<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT Select_priv,Insert_priv FROM user WHERE user='grantUseer' AND host='localhost';</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="mailto:liu3248184446@outlook.com" target="_blank">云影sky</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/02/26/mysql数据备份与还原/" class="pre-post btn btn-default" title="mysql数据备份与还原">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">mysql数据备份与还原</span>
+        </a>
+    
+    
+        <a href="/2019/02/24/mysql查询数据/" class="next-post btn btn-default" title="mysql查询数据">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">mysql查询数据</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MTY4NC8xODIzMA==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <div style="display: flex;justify-content: space-between;"><h3 class="title">搜索</h3><a style="align-self: flex-start;cursor: pointer;" href="/1979/01/01/自我介绍/">关于我</a></div>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">微信公众号</h3>
+        <div>
+            <div style="text-align:center">
+  <img style="margin-left: -10px;width: 200px" src="https://qiniu1.lxfriday.xyz/blog/image_20191031230011.png">
+</div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">目录</h3>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-权限表"><span class="toc-text">MySQL 权限表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-账户管理"><span class="toc-text">MySQL 账户管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登录和退出-MySQL-服务器"><span class="toc-text">登录和退出 MySQL 服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新建普通用户"><span class="toc-text">新建普通用户</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-CREATE-USER"><span class="toc-text">使用 CREATE USER</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-GRANT-语句创建新用户"><span class="toc-text">使用 GRANT 语句创建新用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直接操作-MySQL-用户表"><span class="toc-text">直接操作 MySQL 用户表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除普通用户"><span class="toc-text">删除普通用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root-用户修改自己的密码"><span class="toc-text">root 用户修改自己的密码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-mysqladmin-命令在命令行指定新密码"><span class="toc-text">使用 mysqladmin 命令在命令行指定新密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改-mysql-数据库的-user-表"><span class="toc-text">修改 mysql 数据库的 user 表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-SET-语句修改-root-用户的密码"><span class="toc-text">使用 SET 语句修改 root 用户的密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root-用户修改普通用户密码"><span class="toc-text">root 用户修改普通用户密码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SET-语句"><span class="toc-text">SET 语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UPDATE-语句修改"><span class="toc-text">UPDATE 语句修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRANT-语句修改普通用户密码"><span class="toc-text">GRANT 语句修改普通用户密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通用户修改密码"><span class="toc-text">普通用户修改密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root-用户密码丢失的解决办法"><span class="toc-text">root 用户密码丢失的解决办法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-skip-grant-tables-选项启动-MySQL-服务"><span class="toc-text">使用 skip-grant-tables 选项启动 MySQL 服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-root-用户登录，重新设置密码"><span class="toc-text">使用 root 用户登录，重新设置密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-权限管理"><span class="toc-text">MySQL 权限管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#授权"><span class="toc-text">授权</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#收回权限-REVOKE"><span class="toc-text">收回权限 REVOKE</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/"><i class="fa" aria-hidden="true">css</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/"><i class="fa" aria-hidden="true">javascript</i></a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/"><i class="fa" aria-hidden="true">linux</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pm2/"><i class="fa" aria-hidden="true">pm2</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python入门教程/"><i class="fa" aria-hidden="true">python入门教程</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react资源/"><i class="fa" aria-hidden="true">react资源</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/"><i class="fa" aria-hidden="true">tcp</i></a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tcp/http/"><i class="fa" aria-hidden="true">http</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/微信小程序/"><i class="fa" aria-hidden="true">微信小程序</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我/"><i class="fa" aria-hidden="true">我</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/数据库/"><i class="fa" aria-hidden="true">数据库</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/"><i class="fa" aria-hidden="true">计算机网络</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源/"><i class="fa" aria-hidden="true">资源</i></a><span class="category-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/"><i class="fa" aria-hidden="true">十二月 2019</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/"><i class="fa" aria-hidden="true">十一月 2019</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/"><i class="fa" aria-hidden="true">十月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/"><i class="fa" aria-hidden="true">六月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">五月 2019</i></a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">四月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">三月 2019</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">二月 2019</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/"><i class="fa" aria-hidden="true">一月 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/"><i class="fa" aria-hidden="true">十二月 2018</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">十一月 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/"><i class="fa" aria-hidden="true">九月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">四月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1979/01/"><i class="fa" aria-hidden="true">一月 1979</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1971/01/"><i class="fa" aria-hidden="true">一月 1971</i></a><span class="archive-list-count">2</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/bfc/" style="font-size: 10px;">bfc</a> <a href="/tags/clearfix/" style="font-size: 10px;">clearfix</a> <a href="/tags/commonjs/" style="font-size: 10px;">commonjs</a> <a href="/tags/css选择器优先级/" style="font-size: 10px;">css选择器优先级</a> <a href="/tags/esm/" style="font-size: 10px;">esm</a> <a href="/tags/github-trending/" style="font-size: 10px;">github-trending</a> <a href="/tags/http/" style="font-size: 20px;">http</a> <a href="/tags/javascript中的error类型/" style="font-size: 10px;">javascript中的error类型</a> <a href="/tags/js原理/" style="font-size: 12.5px;">js原理</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pm2/" style="font-size: 10px;">pm2</a> <a href="/tags/python入门/" style="font-size: 10px;">python入门</a> <a href="/tags/react资源/" style="font-size: 10px;">react资源</a> <a href="/tags/tcp/" style="font-size: 17.5px;">tcp</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue双向数据绑定/" style="font-size: 10px;">vue双向数据绑定</a> <a href="/tags/作用域/" style="font-size: 10px;">作用域</a> <a href="/tags/作用域链/" style="font-size: 10px;">作用域链</a> <a href="/tags/全局对象/" style="font-size: 10px;">全局对象</a> <a href="/tags/前端资源/" style="font-size: 10px;">前端资源</a> <a href="/tags/包含块/" style="font-size: 10px;">包含块</a> <a href="/tags/变量提升/" style="font-size: 10px;">变量提升</a> <a href="/tags/工具归总/" style="font-size: 10px;">工具归总</a> <a href="/tags/布局/" style="font-size: 10px;">布局</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/执行上下文/" style="font-size: 15px;">执行上下文</a> <a href="/tags/执行上下文栈/" style="font-size: 10px;">执行上下文栈</a> <a href="/tags/技术博主/" style="font-size: 10px;">技术博主</a> <a href="/tags/模拟实现/" style="font-size: 10px;">模拟实现</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/盒模型/" style="font-size: 10px;">盒模型</a> <a href="/tags/算法资源/" style="font-size: 10px;">算法资源</a> <a href="/tags/箭头函数/" style="font-size: 10px;">箭头函数</a> <a href="/tags/计算机网络/" style="font-size: 10px;">计算机网络</a> <a href="/tags/词法环境/" style="font-size: 12.5px;">词法环境</a> <a href="/tags/资源汇总/" style="font-size: 10px;">资源汇总</a> <a href="/tags/踩坑/" style="font-size: 12.5px;">踩坑</a> <a href="/tags/闭包/" style="font-size: 10px;">闭包</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.ruanyifeng.com/home.html" class="fa" target="_blank">阮一峰</a>
+        
+            <a href="https://www.liaoxuefeng.com/" class="fa" target="_blank">廖雪峰</a>
+        
+            <a href="https://taro.aotu.io/" class="fa" target="_blank">Taro</a>
+        
+            <a href="https://imooc.com" class="fa" target="_blank">慕课网</a>
+        
+            <a href="https://leetcode-cn.com/" class="fa" target="_blank">LeetCode</a>
+        
+            <a href="http://motion.ant.design/index-cn" class="fa" target="_blank">AntMotion</a>
+        
+            <a href="https://antv.alipay.com/zh-cn/index.html" class="fa" target="_blank">AntV</a>
+        
+            <a href="https://ant.design/index-cn" class="fa" target="_blank">AntD</a>
+        
+            <a href="https://reactjs.org/" class="fa" target="_blank">React</a>
+        
+            <a href="https://nodejs.org/zh-cn/" class="fa" target="_blank">NodeJS</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span>Copyright &copy; 2019- </span> |
+        <span>
+          <a href="/1979/01/01/自我介绍/" class="copyright-links">关于我</a>
+        </span>
+        |
+        <span>
+          <a href="//github.com/lxfriday" class="copyright-links" target="_blank">Github</a>
+        </span>
+        |
+        <span>
+          <a href="http://www.beian.miit.gov.cn/" class="copyright-links" target="_blank">网站备案号：鄂ICP备16007573号-3</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="/js/search.js?rev=@@hash"></script>
+
+<!-- 七牛静态文件库  http://staticfile.org/ -->
+<!-- js('http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js') -->
+<!-- js('assets/jquery.pin.js') -->
+<script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/app.js?rev=@@hash"></script>
+<script src="/js/particle.js?rev=@@hash"></script>
+
+
+</body>
+</html>
